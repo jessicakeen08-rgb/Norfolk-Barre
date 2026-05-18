@@ -20,7 +20,7 @@ nav{position:fixed;top:36px;left:0;right:0;z-index:500;background:rgba(247,244,2
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;}
 .nav-logo span{color:var(--sage);}
 .nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
-.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dark);text-decoration:none;transition:color 0.2s;padding:4px 0;border-bottom:2px solid transparent;}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text);text-decoration:none;transition:color 0.2s;padding:4px 0;border-bottom:2px solid transparent;}
 .nav-links a:hover{color:var(--sage);border-bottom-color:var(--sage);}
 .nav-cta{background:var(--charcoal)!important;color:var(--off-white)!important;padding:10px 22px!important;letter-spacing:0.1em!important;transition:background 0.2s!important;}
 .nav-cta:hover{background:var(--charcoal-soft)!important;color:var(--off-white)!important;}
@@ -174,6 +174,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 
   nav{padding:0 20px;height:56px;top:40px;}
   .nav-links{display:none;}
+  .nav-hamburger{display:flex;}
   .nav-logo{font-size:18px;}
   .hero{grid-template-columns:1fr;min-height:auto;}
   .hero-left{padding:72px 24px 56px;}
@@ -330,6 +331,14 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 .btn-register{display:inline-block;background:transparent;color:var(--sage);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:12px 24px;border:1.5px solid var(--sage);cursor:pointer;transition:all 0.2s;text-align:center;width:100%;margin-top:8px;}
 .btn-register:hover{background:var(--sage);color:white;}
 @media(max-width:640px){.reg-modal-body{padding:20px;}}
+
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px;}
+.nav-hamburger span{display:block;width:24px;height:2px;background:var(--charcoal);transition:all 0.3s;}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;background:rgba(247,244,239,0.98);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:499;padding:16px 20px;flex-direction:column;gap:0;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-size:14px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);display:block;}
+.mobile-menu a:last-child{border-bottom:none;color:var(--sage);}
+.mobile-menu a:hover{color:var(--charcoal);}
 </style>
 </head>
 <body>
@@ -346,7 +355,18 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Get in touch</a></li>
   </ul>
+  <button class="nav-hamburger" onclick="toggleMenu()" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#barre" onclick="toggleMenu()">About Barre</a>
+  <a href="#pricing" onclick="toggleMenu()">Book a Class</a>
+  <a href="#classes" onclick="toggleMenu()">What to Expect</a>
+  <a href="#about" onclick="toggleMenu()">About Jessica</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" onclick="toggleMenu()">Get in Touch</a>
+</div>
 
 <section class="hero">
   <div class="hero-left">
@@ -370,6 +390,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
       <div class="pill-rule"></div>
       <div>
         <span class="pill-location">Holt · North Norfolk</span>
+        <a href="#pricing" style="display:inline-block;margin-top:12px;background:var(--sage);color:white;font-size:12px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;padding:12px 22px;text-decoration:none;">Book a class</a>
         
       </div>
     </div>
@@ -393,6 +414,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
         <div class="pillar"><div class="pillar-num">02</div><div><h4>Low impact</h4><p>Kind on your joints, hard on your muscles. Accessible at every fitness level.</p></div></div>
         <div class="pillar"><div class="pillar-num">03</div><div><h4>Precision movements</h4><p>Small, deliberate and isometric. The technique is exactly what makes it work.</p></div></div>
         <div class="pillar"><div class="pillar-num">04</div><div><h4>Posture and core</h4><p>Better posture and a stronger core are two of the first things people notice.</p></div></div>
+        <div style="margin-top:32px;"><a href="#pricing" class="btn-sage">Book a class</a></div>
       </div>
     </div>
   </div>
@@ -666,7 +688,9 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
         <div class="label">Get in touch</div>
         <h2 class="big-title">READY TO<br><em>give it a go?</em></h2>
         <p class="body-text" style="margin-top:40px;margin-bottom:52px">Drop me a message and I will get back to you with everything you need. No commitment, just say hello.</p>
-        <div class="detail-row"><div class="detail-icon">📍</div><div><span class="detail-label">Location</span><span class="detail-value">Holt Community Centre, Kerridge Way, Holt, NR25 6DN</span><a href="https://maps.google.com/?q=Holt+Community+Centre,+Kerridge+Way,+Holt,+NR25+6DN" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);text-decoration:none;">View on Google Maps →</a><span class="detail-label" style="margin-top:6px">Parking</span><span class="detail-value" style="font-size:16px;font-weight:300">Outside, on-street, or Budgens car park</span><span class="detail-label" style="margin-top:6px">Room</span><span class="detail-value" style="font-size:16px;font-weight:300">The Gallery. at the back of the centre</span></div></div>
+        <div class="detail-row"><div class="detail-icon">📍</div><div><span class="detail-label">Location</span><span class="detail-value">Holt Community Centre, Kerridge Way, Holt, NR25 6DN</span><a href="https://maps.google.com/?q=Holt+Community+Centre,+Kerridge+Way,+Holt,+NR25+6DN" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);text-decoration:none;">View on Google Maps →</a></div></div>
+        <div class="detail-row"><div class="detail-icon">🚗</div><div><span class="detail-label">Parking</span><span class="detail-value">Outside, on-street, or Budgens car park</span></div></div>
+        <div class="detail-row"><div class="detail-icon">🏛️</div><div><span class="detail-label">Room</span><span class="detail-value">The Gallery. at the back of the centre</span></div></div>
         <div class="detail-row"><div class="detail-icon">📅</div><div><span class="detail-label">Classes</span><span class="detail-value">Tuesdays · 08:45 &amp; 17:30</span></div></div>
         <div class="detail-row"><div class="detail-icon">✨</div><div><span class="detail-label">Who it's for</span><span class="detail-value">Everyone. All levels.</span></div></div>
       </div>
@@ -711,6 +735,21 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 </footer>
 
 <script>
+
+function toggleMenu(){
+  const menu=document.getElementById('mobileMenu');
+  const btn=document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  const spans=btn.querySelectorAll('span');
+  if(menu.classList.contains('open')){
+    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
+  } else {
+    spans[0].style.transform='';spans[1].style.opacity='';spans[2].style.transform='';
+  }
+}
+
 function toggleFaq(btn){const item=btn.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
 async function submitForm(){
   const fname=document.getElementById('fname').value.trim();
