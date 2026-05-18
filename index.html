@@ -1,798 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Norfolk Barre. Two Classes Every Tuesday in Holt, Norfolk</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --off-white:#f7f4ef;--white:#fdfcf9;--charcoal:#3d2b1f;
-  --charcoal-mid:#4a3428;--charcoal-soft:#5a4035;
-  --sage:#c49a2a;--sage-light:#dbb94e;--sage-pale:#faf3dc;
-  --stone:#9e9589;--stone-light:#ccc7bf;--stone-pale:#eeece8;
-  --border:#e2ddd6;--text-body:#3d3428;--text-mid:#6e6458;--text-faint:#a8a098;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--off-white);font-family:'DM Sans',sans-serif;color:var(--charcoal);overflow-x:hidden;}
-nav{position:fixed;top:36px;left:0;right:0;z-index:500;background:rgba(247,244,239,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:64px;transition:box-shadow 0.3s;}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;}
-.nav-logo span{color:var(--sage);}
-.nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
-.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dark);text-decoration:none;transition:color 0.2s;padding:4px 0;border-bottom:2px solid transparent;}
-.nav-links a:hover{color:var(--sage);border-bottom-color:var(--sage);}
-.nav-cta{background:var(--charcoal)!important;color:var(--off-white)!important;padding:10px 22px!important;letter-spacing:0.1em!important;transition:background 0.2s!important;}
-.nav-cta:hover{background:var(--charcoal-soft)!important;color:var(--off-white)!important;}
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:100px;overflow:hidden;}
-.hero-left{background:var(--charcoal);padding:90px 5vw;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
-.hero-left::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(196,154,42,0.12);bottom:-120px;right:-120px;}
-.hero-left::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid rgba(196,154,42,0.08);top:50px;left:-60px;}
-.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-light);margin-bottom:32px;display:flex;align-items:center;gap:14px;animation:fadeUp 0.9s ease both;}
-.hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--sage);display:block;}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,9.5vw,136px);line-height:0.88;letter-spacing:0.04em;color:var(--off-white);animation:fadeUp 0.9s 0.1s ease both;}
-.hero-title .accent{color:var(--sage-light);display:block;}
-.hero-divider{width:52px;height:2px;background:var(--sage);margin:40px 0;animation:fadeUp 0.9s 0.2s ease both;}
-.hero-body{font-size:18px;font-weight:300;color:rgba(247,244,239,0.65);line-height:1.9;max-width:400px;margin-bottom:52px;animation:fadeUp 0.9s 0.3s ease both;}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp 0.9s 0.4s ease both;}
-.btn-sage{display:inline-block;background:var(--sage);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:17px 38px;text-decoration:none;border:none;cursor:pointer;transition:background 0.2s,transform 0.2s;}
-.btn-sage:hover{background:var(--sage-light);transform:translateY(-1px);}
-.btn-outline{display:inline-block;background:transparent;color:rgba(247,244,239,0.65);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;padding:17px 30px;text-decoration:none;border:1px solid rgba(247,244,239,0.2);transition:border-color 0.2s,color 0.2s;}
-.btn-outline:hover{border-color:rgba(247,244,239,0.5);color:var(--off-white);}
-.hero-right{position:relative;overflow:hidden;min-height:600px;}
-.hero-right img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.hero-right-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(44,36,24,0.65) 100%);}
-.hero-class-pill{position:absolute;bottom:40px;left:40px;right:40px;background:rgba(247,244,239,0.96);backdrop-filter:blur(12px);padding:28px 32px;display:flex;justify-content:space-between;align-items:center;animation:fadeUp 0.9s 0.6s ease both;}
-.pill-day{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.06em;color:var(--charcoal);display:block;}
-.pill-time{font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--sage);display:block;margin-top:2px;}
-.pill-rule{width:1px;height:48px;background:var(--border);}
-.pill-location{font-size:12px;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-mid);display:block;margin-bottom:4px;}
-.pill-sub{font-size:14px;font-weight:300;color:var(--text-faint);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-.section{padding:120px 5vw;}
-.inner{max-width:1200px;margin:0 auto;}
-.label{font-size:11px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:14px;margin-bottom:28px;}
-.label::before{content:'';width:28px;height:1px;background:var(--sage);display:block;}
-.label-light{color:var(--sage-light);}
-.label-light::before{background:var(--sage-light);}
-.big-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,6.5vw,92px);line-height:0.9;letter-spacing:0.04em;color:var(--charcoal);}
-.big-title em{font-family:'Fraunces',serif;font-style:italic;font-weight:300;color:var(--sage);letter-spacing:0.01em;}
-.big-title-light{color:var(--off-white);}
-.big-title-light em{color:var(--sage-light);}
-.body-text{font-size:18px;font-weight:300;color:var(--text-body);line-height:1.9;}
-.barre-section{background:var(--white);border-top:1px solid var(--border);}
-.barre-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
-.barre-left .big-title{margin-bottom:40px;}
-.pull-quote{font-family:'Fraunces',serif;font-style:italic;font-size:27px;font-weight:300;color:var(--charcoal);line-height:1.45;border-left:2px solid var(--sage);padding-left:32px;margin:48px 0;}
-.pillar{padding:32px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:52px 1fr;gap:24px;align-items:start;}
-.pillar:first-child{border-top:1px solid var(--border);}
-.pillar-num{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;color:var(--stone-light);letter-spacing:0.04em;}
-.pillar h4{font-size:17px;font-weight:500;color:var(--charcoal);margin-bottom:8px;}
-.pillar p{font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.7;margin:0;}
-.stats-bar{background:var(--sage);padding:52px 5vw;}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
-.stat-item{background:rgba(0,0,0,0.08);padding:40px 32px;text-align:center;}
-.stat-big{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:white;letter-spacing:0.04em;display:block;margin-bottom:8px;}
-.stat-label{font-size:12px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);}
-.classes-section{background:var(--charcoal);}
-.classes-header{margin-bottom:72px;}
-.flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;}
-.flow-card{background:var(--charcoal-mid);padding:44px 28px;position:relative;overflow:hidden;transition:background 0.3s;}
-.flow-card:hover{background:var(--charcoal-soft);}
-.flow-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
-.flow-card:hover::before{transform:scaleX(1);}
-.flow-bg-num{font-family:'Bebas Neue',sans-serif;font-size:80px;line-height:1;color:rgba(245,242,238,0.04);position:absolute;bottom:16px;right:18px;letter-spacing:0.04em;}
-.flow-emoji{font-size:30px;margin-bottom:24px;display:block;}
-.flow-title{font-size:16px;font-weight:500;color:var(--off-white);margin-bottom:12px;}
-.flow-desc{font-size:13px;font-weight:300;color:rgba(247,244,239,0.45);line-height:1.7;}
-.about-section{background:var(--off-white);}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
-.about-photo-wrap{position:relative;}
-.about-photo-frame{position:relative;overflow:hidden;aspect-ratio:3/4;}
-.about-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.about-photo-tag{position:absolute;bottom:32px;left:32px;background:var(--charcoal);color:var(--off-white);padding:16px 22px;}
-.about-photo-tag-name{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.08em;display:block;}
-.about-photo-tag-title{font-size:11px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage-light);display:block;margin-top:2px;}
-.about-stat-badge{position:absolute;top:-28px;right:-28px;background:var(--sage-pale);border:1px solid var(--sage-light);padding:24px;text-align:center;width:120px;}
-.stat-n{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:1;color:var(--sage);display:block;}
-.stat-l{font-size:11px;font-weight:400;color:var(--text-mid);letter-spacing:0.08em;}
-.about-text .big-title{margin-bottom:44px;}
-.about-text .body-text{margin-bottom:22px;}
-.about-blockquote{font-family:'Fraunces',serif;font-style:italic;font-size:24px;font-weight:300;color:var(--charcoal);line-height:1.5;border-left:2px solid var(--sage);padding-left:28px;margin:44px 0;}
-.qual-tag{display:inline-flex;align-items:center;gap:10px;background:var(--charcoal);color:var(--off-white);padding:13px 22px;font-size:12px;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;margin-top:12px;}
-.qual-tag span{color:var(--sage-light);}
-.faq-section{background:var(--white);border-top:1px solid var(--border);}
-.faq-inner{max-width:800px;margin:0 auto;}
-.faq-header{margin-bottom:64px;}
-.faq-item{border-bottom:1px solid var(--border);}
-.faq-q{width:100%;background:transparent;border:none;text-align:left;padding:28px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Fraunces',serif;font-size:22px;font-weight:300;font-style:italic;color:var(--charcoal);gap:20px;transition:color 0.2s;}
-.faq-q:hover{color:var(--sage);}
-.faq-icon{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--sage);flex-shrink:0;transition:transform 0.3s;font-family:'DM Sans',sans-serif;line-height:1;font-style:normal;}
-.faq-item.open .faq-icon{transform:rotate(45deg);}
-.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
-.faq-item.open .faq-a{max-height:300px;}
-.faq-a-inner{padding-bottom:28px;font-size:16px;font-weight:300;color:var(--text-mid);line-height:1.85;}
-.contact-section{background:var(--off-white);border-top:1px solid var(--border);}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
-.contact-left .big-title{margin-bottom:40px;}
-.detail-row{display:flex;gap:20px;align-items:flex-start;margin-bottom:28px;}
-.detail-icon{width:44px;height:44px;background:var(--charcoal);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.detail-label{font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-faint);margin-bottom:4px;display:block;}
-.detail-value{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--charcoal);}
-.contact-form{background:var(--charcoal);padding:52px;}
-.form-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.06em;color:var(--off-white);margin-bottom:6px;}
-.form-sub{font-size:14px;font-weight:300;color:rgba(247,244,239,0.45);margin-bottom:36px;line-height:1.6;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
-.form-group label{font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(247,244,239,0.4);}
-.form-group input,.form-group select,.form-group textarea{background:rgba(247,244,239,0.06);border:1px solid rgba(247,244,239,0.12);padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;color:var(--off-white);transition:border-color 0.2s;outline:none;width:100%;}
-.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(247,244,239,0.25);}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--sage);}
-.form-group textarea{resize:vertical;min-height:110px;}
-.form-group select{appearance:none;cursor:pointer;color:rgba(245,242,238,0.6);}
-.form-group select option{background:var(--charcoal);color:var(--off-white);}
-.btn-submit{width:100%;margin-top:8px;padding:18px;background:var(--sage);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;}
-.btn-submit:hover{background:var(--sage-light);}
-.form-success{display:none;text-align:center;padding:60px 0;}
-.form-success.visible{display:block;}
-.success-icon{font-size:48px;margin-bottom:20px;}
-.success-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:0.06em;color:var(--off-white);margin-bottom:12px;}
-.success-body{font-size:15px;font-weight:300;color:rgba(247,244,239,0.5);line-height:1.8;}
-footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 5vw 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
-.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.1em;color:var(--off-white);margin-bottom:10px;display:block;}
-.footer-logo span{color:var(--sage-light);}
-.footer-tagline{font-size:13px;font-weight:300;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.3);margin-bottom:32px;}
-.footer-copy{font-size:12px;color:rgba(247,244,239,0.2);margin-top:40px;padding-top:24px;border-top:1px solid rgba(245,242,238,0.08);}
-.footer-nav{display:flex;flex-direction:column;gap:18px;align-items:flex-end;}
-.footer-nav a{font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);text-decoration:none;transition:color 0.2s;}
-.footer-nav a:hover{color:var(--sage-light);}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.75s ease,transform 0.75s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-@media(max-width:1000px){
-  .hero{grid-template-columns:1fr;}
-  .hero-right{min-height:65vw;}
-  .barre-grid,.about-grid,.contact-grid{grid-template-columns:1fr;gap:56px;}
-  .flow-grid{grid-template-columns:repeat(2,1fr);}
-  .stats-inner{grid-template-columns:repeat(2,1fr);}
-  footer{grid-template-columns:1fr;gap:36px;}
-  .footer-nav{align-items:flex-start;}
-  .about-stat-badge{top:-20px;right:16px;}
-}
-@media(max-width:640px){
-  /* Benefits grid mobile */
-  div[style*="grid-template-columns:repeat(4,1fr)"] {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 2px !important;
-  }
-  /* Persona grid mobile */
-  div[style*="grid-template-columns:repeat(3,1fr)"] {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 2px !important;
-  }
+FOLLOW US ON INSTAGRAM  @NORFOLKBARRE  ↗
+NORFOLK BARRE
+		ABOUT BARRE
+		BOOK A CLASS
+		WHAT TO EXPECT
+		ABOUT JESSICA
+		FAQ
+		GET IN TOUCH
+NORFOLK
+BARRE
 
-  nav{padding:0 20px;height:56px;top:40px;}
-  .nav-links{display:none;}
-  .nav-logo{font-size:18px;}
-  .hero{grid-template-columns:1fr;min-height:auto;}
-  .hero-left{padding:72px 24px 56px;}
-  .hero-eyebrow{font-size:10px;margin-bottom:24px;}
-  .hero-title{font-size:clamp(64px,18vw,88px);line-height:0.88;}
-  .hero-divider{margin:28px 0;}
-  .hero-body{font-size:16px;line-height:1.8;margin-bottom:36px;max-width:100%;}
-  .btn-sage,.btn-outline{width:100%;text-align:center;padding:18px 20px;font-size:13px;}
-  .hero-actions{flex-direction:column;gap:12px;}
-  .hero-right{min-height:85vw;}
-  .hero-class-pill{left:16px;right:16px;bottom:20px;flex-direction:row;gap:0;padding:18px 20px;justify-content:space-around;align-items:center;}
-  .pill-day{font-size:24px;}
-  .pill-time{font-size:17px;}
-  .pill-rule{width:1px;height:40px;}
-  .pill-location{font-size:11px;}
-  .pill-sub{font-size:13px;}
-  .section{padding:72px 20px;}
-  .label{font-size:10px;margin-bottom:20px;}
-  .big-title{font-size:clamp(44px,13vw,64px);line-height:0.9;}
-  .barre-grid{gap:48px;}
-  .barre-left .big-title{margin-bottom:28px;}
-  .body-text{font-size:16px;line-height:1.85;}
-  .pull-quote{font-size:22px;padding-left:22px;margin:36px 0;}
-  .pillar{padding:24px 0;grid-template-columns:44px 1fr;gap:16px;}
-  .pillar-num{font-size:36px;}
-  .pillar h4{font-size:16px;}
-  .pillar p{font-size:14px;}
-  .stats-bar{padding:36px 20px;}
-  .stats-inner{grid-template-columns:1fr 1fr;gap:2px;}
-  .stat-item{padding:28px 16px;}
-  .stat-big{font-size:44px;}
-  .stat-label{font-size:10px;letter-spacing:0.1em;}
-  .classes-header{margin-bottom:48px;}
-  .flow-grid{grid-template-columns:1fr;gap:2px;}
-  .flow-card{padding:32px 24px;}
-  .flow-emoji{font-size:26px;margin-bottom:16px;}
-  .flow-title{font-size:15px;}
-  .flow-desc{font-size:13px;}
-  .about-grid{gap:48px;}
-  .about-photo-frame{aspect-ratio:4/5;}
-  .about-photo-tag{bottom:20px;left:20px;padding:12px 16px;}
-  .about-photo-tag-name{font-size:22px;}
-  .about-stat-badge{top:-16px;right:12px;width:96px;padding:16px 10px;}
-  .stat-n{font-size:38px;}
-  .stat-l{font-size:10px;}
-  .about-text .big-title{margin-bottom:32px;}
-  .about-blockquote{font-size:20px;padding-left:20px;margin:32px 0;}
-  .qual-tag{font-size:11px;padding:11px 18px;width:100%;justify-content:center;}
-  .faq-header{margin-bottom:44px;}
-  .faq-q{font-size:18px;padding:22px 0;}
-  .faq-icon{width:30px;height:30px;font-size:18px;}
-  .faq-a-inner{font-size:15px;padding-bottom:22px;}
-  .contact-grid{gap:48px;}
-  .contact-form{padding:28px 20px;}
-  .form-title{font-size:28px;}
-  .form-sub{font-size:14px;margin-bottom:28px;}
-  .form-row{grid-template-columns:1fr;}
-  .form-group input,.form-group select,.form-group textarea{font-size:16px;padding:14px 16px;}
-  .btn-submit{font-size:13px;padding:18px;}
-  .detail-row{margin-bottom:20px;}
-  .detail-icon{width:40px;height:40px;font-size:15px;}
-  .detail-value{font-size:19px;}
-  footer{padding:48px 20px 36px;grid-template-columns:1fr;gap:32px;}
-  .footer-logo{font-size:28px;}
-  .footer-nav{align-items:flex-start;gap:14px;flex-direction:row;flex-wrap:wrap;}
-  .footer-nav a{font-size:12px;}
-}
-.pricing-section{background:var(--charcoal);border-top:2px solid var(--sage);}
-.pricing-section .label{color:var(--sage-light);}
-.pricing-section .label::before{background:var(--sage-light);}
-.pricing-header{margin-bottom:64px;}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;align-items:stretch;}
-.pricing-card{background:var(--charcoal-mid);padding:52px 44px;position:relative;overflow:hidden;transition:background 0.3s;display:flex;flex-direction:column;}
-.pricing-card:hover{background:var(--charcoal-soft);}
-.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
-.pricing-card:hover::before{transform:scaleX(1);}
-.pricing-card.featured{background:var(--sage);display:flex;flex-direction:column;}
-.pricing-card.featured::before{transform:scaleX(1);background:rgba(255,255,255,0.3);}
-.pricing-tag{font-size:11px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:var(--sage-light);display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-.pricing-card.featured .pricing-tag{color:rgba(255,255,255,0.7);}
-.pricing-tag::before{content:'';width:24px;height:1px;background:var(--sage-light);display:block;}
-.pricing-card.featured .pricing-tag::before{background:rgba(255,255,255,0.5);}
-.pricing-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,52px);letter-spacing:0.04em;line-height:0.95;color:var(--off-white);margin-bottom:20px;}
-.pricing-card.featured .pricing-name{color:white;}
-.pricing-time{display:flex;align-items:baseline;gap:10px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid rgba(247,244,239,0.1);}
-.pricing-card.featured .pricing-time{border-bottom-color:rgba(255,255,255,0.2);}
-.pricing-day{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;color:var(--sage-light);}
-.pricing-card.featured .pricing-day{color:rgba(255,255,255,0.85);}
-.pricing-clock{font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:rgba(247,244,239,0.5);}
-.pricing-card.featured .pricing-clock{color:rgba(255,255,255,0.6);}
-.pricing-desc{font-size:16px;font-weight:300;color:rgba(247,244,239,0.55);line-height:1.8;margin-bottom:36px;}
-.pricing-card.featured .pricing-desc{color:rgba(255,255,255,0.75);}
-.pricing-details{display:flex;flex-direction:column;gap:12px;margin-bottom:40px;}
-.pricing-detail{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:300;color:rgba(247,244,239,0.5);}
-.pricing-card.featured .pricing-detail{color:rgba(255,255,255,0.7);}
-.pricing-detail::before{content:'✦';color:var(--sage-light);font-size:10px;flex-shrink:0;}
-.pricing-card.featured .pricing-detail::before{color:rgba(255,255,255,0.5);}
-.pricing-price{display:flex;align-items:baseline;gap:4px;margin-bottom:32px;}
-.price-amount{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:var(--off-white);letter-spacing:0.02em;}
-.pricing-card.featured .price-amount{color:white;}
-.price-currency{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--sage-light);align-self:flex-start;margin-top:8px;}
-.pricing-card.featured .price-currency{color:rgba(255,255,255,0.7);}
-.price-note{font-size:13px;font-weight:300;color:rgba(247,244,239,0.35);align-self:flex-end;padding-bottom:10px;}
-.pricing-card.featured .price-note{color:rgba(255,255,255,0.5);}
-.pricing-cta{display:inline-block;background:var(--sage);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:16px 32px;text-decoration:none;transition:background 0.2s;}
-.pricing-cta:hover{background:var(--sage-light);}
-.pricing-card.featured .pricing-cta{background:white;color:var(--charcoal);}
-.pricing-card.featured .pricing-cta:hover{background:var(--off-white);}
-@media(max-width:640px){
-  .pricing-grid{grid-template-columns:1fr;}
-  .pricing-card{padding:36px 24px;}
-  .pricing-name{font-size:36px;}
-  .price-amount{font-size:52px;}
-}
+Get stronger. Build mobility. Move freely. Feel incredible.
+LEARN MORE
+￼
 
+Tuesday
+08:45 & 17:30
 
-/* REVIEWS. hidden until real ones ready */
-.reviews-section{display:none;background:var(--off-white);border-top:1px solid var(--border);}
-.reviews-section.live{display:block;}
-.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:0;}
-.review-card{background:var(--white);padding:44px 36px;position:relative;}
-.review-quote-mark{font-family:'Fraunces',serif;font-size:80px;line-height:0.8;color:var(--sage);opacity:0.25;position:absolute;top:28px;left:32px;font-style:italic;}
-.review-text{font-family:'Fraunces',serif;font-style:italic;font-size:19px;font-weight:300;color:var(--text-body);line-height:1.7;margin-bottom:32px;padding-top:40px;position:relative;z-index:1;}
-.review-stars{display:flex;gap:4px;margin-bottom:16px;}
-.review-star{color:var(--sage);font-size:14px;}
-.review-author{font-size:13px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);}
-.review-detail{font-size:13px;font-weight:300;color:var(--text-faint);margin-top:2px;}
-@media(max-width:1000px){.reviews-grid{grid-template-columns:1fr;}}
-@media(max-width:640px){.review-card{padding:36px 24px;}.review-text{font-size:17px;}}
+HOLT · NORTH NORFOLK
+WHAT IS BARRE?
+STRENGTH TRAINING with a difference
+Barre is a full-body workout that blends ballet-inspired movements with pilates and functional exercises. Don't let the name fool you. This is not a dance class, and you don't need any dance experience whatsoever.
 
-/* REGISTRATION MODAL */
-.reg-overlay{display:none;position:fixed;inset:0;background:rgba(61,43,31,0.8);z-index:2000;align-items:center;justify-content:center;}
-.reg-overlay.open{display:flex;}
-.reg-modal{background:var(--white);width:100%;max-width:480px;margin:20px;max-height:90vh;overflow-y:auto;}
-.reg-modal-header{background:var(--charcoal);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
-.reg-modal-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.06em;color:var(--off-white);}
-.reg-modal-title span{color:var(--sage);}
-.reg-modal-close{background:none;border:none;color:rgba(247,244,239,0.5);font-size:24px;cursor:pointer;line-height:1;padding:0 4px;}
-.reg-modal-close:hover{color:var(--off-white);}
-.reg-modal-body{padding:28px;}
-.reg-intro{font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.7;margin-bottom:24px;padding:16px 18px;background:var(--sage-pale);border-left:3px solid var(--sage);}
-.reg-form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-.reg-form-group label{font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mid);}
-.reg-form-group input,.reg-form-group select,.reg-form-group textarea{background:var(--off-white);border:1.5px solid var(--border);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;color:var(--text);outline:none;transition:border-color 0.2s;width:100%;}
-.reg-form-group input:focus,.reg-form-group select:focus,.reg-form-group textarea:focus{border-color:var(--sage);}
-.reg-form-group textarea{resize:vertical;min-height:90px;}
-.reg-submit{width:100%;padding:16px;background:var(--sage);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;margin-top:8px;transition:background 0.2s;}
-.reg-submit:hover{background:var(--sage-light);}
-.reg-success{display:none;text-align:center;padding:40px 0;}
-.reg-success.visible{display:block;}
-.reg-success-icon{font-size:48px;margin-bottom:16px;}
-.reg-success-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.06em;color:var(--charcoal);margin-bottom:10px;}
-.reg-success-body{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.8;}
-.btn-register{display:inline-block;background:transparent;color:var(--sage);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:12px 24px;border:1.5px solid var(--sage);cursor:pointer;transition:all 0.2s;text-align:center;width:100%;margin-top:8px;}
-.btn-register:hover{background:var(--sage);color:white;}
-@media(max-width:640px){.reg-modal-body{padding:20px;}}
-</style>
-</head>
-<body>
-<a href="https://instagram.com/norfolkbarre" target="_blank" style="display:block;background:var(--sage);color:white;text-align:center;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;transition:background 0.2s;position:fixed;top:0;left:0;right:0;z-index:600;" onmouseover="this.style.background='var(--sage-light)'" onmouseout="this.style.background='var(--sage)'">
-  Follow us on Instagram &nbsp;@norfolkbarre &nbsp;↗
-</a>
-<nav id="top">
-  <a href="#top" class="nav-logo">NORFOLK <span>BARRE</span></a>
-  <ul class="nav-links">
-    <li><a href="#barre">About Barre</a></li>
-    <li><a href="#pricing">Book a Class</a></li>
-    <li><a href="#classes">What to Expect</a></li>
-    <li><a href="#about">About Jessica</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
-  </ul>
-</nav>
+Small, precise movements combined with high repetitions and light weights will build full body strength, increase your mobility and improve your balance. Low impact means it is kind on your joints, but your muscles will absolutely know they have worked. Will you say yes to the barre burn?
+01
+Full body strength
+Arms, core, thighs and seat. Every muscle group in every session.
+02
+Low impact
+Kind on your joints, hard on your muscles. Accessible at every fitness level.
+03
+Precision movements
+Small, deliberate and isometric. The technique is exactly what makes it work.
+04
+Posture and core
+Better posture and a stronger core are two of the first things people notice.
+LOW
+IMPACT ON JOINTS
+FULL
+BODY WORKOUT
+ALL
+LEVELS WELCOME
+2
+CLASSES EVERY TUESDAY IN HOLT
+WHY BARRE WORKS
+THE benefits
+01
+💪
+Get Stronger
+Small, precise movements under resistance build functional strength from head to toe. Arms, core, thighs and seat every session.
+02
+✨
+Build Lean Muscle
+High repetitions with light resistance create long, lean muscle tone without bulk. The kind of strength that looks and feels effortless.
+03
+🌿
+Increase Mobility
+Movement through your full range of motion builds real flexibility over time. You'll feel looser, freer and more stable in your body.
+04
+🧘
+Improve Balance
+Ballet-inspired movements challenge your stability and coordination every session. Better balance, better posture and greater stability through every movement.
+BOOK A CLASS
+WHAT TO EXPECT
+WHAT TO EXPECT in each class
+A friendly, welcoming environment with energising music to keep you motivated. There will be personal feedback and adjustments throughout so you always get the most from every session.
+01
+🔥
+Warm up
+Wake the body up and prepare the muscles for the work ahead
+02
+💪
+Arms
+Small weights, high reps. The burn always sneaks up on you.
+03
+🦵
+Thighs & seat
+Tiny pulses that do everything. You will feel it tomorrow
+04
+🧘
+Core
+Low, slow, highly effective. Where posture really transforms
+05
+🌿
+Stretch
+A proper cool-down because you have genuinely earned it.
+CLASSES & PRICING
+FIND YOUR perfect class
+PERFECT TO START
+INTRODUCTION TO
+BARRE
+Tuesday
+08:45
+An introductory course for those wanting to explore something new in a fun and welcoming space! This four-week course will take you through everything from the ground up: technique, positions, and what to expect, in a supportive, welcoming space.
+4 classes over 4 weeks No barre experience needed Dates: 2nd, 9th, 16th and 23rd June Small group, friendly atmosphere Holt Community Centre, NR25 6DN
+£
+50
+for 4 classes
+BOOK & PAY. £50 ↗
+ALREADY PAID? REGISTER YOUR PLACE
+OPEN LEVEL
+OPEN LEVEL
+BARRE
+Tuesday
+17:30
+A full-body barre class for those with some fitness base who are ready to work. No barre experience necessary, just come ready to move. Each class builds on the last, and every level is welcome.
+Dates: 2nd, 9th, 16th and 23rd June Some fitness helpful, barre experience not required Full-body strength & conditioning Holt Community Centre, NR25 6DN Want to drop in? Contact Jessica to check availability. £15 per class.
+£
+50
+block of 4 classes
+BLOCK OF 4. £50 ↗
+DROP IN. £15 ↗
+ALREADY PAID? REGISTER YOUR PLACE
+￼
+JESSICA
+YOUR INSTRUCTOR
+9
+years of barre
+ABOUT ME
+I'm not a dancer. I'm not particularly flexible. When I first tried barre, I had no idea what I was doing and felt like a bit of a wally during the class. But I had SUCH a good workout, I booked myself straight back in again! Barre became the 50 minute slice of space and mindful movement that kept me sane, during my intense London days!
+For nine years I have made barre part of my weekly movement routine and I can't live without it. It helps calm my mind, energise my body and refresh my nervous system. I love it and I hope you do too.
+Since moving to Norfolk in 2020 I've practised online and regularly go down to London to visit my favourite studios, because nothing local existed. That felt like a gap worth filling.
+Now qualified with Barre Series, I'm bringing the classes I love to Holt. If you're curious, excited to try something different, or looking to get back into barre, you are so welcome!
+✦
+QUALIFIED WITH BARRE SERIES ↗
+QUESTIONS
+THE ONES everyone asks
+What should I expect from my first class?+
+A warm welcome and a genuinely good workout. Both classes follow the same clear structure: warm up, arms, thighs and seat, core, stretch. You will always know what is coming. This is a good place to start if you are unsure. I can welcome brand new barre students in either class! You will leave feeling worked and uplifted.
+I'm not very fit — is this for me?+
+Yes, genuinely. Barre is low impact and highly adaptable. There is no competition and no judgement. Everyone works at their own level through the same class.
+What do I need to wear or bring?+
+Comfortable gym clothes and grip socks. Bare feet on the mat work well too. No special kit required. Please bring a mat, a water bottle and yourself!
+Where exactly are classes held?+
+Classes are held at Holt Community Centre, Kerridge Way, Holt, NR25 6DN, in the Gallery space at the back of the building. Classes run every Tuesday at 08:45 and 17:30.
+How do I book?+
+You can message me via the contact form to find out more, or book directly using the payment links on this page. If you are booking a one off class, please send me a message to let me know which class you plan to attend so I can manage numbers. No commitment needed, just say hello!
+GET IN TOUCH
+READY TO give it a go?
+Drop me a message and I will get back to you with everything you need. No commitment, just say hello.
+📍
+LOCATION
+Holt Community Centre, Kerridge Way, Holt, NR25 6DNVIEW ON GOOGLE MAPS →
+PARKING
+Outside, on-street, or Budgens car park
+ROOM
+The Gallery. at the back of the centre
+📅
+CLASSES
+Tuesdays · 08:45 & 17:30
+✨
+WHO IT'S FOR
+Everyone. All levels.
+SAY HELLO
+I'll reply within 24 hours. usually much sooner.
+FIRST NAME
 
-<section class="hero">
-  <div class="hero-left">
-    
-    <h1 class="hero-title">NORFOLK<span class="accent">BARRE</span></h1>
-    <div class="hero-divider"></div>
-    <p class="hero-body">Get stronger. Build mobility. Move freely.<br>Feel incredible.</p>
-    <div class="hero-actions">
-      <a href="#barre" class="btn-outline" style="font-weight:500;color:var(--off-white);border-color:rgba(247,244,239,0.4);">Learn more</a>
-      
-    </div>
-  </div>
-  <div class="hero-right">
-    <img src="jessica-hero.jpg" alt="Jessica. Norfolk Barre instructor">
-    <div class="hero-right-overlay"></div>
-    <div class="hero-class-pill">
-      <div>
-        <span class="pill-day">Tuesday</span>
-        <span class="pill-time">08:45 &amp; 17:30</span>
-      </div>
-      <div class="pill-rule"></div>
-      <div>
-        <span class="pill-location">Holt · North Norfolk</span>
-        
-      </div>
-    </div>
-  </div>
-</section>
+LAST NAME
 
-<section class="barre-section section" id="barre">
-  <div class="inner">
-    <div class="barre-grid">
-      <div class="barre-left reveal">
-        <div class="label">What is barre?</div>
-        <h2 class="big-title">STRENGTH<br>TRAINING<br><em>with a difference</em></h2>
-        <div style="margin-top:40px">
-          <p class="body-text">Barre is a full-body workout that blends ballet-inspired movements with pilates and functional exercises. Don't let the name fool you. This is not a dance class, and you don't need any dance experience whatsoever.</p>
-          <div class="pull-quote"></div>
-          <p class="body-text">Small, precise movements combined with high repetitions and light weights will build full body strength, increase your mobility and improve your balance. Low impact means it is kind on your joints, but your muscles will absolutely know they have worked. Will you say yes to the barre burn?</p>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="pillar"><div class="pillar-num">01</div><div><h4>Full body strength</h4><p>Arms, core, thighs and seat. Every muscle group in every session.</p></div></div>
-        <div class="pillar"><div class="pillar-num">02</div><div><h4>Low impact</h4><p>Kind on your joints, hard on your muscles. Accessible at every fitness level.</p></div></div>
-        <div class="pillar"><div class="pillar-num">03</div><div><h4>Precision movements</h4><p>Small, deliberate and isometric. The technique is exactly what makes it work.</p></div></div>
-        <div class="pillar"><div class="pillar-num">04</div><div><h4>Posture and core</h4><p>Better posture and a stronger core are two of the first things people notice.</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
+EMAIL ADDRESS
 
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item reveal"><span class="stat-big">LOW</span><span class="stat-label">Impact on joints</span></div>
-    <div class="stat-item reveal"><span class="stat-big">FULL</span><span class="stat-label">Body workout</span></div>
-    <div class="stat-item reveal"><span class="stat-big">ALL</span><span class="stat-label">Levels welcome</span></div>
-    <div class="stat-item reveal"><span class="stat-big">2</span><span class="stat-label">Classes every Tuesday in Holt</span></div>
-  </div>
-</div>
-
-
-<section style="background:var(--white);border-top:1px solid var(--border);padding:100px 5vw;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <div class="reveal">
-      <div class="label">Why barre works</div>
-      <h2 class="big-title" style="margin-bottom:64px;">THE <em>benefits</em></h2>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;" class="reveal">
-
-      <div style="background:var(--off-white);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--off-white)'">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:var(--sage);opacity:0.2;position:absolute;top:16px;right:20px;">01</div>
-        <div style="font-size:36px;margin-bottom:20px;">💪</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--charcoal);margin-bottom:12px;">Get Stronger</h3>
-        <p style="font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.7;">Small, precise movements under resistance build functional strength from head to toe. Arms, core, thighs and seat every session.</p>
-      </div>
-
-      <div style="background:var(--off-white);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--off-white)'">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:var(--sage);opacity:0.2;position:absolute;top:16px;right:20px;">02</div>
-        <div style="font-size:36px;margin-bottom:20px;">✨</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--charcoal);margin-bottom:12px;">Build Lean Muscle</h3>
-        <p style="font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.7;">High repetitions with light resistance create long, lean muscle tone without bulk. The kind of strength that looks and feels effortless.</p>
-      </div>
-
-      <div style="background:var(--off-white);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--off-white)'">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:var(--sage);opacity:0.2;position:absolute;top:16px;right:20px;">03</div>
-        <div style="font-size:36px;margin-bottom:20px;">🌿</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--charcoal);margin-bottom:12px;">Increase Mobility</h3>
-        <p style="font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.7;">Movement through your full range of motion builds real flexibility over time. You'll feel looser, freer and more stable in your body.</p>
-      </div>
-
-      <div style="background:var(--off-white);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--off-white)'">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:var(--sage);opacity:0.2;position:absolute;top:16px;right:20px;">04</div>
-        <div style="font-size:36px;margin-bottom:20px;">🧘</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--charcoal);margin-bottom:12px;">Improve Balance</h3>
-        <p style="font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.7;">Ballet-inspired movements challenge your stability and coordination every session. Better balance, better posture and greater stability through every movement.</p>
-      </div>
-
-    </div>
-  <div style="margin-top:48px;"><a href="#pricing" class="btn-sage">Book a class</a></div>
-  </div>
-</section>
-
-<section class="classes-section section" id="classes">
-  <div class="inner">
-    <div class="classes-header reveal">
-      <div class="label label-light">What to expect</div>
-      <h2 class="big-title big-title-light">WHAT TO EXPECT<br><em>in each class</em></h2>
-    </div>
-    <p style="font-size:18px;font-weight:300;color:rgba(247,244,239,0.65);line-height:1.9;max-width:700px;margin-bottom:64px;">A friendly, welcoming environment with energising music to keep you motivated. There will be personal feedback and adjustments throughout so you always get the most from every session.</p>
-    <div class="flow-grid reveal">
-      <div class="flow-card"><span class="flow-bg-num">01</span><span class="flow-emoji">🔥</span><div class="flow-title">Warm up</div><div class="flow-desc">Wake the body up and prepare the muscles for the work ahead</div></div>
-      <div class="flow-card"><span class="flow-bg-num">02</span><span class="flow-emoji">💪</span><div class="flow-title">Arms</div><div class="flow-desc">Small weights, high reps. The burn always sneaks up on you.</div></div>
-      <div class="flow-card"><span class="flow-bg-num">03</span><span class="flow-emoji">🦵</span><div class="flow-title">Thighs &amp; seat</div><div class="flow-desc">Tiny pulses that do everything. You will feel it tomorrow</div></div>
-      <div class="flow-card"><span class="flow-bg-num">04</span><span class="flow-emoji">🧘</span><div class="flow-title">Core</div><div class="flow-desc">Low, slow, highly effective. Where posture really transforms</div></div>
-      <div class="flow-card"><span class="flow-bg-num">05</span><span class="flow-emoji">🌿</span><div class="flow-title">Stretch</div><div class="flow-desc">A proper cool-down because you have genuinely earned it.</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="pricing-section section" id="pricing">
-  <div class="inner">
-    <div class="pricing-header reveal">
-      <div class="label label-light">Classes &amp; pricing</div>
-      <h2 class="big-title big-title-light">FIND YOUR<br><em>perfect class</em></h2>
-    </div>
-    <div class="pricing-grid reveal">
-
-      <div class="pricing-card featured">
-        <div class="pricing-tag">Perfect to start</div>
-        <div class="pricing-name">INTRODUCTION TO<br>BARRE</div>
-        <div class="pricing-time">
-          <span class="pricing-day">Tuesday</span>
-          <span class="pricing-clock">08:45</span>
-        </div>
-        <p class="pricing-desc">An introductory course for those wanting to explore something new in a fun and welcoming space! This four-week course will take you through everything from the ground up: technique, positions, and what to expect, in a supportive, welcoming space.</p>
-        <div class="pricing-details">
-          <div class="pricing-detail">4 classes over 4 weeks</div>
-          <div class="pricing-detail">No barre experience needed</div>
-                <div class="pricing-detail">Dates: 2nd, 9th, 16th and 23rd June</div>
-          <div class="pricing-detail">Small group, friendly atmosphere</div>
-          <div class="pricing-detail">Holt Community Centre, NR25 6DN</div>
-        </div>
-        <div class="pricing-price">
-          <span class="price-currency">£</span>
-          <span class="price-amount">50</span>
-          <span class="price-note">for 4 classes</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:24px;"><a href="https://pay.sumup.com/b2c/X1HLZSGIAY" target="_blank" class="pricing-cta" style="background:white;color:var(--sage);">Book &amp; Pay. £50 ↗</a>
-        <button onclick="openReg('Introduction to Barre (Tue 08:45)')" style="width:100%;padding:13px 24px;background:transparent;border:1.5px solid white;color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='white';this.style.color='var(--sage)'" onmouseout="this.style.background='transparent';this.style.color='white'">Already paid? Register your place</button></div>
-      </div>
-
-      <div class="pricing-card">
-        <div class="pricing-tag">Open level</div>
-        <div class="pricing-name">OPEN LEVEL<br>BARRE</div>
-        <div class="pricing-time">
-          <span class="pricing-day">Tuesday</span>
-          <span class="pricing-clock">17:30</span>
-        </div>
-        <p class="pricing-desc">A full-body barre class for those with some fitness base who are ready to work. No barre experience necessary, just come ready to move. Each class builds on the last, and every level is welcome.</p>
-        <div class="pricing-details">
-          <div class="pricing-detail">Dates: 2nd, 9th, 16th and 23rd June</div>
-          <div class="pricing-detail">Some fitness helpful, barre experience not required</div>
-          <div class="pricing-detail">Full-body strength &amp; conditioning</div>
-          <div class="pricing-detail">Holt Community Centre, NR25 6DN</div>
-          <div class="pricing-detail">Want to drop in? Contact Jessica to check availability. £15 per class.</div>
-        </div>
-        <div class="pricing-price">
-          <span class="price-currency">£</span>
-          <span class="price-amount">50</span>
-          <span class="price-note">block of 4 classes</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:24px;"><a href="https://pay.sumup.com/b2c/X27MANJMF6" target="_blank" class="pricing-cta" style="background:white;color:var(--sage);">Block of 4. £50 ↗</a><a href="https://pay.sumup.com/b2c/XUNO6PPDZB" target="_blank" class="pricing-cta" style="background:var(--charcoal);color:var(--off-white);">Drop in. £15 ↗</a>
-        <button onclick="openReg('Open Level Barre (Tue 17:30)')" style="width:100%;padding:13px 24px;background:transparent;border:1.5px solid var(--sage);color:var(--sage);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--sage)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--sage)'">Already paid? Register your place</button></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- REVIEWS. add class="live" to .reviews-section when real reviews are ready -->
-
-<section style="display:none;background:var(--charcoal);padding:100px 5vw;border-top:2px solid var(--sage);">
-  <div style="max-width:1200px;margin:0 auto;">
-    <div class="reveal">
-      <div class="label label-light">Who is barre for?</div>
-      <h2 class="big-title big-title-light" style="margin-bottom:64px;">BARRE IS FOR<br><em>everyone</em></h2>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;" class="reveal">
-
-      <div style="background:var(--charcoal-mid);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--charcoal-soft)'" onmouseout="this.style.background='var(--charcoal-mid)'">
-        <div style="font-size:40px;margin-bottom:24px;">🤱</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--off-white);margin-bottom:16px;">Mums</h3>
-        <p style="font-size:15px;font-weight:300;color:rgba(247,244,239,0.6);line-height:1.8;margin-bottom:20px;">A low impact workout that's perfect pre or post partum. Rebuild core strength, improve posture and feel strong again. No fancy gym kit needed, just comfortable clothes and a willingness to show up.</p>
-        <div style="width:32px;height:1px;background:var(--sage);margin-bottom:20px;"></div>
-        <p style="font-size:13px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage-light);">Low impact · Core rebuild · All welcome</p>
-      </div>
-
-      <div style="background:var(--charcoal-mid);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--charcoal-soft)'" onmouseout="this.style.background='var(--charcoal-mid)'">
-        <div style="font-size:40px;margin-bottom:24px;">🌿</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--off-white);margin-bottom:16px;">Over 55s</h3>
-        <p style="font-size:15px;font-weight:300;color:rgba(247,244,239,0.6);line-height:1.8;margin-bottom:20px;">Looking to improve balance, mobility, stability and strength as you get older? Barre is one of the best things you can do for your body. Gentle on joints, effective for muscles and genuinely enjoyable every session.</p>
-        <div style="width:32px;height:1px;background:var(--sage);margin-bottom:20px;"></div>
-        <p style="font-size:13px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage-light);">Balance · Mobility · Stability · Strength</p>
-      </div>
-
-      <div style="background:var(--charcoal-mid);padding:48px 36px;position:relative;overflow:hidden;transition:background 0.3s;" onmouseover="this.style.background='var(--charcoal-soft)'" onmouseout="this.style.background='var(--charcoal-mid)'">
-        <div style="font-size:40px;margin-bottom:24px;">🔥</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--off-white);margin-bottom:16px;">Fitness Fanatics</h3>
-        <p style="font-size:15px;font-weight:300;color:rgba(247,244,239,0.6);line-height:1.8;margin-bottom:20px;">Think barre sounds too easy? I bet I can make your arms burn with just a 1kg weight 😉 Barre will challenge you in ways you haven't felt before. The shake is real, the burn is real. and the results speak for themselves.</p>
-        <div style="width:32px;height:1px;background:var(--sage);margin-bottom:20px;"></div>
-        <p style="font-size:13px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage-light);">Challenge · Results · Something new</p>
-      </div>
-
-    </div>
-    <div style="margin-top:48px;" class="reveal">
-      <a href="#pricing" class="btn-sage">Book a class</a>
-    </div>
-  </div>
-</section>
-
-<section class="about-section section" id="about">
-  <div class="inner">
-    <div class="about-grid">
-      <div class="about-photo-wrap reveal">
-        <div class="about-photo-frame">
-          <img src="jessica-portrait.jpeg" alt="Jessica, Norfolk Barre instructor">
-          <div class="about-photo-tag">
-            <span class="about-photo-tag-name">JESSICA</span>
-            <span class="about-photo-tag-title">Your instructor</span>
-          </div>
-        </div>
-        <div class="about-stat-badge">
-          <span class="stat-n">9</span>
-          <span class="stat-l">years of barre</span>
-        </div>
-      </div>
-      <div class="about-text reveal">
-        <div class="label">About me</div>
-        
-        <div style="margin-top:44px">
-          <p class="body-text">I'm not a dancer. I'm not particularly flexible. When I first tried barre, I had no idea what I was doing and felt like a bit of a wally during the class. But I had SUCH a good workout, I booked myself straight back in again! Barre became the 50 minute slice of space and mindful movement that kept me sane, during my intense London days!</p>
-          <div class="about-blockquote">For nine years I have made barre part of my weekly movement routine and I can't live without it. It helps calm my mind, energise my body and refresh my nervous system. I love it and I hope you do too.</div>
-          <p class="body-text">Since moving to Norfolk in 2020 I've practised online and regularly go down to London to visit my favourite studios, because nothing local existed. That felt like a gap worth filling.</p>
-          <p class="body-text" style="margin-top:20px">Now qualified with Barre Series, I'm bringing the classes I love to Holt. If you're curious, excited to try something different, or looking to get back into barre, you are so welcome!</p>
-          <a href="https://barreseries.com/" target="_blank" style="text-decoration:none"><div class="qual-tag">✦ <span>Qualified with Barre Series ↗</span></div></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- CLASSES & PRICING -->
-<section class="reviews-section" id="reviews">
-  <div class="inner">
-    <div class="pricing-header reveal">
-      <div class="label">What people say</div>
-      <h2 class="big-title">REAL RESULTS,<br><em>real people</em></h2>
-    </div>
-    <div class="reviews-grid reveal">
-
-      <div class="review-card">
-        <div class="review-quote-mark">"</div>
-        <p class="review-text">PLACEHOLDER. replace with real review</p>
-        <div class="review-stars">
-          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
-        </div>
-        <div class="review-author">Name</div>
-        <div class="review-detail">Class attended</div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-quote-mark">"</div>
-        <p class="review-text">PLACEHOLDER. replace with real review</p>
-        <div class="review-stars">
-          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
-        </div>
-        <div class="review-author">Name</div>
-        <div class="review-detail">Class attended</div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-quote-mark">"</div>
-        <p class="review-text">PLACEHOLDER. replace with real review</p>
-        <div class="review-stars">
-          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
-        </div>
-        <div class="review-author">Name</div>
-        <div class="review-detail">Class attended</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="faq-section section" id="faq">
-  <div class="faq-inner">
-    <div class="faq-header reveal">
-      <div class="label">Questions</div>
-      <h2 class="big-title">THE ONES<br><em>everyone asks</em></h2>
-    </div>
-    <div class="reveal">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What should I expect from my first class?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">A warm welcome and a genuinely good workout. Both classes follow the same clear structure: warm up, arms, thighs and seat, core, stretch. You will always know what is coming. This is a good place to start if you are unsure. I can welcome brand new barre students in either class! You will leave feeling worked and uplifted.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">I'm not very fit — is this for me?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Yes, genuinely. Barre is low impact and highly adaptable. There is no competition and no judgement. Everyone works at their own level through the same class.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What do I need to wear or bring?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Comfortable gym clothes and grip socks. Bare feet on the mat work well too. No special kit required. Please bring a mat, a water bottle and yourself!</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Where exactly are classes held?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Classes are held at Holt Community Centre, Kerridge Way, Holt, NR25 6DN, in the Gallery space at the back of the building. Classes run every Tuesday at 08:45 and 17:30.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I book?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">You can message me via the contact form to find out more, or book directly using the payment links on this page. If you are booking a one off class, please send me a message to let me know which class you plan to attend so I can manage numbers. No commitment needed, just say hello!</div></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="contact-section section" id="contact">
-  <div class="inner">
-    <div class="contact-grid">
-      <div class="contact-left reveal">
-        <div class="label">Get in touch</div>
-        <h2 class="big-title">READY TO<br><em>give it a go?</em></h2>
-        <p class="body-text" style="margin-top:40px;margin-bottom:52px">Drop me a message and I will get back to you with everything you need. No commitment, just say hello.</p>
-        <div class="detail-row"><div class="detail-icon">📍</div><div><span class="detail-label">Location</span><span class="detail-value">Holt Community Centre, Kerridge Way, Holt, NR25 6DN</span><a href="https://maps.google.com/?q=Holt+Community+Centre,+Kerridge+Way,+Holt,+NR25+6DN" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);text-decoration:none;">View on Google Maps →</a><span class="detail-label" style="margin-top:6px">Parking</span><span class="detail-value" style="font-size:16px;font-weight:300">Outside, on-street, or Budgens car park</span><span class="detail-label" style="margin-top:6px">Room</span><span class="detail-value" style="font-size:16px;font-weight:300">The Gallery. at the back of the centre</span></div></div>
-        <div class="detail-row"><div class="detail-icon">📅</div><div><span class="detail-label">Classes</span><span class="detail-value">Tuesdays · 08:45 &amp; 17:30</span></div></div>
-        <div class="detail-row"><div class="detail-icon">✨</div><div><span class="detail-label">Who it's for</span><span class="detail-value">Everyone. All levels.</span></div></div>
-      </div>
-      <div class="reveal">
-        <div class="contact-form">
-          <div id="theForm">
-            <div class="form-title">SAY HELLO</div>
-            <div class="form-sub">I'll reply within 24 hours. usually much sooner.</div>
-            <div class="form-row">
-              <div class="form-group"><label>First name</label><input type="text" id="fname" placeholder="Your first name"></div>
-              <div class="form-group"><label>Last name</label><input type="text" id="lname" placeholder="Your last name"></div>
-            </div>
-            <div class="form-group"><label>Email address</label><input type="email" id="email" placeholder="your@email.com"></div>
-            <div class="form-group"><label>I'd like to...</label><select id="interest"><option value="">Select an option</option><option>Book my first class</option><option>Find out more first</option><option>Ask about pricing</option><option>Something else</option></select></div>
-            <div class="form-group"><label>Message (optional)</label><textarea id="message" placeholder="Any questions, or just say hello!"></textarea></div>
-            <button class="btn-submit" onclick="submitForm()">Send message ✦</button>
-          </div>
-          <div class="form-success" id="formSuccess">
-            <div class="success-icon">🌿</div>
-            <div class="success-title">MESSAGE SENT</div>
-            <div class="success-body">Thank you. I'll be in touch soon with everything you need.<br><br>Follow along on Instagram for class updates.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div>
-    <span class="footer-logo">NORFOLK <span>BARRE</span></span>
-    <div class="footer-tagline">Holt · North Norfolk · Tuesdays 08:45 &amp; 17:30</div>
-    <div class="footer-copy">© 2026 Norfolk Barre. All rights reserved.</div>
-  </div>
-  <nav class="footer-nav">
-    <a href="#barre">About Barre</a>
-    <a href="#classes">Classes</a>
-    <a href="#about">About Jessica</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</footer>
-
-<script>
-function toggleFaq(btn){const item=btn.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
-async function submitForm(){
-  const fname=document.getElementById('fname').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const lname=document.getElementById('lname').value.trim();
-  const interest=document.getElementById('interest').value;
-  const message=document.getElementById('message').value.trim();
-  if(!fname||!email){alert('Please fill in your name and email address.');return;}
-  const btn=document.querySelector('.btn-submit');
-  btn.textContent='Sending...';btn.disabled=true;
-  try{
-    const res=await fetch('https://formspree.io/f/mvzlyllk',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({name:fname+' '+lname,email:email,interest:interest,message:message})
-    });
-    if(res.ok){
-      document.getElementById('theForm').style.display='none';
-      document.getElementById('formSuccess').classList.add('visible');
-    } else {
-      alert('Something went wrong. please try again or email me directly.');
-      btn.textContent='Send message ✦';btn.disabled=false;
-    }
-  } catch(e){
-    alert('Something went wrong. please check your connection and try again.');
-    btn.textContent='Send message ✦';btn.disabled=false;
-  }
-}
-const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}});},{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-window.addEventListener('scroll',()=>{document.querySelector('nav').style.boxShadow=window.scrollY>10?'0 2px 20px rgba(0,0,0,0.08)':'none';});
-</script>
-
-<!-- REGISTRATION MODAL -->
-<div class="reg-overlay" id="regOverlay">
-  <div class="reg-modal">
-    <div class="reg-modal-header">
-      <div class="reg-modal-title">NORFOLK <span>BARRE</span></div>
-      <button class="reg-modal-close" onclick="closeReg()">✕</button>
-    </div>
-    <div class="reg-modal-body">
-      <div id="regForm">
-        <div class="reg-intro">
-          Thank you for booking! Please complete your registration below so Jessica can confirm your place and be in touch before your first class.
-        </div>
-        <div class="reg-form-group">
-          <label>First name</label>
-          <input type="text" id="regFirstName" placeholder="Your first name">
-        </div>
-        <div class="reg-form-group">
-          <label>Last name</label>
-          <input type="text" id="regLastName" placeholder="Your last name">
-        </div>
-        <div class="reg-form-group">
-          <label>Email address</label>
-          <input type="email" id="regEmail" placeholder="your@email.com">
-        </div>
-        <div class="reg-form-group">
-          <label>Phone (optional)</label>
-          <input type="tel" id="regPhone" placeholder="07700 000000">
-        </div>
-        <div class="reg-form-group">
-          <label>Class booked</label>
-          <select id="regClass">
-            <option value="Introduction to Barre (Tue 08:45)">Introduction to Barre. Tuesday 08:45</option>
-            <option value="Open Level Barre (Tue 17:30)">Open Level Barre. Tuesday 17:30</option>
-          </select>
-        </div>
-        <div class="reg-form-group">
-          <label>Anything Jessica should know? (optional)</label>
-          <textarea id="regNotes" placeholder="e.g. injuries, post-partum, any questions..."></textarea>
-        </div>
-        <button class="reg-submit" onclick="submitReg()">Complete my registration ✦</button>
-      </div>
-      <div class="reg-success" id="regSuccess">
-        <div class="reg-success-icon">🌿</div>
-        <div class="reg-success-title">You're registered!</div>
-        <div class="reg-success-body">Thank you! Jessica will be in touch soon to confirm your place and share everything you need to know before your first class.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+I'D LIKE TO...
+Select an optionBook my first classFind out more firstAsk about pricingSomething else
+MESSAGE (OPTIONAL)
+SEND MESSAGE ✦
+NORFOLK BARRE
+HOLT · NORTH NORFOLK · TUESDAYS 08:45 & 17:30
+© 2026 Norfolk Barre. All rights reserved.
+ABOUT BARRE
+CLASSES
+ABOUT JESSICA
+FAQ
+CONTACT
