@@ -20,8 +20,8 @@ nav{position:fixed;top:36px;left:0;right:0;z-index:500;background:rgba(247,244,2
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;}
 .nav-logo span{color:var(--sage);}
 .nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
-.nav-links a{font-size:12px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
-.nav-links a:hover{color:var(--charcoal);}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dark);text-decoration:none;transition:color 0.2s;padding:4px 0;border-bottom:2px solid transparent;}
+.nav-links a:hover{color:var(--sage);border-bottom-color:var(--sage);}
 .nav-cta{background:var(--charcoal)!important;color:var(--off-white)!important;padding:10px 22px!important;letter-spacing:0.1em!important;transition:background 0.2s!important;}
 .nav-cta:hover{background:var(--charcoal-soft)!important;color:var(--off-white)!important;}
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:100px;overflow:hidden;}
@@ -245,12 +245,12 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 .pricing-section .label{color:var(--sage-light);}
 .pricing-section .label::before{background:var(--sage-light);}
 .pricing-header{margin-bottom:64px;}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
-.pricing-card{background:var(--charcoal-mid);padding:52px 44px;position:relative;overflow:hidden;transition:background 0.3s;}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;align-items:stretch;}
+.pricing-card{background:var(--charcoal-mid);padding:52px 44px;position:relative;overflow:hidden;transition:background 0.3s;display:flex;flex-direction:column;}
 .pricing-card:hover{background:var(--charcoal-soft);}
 .pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
 .pricing-card:hover::before{transform:scaleX(1);}
-.pricing-card.featured{background:var(--sage);}
+.pricing-card.featured{background:var(--sage);display:flex;flex-direction:column;}
 .pricing-card.featured::before{transform:scaleX(1);background:rgba(255,255,255,0.3);}
 .pricing-tag{font-size:11px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:var(--sage-light);display:flex;align-items:center;gap:12px;margin-bottom:24px;}
 .pricing-card.featured .pricing-tag{color:rgba(255,255,255,0.7);}
@@ -340,9 +340,10 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
   <a href="#top" class="nav-logo">NORFOLK <span>BARRE</span></a>
   <ul class="nav-links">
     <li><a href="#barre">About Barre</a></li>
-    <li><a href="#classes">Classes</a></li>
+    <li><a href="#pricing">Book a Class</a></li>
+    <li><a href="#classes">What to Expect</a></li>
     <li><a href="#about">About Jessica</a></li>
-    <li><a href="#pricing">Classes</a></li><li><a href="#faq">FAQ</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Get in touch</a></li>
   </ul>
 </nav>
@@ -364,7 +365,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
     <div class="hero-class-pill">
       <div>
         <span class="pill-day">Tuesday</span>
-        <span class="pill-time">08:00 &amp; 17:45</span>
+        <span class="pill-time">08:45 &amp; 17:30</span>
       </div>
       <div class="pill-rule"></div>
       <div>
@@ -478,9 +479,9 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
         <div class="pricing-name">INTRODUCTION TO<br>BARRE</div>
         <div class="pricing-time">
           <span class="pricing-day">Tuesday</span>
-          <span class="pricing-clock">08:00</span>
+          <span class="pricing-clock">08:45</span>
         </div>
-        <p class="pricing-desc">A four-week course designed to take you through everything from the ground up: technique, positions, and what to expect, in a supportive, welcoming space.</p>
+        <p class="pricing-desc">An introductory course for those wanting to explore something new in a fun and welcoming space! This four-week course will take you through everything from the ground up: technique, positions, and what to expect, in a supportive, welcoming space.</p>
         <div class="pricing-details">
           <div class="pricing-detail">4 classes over 4 weeks</div>
           <div class="pricing-detail">No barre experience needed</div>
@@ -493,8 +494,8 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
           <span class="price-amount">50</span>
           <span class="price-note">for 4 classes</span>
         </div>
-        <a href="https://pay.sumup.com/b2c/X1HLZSGIAY" target="_blank" class="pricing-cta">Book &amp; Pay. £50 ↗</a>
-        <button class="btn-register" onclick="openReg('Introduction to Barre (Tue 08:00)')">Already paid? Register your place</button>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:24px;"><a href="https://pay.sumup.com/b2c/X1HLZSGIAY" target="_blank" class="pricing-cta" style="background:white;color:var(--sage);">Book &amp; Pay. £50 ↗</a>
+        <button onclick="openReg('Introduction to Barre (Tue 08:45)')" style="width:100%;padding:13px 24px;background:transparent;border:1.5px solid white;color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='white';this.style.color='var(--sage)'" onmouseout="this.style.background='transparent';this.style.color='white'">Already paid? Register your place</button></div>
       </div>
 
       <div class="pricing-card">
@@ -502,7 +503,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
         <div class="pricing-name">OPEN LEVEL<br>BARRE</div>
         <div class="pricing-time">
           <span class="pricing-day">Tuesday</span>
-          <span class="pricing-clock">17:45</span>
+          <span class="pricing-clock">17:30</span>
         </div>
         <p class="pricing-desc">A full-body barre class for those with some fitness base who are ready to work. No barre experience necessary, just come ready to move. Each class builds on the last, and every level is welcome.</p>
         <div class="pricing-details">
@@ -517,8 +518,8 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
           <span class="price-amount">50</span>
           <span class="price-note">block of 4 classes</span>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px;"><a href="https://pay.sumup.com/b2c/X27MANJMF6" target="_blank" class="pricing-cta">Block of 4. £50 ↗</a><a href="https://pay.sumup.com/b2c/XUNO6PPDZB" target="_blank" class="pricing-cta" style="background:var(--charcoal);color:var(--off-white);">Drop in. £15 ↗</a>
-        <button class="btn-register" onclick="openReg('Open Level Barre (Tue 17:45)')">Already paid? Register your place</button></div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:24px;"><a href="https://pay.sumup.com/b2c/X27MANJMF6" target="_blank" class="pricing-cta" style="background:white;color:var(--sage);">Block of 4. £50 ↗</a><a href="https://pay.sumup.com/b2c/XUNO6PPDZB" target="_blank" class="pricing-cta" style="background:var(--charcoal);color:var(--off-white);">Drop in. £15 ↗</a>
+        <button onclick="openReg('Open Level Barre (Tue 17:30)')" style="width:100%;padding:13px 24px;background:transparent;border:1.5px solid var(--sage);color:var(--sage);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--sage)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--sage)'">Already paid? Register your place</button></div>
       </div>
 
     </div>
@@ -528,7 +529,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 
 <!-- REVIEWS. add class="live" to .reviews-section when real reviews are ready -->
 
-<section style="background:var(--charcoal);padding:100px 5vw;border-top:2px solid var(--sage);">
+<section style="display:none;background:var(--charcoal);padding:100px 5vw;border-top:2px solid var(--sage);">
   <div style="max-width:1200px;margin:0 auto;">
     <div class="reveal">
       <div class="label label-light">Who is barre for?</div>
@@ -652,8 +653,8 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What should I expect from my first class?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">A warm welcome and a genuinely good workout. Both classes follow the same clear structure: warm up, arms, thighs and seat, core, stretch. You will always know what is coming. This is a good place to start if you are unsure. I can welcome brand new barre students in either class! You will leave feeling worked and uplifted.</div></div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">I'm not very fit — is this for me?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Yes, genuinely. Barre is low impact and highly adaptable. There is no competition and no judgement. Everyone works at their own level through the same class.</div></div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What do I need to wear or bring?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Comfortable gym clothes and grip socks. Bare feet on the mat work well too. No special kit required. Please bring a mat, a water bottle and yourself!</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Where exactly are classes held?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Classes are held at Holt Community Centre, Kerridge Way, Holt, NR25 6DN, in the Gallery space at the back of the building. Classes run every Tuesday at 08:00 and 17:45.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I book?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">You can message me via the contact form to find out more, or book directly using the payment links on this page. Once you have booked, please complete the registration form so I can manage numbers! </div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Where exactly are classes held?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">Classes are held at Holt Community Centre, Kerridge Way, Holt, NR25 6DN, in the Gallery space at the back of the building. Classes run every Tuesday at 08:45 and 17:30.</div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I book?<span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">You can message me via the contact form to find out more, or book directly using the payment links on this page. If you are booking a one off class, please send me a message to let me know which class you plan to attend so I can manage numbers. No commitment needed, just say hello!</div></div></div>
     </div>
   </div>
 </section>
@@ -666,7 +667,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
         <h2 class="big-title">READY TO<br><em>give it a go?</em></h2>
         <p class="body-text" style="margin-top:40px;margin-bottom:52px">Drop me a message and I will get back to you with everything you need. No commitment, just say hello.</p>
         <div class="detail-row"><div class="detail-icon">📍</div><div><span class="detail-label">Location</span><span class="detail-value">Holt Community Centre, Kerridge Way, Holt, NR25 6DN</span><a href="https://maps.google.com/?q=Holt+Community+Centre,+Kerridge+Way,+Holt,+NR25+6DN" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);text-decoration:none;">View on Google Maps →</a><span class="detail-label" style="margin-top:6px">Parking</span><span class="detail-value" style="font-size:16px;font-weight:300">Outside, on-street, or Budgens car park</span><span class="detail-label" style="margin-top:6px">Room</span><span class="detail-value" style="font-size:16px;font-weight:300">The Gallery. at the back of the centre</span></div></div>
-        <div class="detail-row"><div class="detail-icon">📅</div><div><span class="detail-label">Classes</span><span class="detail-value">Tuesdays · 08:00 &amp; 17:45</span></div></div>
+        <div class="detail-row"><div class="detail-icon">📅</div><div><span class="detail-label">Classes</span><span class="detail-value">Tuesdays · 08:45 &amp; 17:30</span></div></div>
         <div class="detail-row"><div class="detail-icon">✨</div><div><span class="detail-label">Who it's for</span><span class="detail-value">Everyone. All levels.</span></div></div>
       </div>
       <div class="reveal">
@@ -697,7 +698,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 <footer>
   <div>
     <span class="footer-logo">NORFOLK <span>BARRE</span></span>
-    <div class="footer-tagline">Holt · North Norfolk · Tuesdays 08:00 &amp; 17:45</div>
+    <div class="footer-tagline">Holt · North Norfolk · Tuesdays 08:45 &amp; 17:30</div>
     <div class="footer-copy">© 2026 Norfolk Barre. All rights reserved.</div>
   </div>
   <nav class="footer-nav">
@@ -774,8 +775,8 @@ window.addEventListener('scroll',()=>{document.querySelector('nav').style.boxSha
         <div class="reg-form-group">
           <label>Class booked</label>
           <select id="regClass">
-            <option value="Introduction to Barre (Tue 08:00)">Introduction to Barre. Tuesday 08:00</option>
-            <option value="Open Level Barre (Tue 17:45)">Open Level Barre. Tuesday 17:45</option>
+            <option value="Introduction to Barre (Tue 08:45)">Introduction to Barre. Tuesday 08:45</option>
+            <option value="Open Level Barre (Tue 17:30)">Open Level Barre. Tuesday 17:30</option>
           </select>
         </div>
         <div class="reg-form-group">
