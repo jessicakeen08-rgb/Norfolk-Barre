@@ -825,7 +825,7 @@ async function submitReg(){
       btn.textContent='Continue to payment ↗';btn.disabled=false;
       if(paymentUrl){
         document.getElementById('paymentFallback').href=paymentUrl;
-        setTimeout(function(){ window.open(paymentUrl,'_blank'); },800);
+        document.getElementById('paymentFallback').style.display='inline-block';
       }
     } else {
       alert('Something went wrong: '+(data.message||'please try again.'));
@@ -881,8 +881,9 @@ async function submitReg(){
       </div>
       <div class="reg-success" id="regSuccess">
         <div class="reg-success-icon">🌿</div>
-        <div class="reg-success-title">You're registered!</div>
-        <div class="reg-success-body">Thank you! Jessica will be in touch soon to confirm your place and share everything you need to know before your first class.</div>
+        <div class="reg-success-title">Details received!</div>
+        <div class="reg-success-body" style="margin-bottom:24px;">Thank you! Jessica will be in touch to confirm your place. Now click below to complete your payment.</div>
+        <a id="paymentFallback" href="#" target="_blank" style="display:none;background:var(--sage);color:white;padding:16px 32px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;">Complete payment ↗</a>
       </div>
     </div>
   </div>
