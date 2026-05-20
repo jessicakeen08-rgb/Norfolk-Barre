@@ -517,7 +517,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
           <span class="price-note">for 4 classes</span>
         </div>
         <div style="margin-top:auto;padding-top:24px;">
-        <button onclick="openBooking('Introduction to Barre (Tue 08:45)','https://pay.sumup.com/b2c/Q379WGS0','£50')" style="width:100%;padding:16px 24px;background:var(--sage);color:white;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--sage-light)'" onmouseout="this.style.background='var(--sage)'">Register &amp; Pay — £50 ↗</button>
+        <button onclick="openBooking('Introduction to Barre (Tue 08:45)','https://pay.sumup.com/b2c/Q379WGS0','£50')" style="width:100%;padding:16px 24px;background:var(--sage);color:white;border:2px solid var(--charcoal);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;box-shadow:4px 4px 0 var(--charcoal);" onmouseover="this.style.boxShadow='2px 2px 0 var(--charcoal)';this.style.transform='translate(2px,2px)'" onmouseout="this.style.boxShadow='4px 4px 0 var(--charcoal)';this.style.transform='translate(0,0)'">Register &amp; Pay — £50 ↗</button>
       </div>
       </div>
 
@@ -764,7 +764,7 @@ async function submitForm(){
     const res=await fetch('https://api.web3forms.com/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({name:fname+' '+lname,email:email,interest:interest,message:message})
+      body:JSON.stringify({access_key:'7d8bf3b0-61bd-4092-8540-d7d500243ea6',subject:'New Enquiry - Norfolk Barre',name:fname+' '+lname,email:email,interest:interest,message:message})
     });
     if(res.ok){
       document.getElementById('theForm').style.display='none';
@@ -817,18 +817,18 @@ async function submitReg(){
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({access_key:'7d8bf3b0-61bd-4092-8540-d7d500243ea6',subject:'New Class Booking - Norfolk Barre',name:firstName+' '+document.getElementById('regLastName').value.trim(),email:email,phone:document.getElementById('regPhone').value.trim(),class_booked:document.getElementById('regClass').value,notes:document.getElementById('regNotes').value.trim(),type:'Class Booking'})
     });
-    if(res.ok){
+    const data=await res.json();
+    if(res.ok&&data.success){
       document.getElementById('regForm').style.display='none';
       document.getElementById('regSuccess').classList.add('visible');
       document.body.style.overflow='';
       btn.textContent='Continue to payment ↗';btn.disabled=false;
-      // Redirect to payment
       if(paymentUrl){
         document.getElementById('paymentFallback').href=paymentUrl;
         setTimeout(function(){ window.open(paymentUrl,'_blank'); },800);
       }
     } else {
-      alert('Something went wrong. Please try again.');
+      alert('Something went wrong: '+(data.message||'please try again.'));
       btn.textContent='Continue to payment ↗';btn.disabled=false;
     }
   }catch(e){
