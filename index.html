@@ -626,7 +626,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 
 
 <!-- CLASSES & PRICING -->
-<section class="reviews-section" id="reviews">
+<section class="reviews-section live" id="reviews">
   <div class="inner">
     <div class="pricing-header reveal">
       <div class="label">What people say</div>
@@ -636,32 +636,29 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 
       <div class="review-card">
         <div class="review-quote-mark">"</div>
-        <p class="review-text">PLACEHOLDER. replace with real review</p>
+        <p class="review-text">I have thoroughly enjoyed doing the barre classes. Having never done barre before, Jess explains everything so that it's easy to follow, fun and you feel like you have had a great workout. Thank you for introducing me to barre!</p>
         <div class="review-stars">
           <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
         </div>
-        <div class="review-author">Name</div>
-        <div class="review-detail">Class attended</div>
+        <div class="review-author">Lucy</div>
+        <div class="review-detail">Introduction to Barre</div>
       </div>
 
       <div class="review-card">
         <div class="review-quote-mark">"</div>
-        <p class="review-text">PLACEHOLDER. replace with real review</p>
+        <p class="review-text">I've been going to Jessica's classes for a few weeks and they are excellent. She's a great teacher — clear, encouraging and really good at keeping the pace just right. The workouts are tough in a good way and you definitely feel the burn, but they are always enjoyable. I always leave feeling stronger and really glad I went.</p>
         <div class="review-stars">
           <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
         </div>
-        <div class="review-author">Name</div>
-        <div class="review-detail">Class attended</div>
+        <div class="review-author">Kate</div>
+        <div class="review-detail">Open Level Barre</div>
       </div>
 
-      <div class="review-card">
-        <div class="review-quote-mark">"</div>
-        <p class="review-text">PLACEHOLDER. replace with real review</p>
-        <div class="review-stars">
-          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+      <div class="review-card" style="display:flex;align-items:center;justify-content:center;background:var(--gold-pale);border:2px dashed var(--border);">
+        <div style="text-align:center;padding:20px;">
+          <div style="font-size:32px;margin-bottom:12px;">🌿</div>
+          <div style="font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--text-mid);line-height:1.6;">More reviews coming soon...</div>
         </div>
-        <div class="review-author">Name</div>
-        <div class="review-detail">Class attended</div>
       </div>
 
     </div>
@@ -764,7 +761,7 @@ async function submitForm(){
   const btn=document.querySelector('.btn-submit');
   btn.textContent='Sending...';btn.disabled=true;
   try{
-    const res=await fetch('https://formspree.io/f/mvzlyllk',{
+    const res=await fetch('https://api.web3forms.com/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({name:fname+' '+lname,email:email,interest:interest,message:message})
@@ -815,10 +812,10 @@ async function submitReg(){
   const paymentUrl=document.getElementById('regOverlay').dataset.paymentUrl||'';
   btn.textContent='Sending...';btn.disabled=true;
   try{
-    const res=await fetch('https://formspree.io/f/mvzlyllk',{
+    const res=await fetch('https://api.web3forms.com/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({_subject:'New Class Booking - Norfolk Barre',name:firstName+' '+document.getElementById('regLastName').value.trim(),email:email,phone:document.getElementById('regPhone').value.trim(),class_booked:document.getElementById('regClass').value,notes:document.getElementById('regNotes').value.trim(),type:'Class Booking'})
+      body:JSON.stringify({access_key:'7d8bf3b0-61bd-4092-8540-d7d500243ea6',subject:'New Class Booking - Norfolk Barre',name:firstName+' '+document.getElementById('regLastName').value.trim(),email:email,phone:document.getElementById('regPhone').value.trim(),class_booked:document.getElementById('regClass').value,notes:document.getElementById('regNotes').value.trim(),type:'Class Booking'})
     });
     if(res.ok){
       document.getElementById('regForm').style.display='none';
