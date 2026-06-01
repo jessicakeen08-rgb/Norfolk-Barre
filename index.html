@@ -16,7 +16,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--off-white);font-family:'DM Sans',sans-serif;color:var(--charcoal);overflow-x:hidden;}
-nav{position:fixed;top:36px;left:0;right:0;z-index:500;background:rgba(247,244,239,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:64px;transition:box-shadow 0.3s;}
+nav{position:fixed;top:40px;left:0;right:0;z-index:500;background:rgba(247,244,239,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:64px;transition:box-shadow 0.3s;}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.12em;color:var(--charcoal);text-decoration:none;}
 .nav-logo span{color:var(--sage);}
 .nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
@@ -339,6 +339,18 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 .mobile-menu a{font-size:14px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);display:block;}
 .mobile-menu a:last-child{border-bottom:none;color:var(--sage);}
 .mobile-menu a:hover{color:var(--charcoal);}
+
+/* OTHER WAYS TO MOVE */
+.other-section{background:var(--off-white);padding:100px 5vw;border-top:1px solid var(--border);}
+.other-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:56px;}
+.other-card{background:var(--white);border:1px solid var(--border);padding:48px 44px;position:relative;overflow:hidden;transition:border-color 0.3s;}
+.other-card:hover{border-color:var(--sage);}
+.other-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.other-card:hover::before{transform:scaleX(1);}
+.other-num{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:var(--border);margin-bottom:16px;letter-spacing:0.04em;}
+.other-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;color:var(--charcoal);margin-bottom:16px;}
+.other-body{font-size:15px;font-weight:300;color:var(--text-mid);line-height:1.8;margin-bottom:32px;}
+@media(max-width:640px){.other-grid{grid-template-columns:1fr;}.other-card{padding:36px 28px;}}
 </style>
 </head>
 <body>
@@ -352,6 +364,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
     <li><a href="#pricing">Book a Class</a></li>
     <li><a href="#classes">What to Expect</a></li>
     <li><a href="#about">About Jessica</a></li>
+    <li><a href="#other">Other Ways to Move</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Get in touch</a></li>
   </ul>
@@ -364,6 +377,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
   <a href="#pricing" onclick="toggleMenu()">Book a Class</a>
   <a href="#classes" onclick="toggleMenu()">What to Expect</a>
   <a href="#about" onclick="toggleMenu()">About Jessica</a>
+  <a href="#other" onclick="toggleMenu()">Other Ways to Move</a>
   <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="#contact" onclick="toggleMenu()">Get in Touch</a>
 </div>
@@ -389,7 +403,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
       </div>
       <div class="pill-rule"></div>
       <div>
-        <span class="pill-location">Holt · North Norfolk</span>
+        <span class="pill-location">Holt · Norfolk</span>
         <a href="#pricing" style="display:inline-block;margin-top:12px;background:var(--sage);color:white;font-size:12px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;padding:12px 22px;text-decoration:none;">Book a class</a>
         
       </div>
@@ -517,7 +531,8 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
           <span class="price-note">for 4 classes</span>
         </div>
         <div style="margin-top:auto;padding-top:24px;">
-        <button onclick="openBooking('Introduction to Barre (Tue 08:45)','https://pay.sumup.com/b2c/Q379WGS0','£50')" style="width:100%;padding:16px 24px;background:var(--sage);color:white;border:2px solid var(--charcoal);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;box-shadow:4px 4px 0 var(--charcoal);" onmouseover="this.style.boxShadow='2px 2px 0 var(--charcoal)';this.style.transform='translate(2px,2px)'" onmouseout="this.style.boxShadow='4px 4px 0 var(--charcoal)';this.style.transform='translate(0,0)'">Register &amp; Pay — £50 ↗</button>
+        <button id="introCTA" onclick="checkIntroCapacity()" style="width:100%;padding:16px 24px;background:var(--sage);color:white;border:2px solid var(--charcoal);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;box-shadow:4px 4px 0 var(--charcoal);" onmouseover="this.style.boxShadow='2px 2px 0 var(--charcoal)';this.style.transform='translate(2px,2px)'" onmouseout="this.style.boxShadow='4px 4px 0 var(--charcoal)';this.style.transform='translate(0,0)'">Register &amp; Pay — £50 ↗</button>
+        <div id="introCapacityNote" style="display:none;margin-top:8px;font-size:12px;font-weight:300;color:rgba(247,244,239,0.6);text-align:center;letter-spacing:0.06em;"></div>
       </div>
       </div>
 
@@ -593,6 +608,26 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
   </div>
 </section>
 
+<!-- OTHER WAYS TO MOVE -->
+<section class="other-section section" id="other">
+  <div class="section-label">Beyond the class</div>
+  <h2 class="section-title">Other ways to <em>move</em></h2>
+  <div class="other-grid">
+    <div class="other-card">
+      <div class="other-num">01</div>
+      <div class="other-title">One to Ones</div>
+      <p class="other-body">Perfect technique and form, recover from injury, or exercise safely pre or post natal with a one to one class tailored entirely to you. Available at home or in a local venue.</p>
+      <a href="#contact" class="btn-sage">Enquire now</a>
+    </div>
+    <div class="other-card">
+      <div class="other-num">02</div>
+      <div class="other-title">Private Group Bookings</div>
+      <p class="other-body">Get some mates together, challenge your spouse, or celebrate a birthday or hen party with fun group barre classes. Party hats optional!</p>
+      <a href="#contact" class="btn-sage">Enquire now</a>
+    </div>
+  </div>
+</section>
+
 <section class="about-section section" id="about">
   <div class="inner">
     <div class="about-grid">
@@ -616,7 +651,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
           <p class="body-text">I'm not a dancer. I'm not particularly flexible. When I first tried barre, I had no idea what I was doing and felt like a bit of a wally during the class. But I had SUCH a good workout, I booked myself straight back in again! Barre became the 50 minute slice of space and mindful movement that kept me sane, during my intense London days!</p>
           <div class="about-blockquote">For nine years I have made barre part of my weekly movement routine and I can't live without it. It helps calm my mind, energise my body and refresh my nervous system. I love it and I hope you do too.</div>
           <p class="body-text">Since moving to Norfolk in 2020 I've practised online and regularly go down to London to visit my favourite studios, because nothing local existed. That felt like a gap worth filling.</p>
-          <p class="body-text" style="margin-top:20px">Now qualified with Barre Series, I'm bringing the classes I love to Holt. If you're curious, excited to try something different, or looking to get back into barre, you are so welcome!</p>
+          <p class="body-text" style="margin-top:20px">Now qualified as a 100-hour Barre Instructor through Barre Series, I'm bringing the classes I love to Holt. If you're curious, excited to try something different, or looking to get back into barre, you are so welcome!</p>
           <a href="https://barreseries.com/" target="_blank" style="text-decoration:none"><div class="qual-tag">✦ <span>Qualified with Barre Series ↗</span></div></a>
         </div>
       </div>
@@ -664,6 +699,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
     </div>
   </div>
 </section>
+
 
 <section class="faq-section section" id="faq">
   <div class="faq-inner">
@@ -722,7 +758,7 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 <footer>
   <div>
     <span class="footer-logo">NORFOLK <span>BARRE</span></span>
-    <div class="footer-tagline">Holt · North Norfolk · Tuesdays 08:45 &amp; 17:30</div>
+    <div class="footer-tagline">Holt · Norfolk · Tuesdays 08:45 &amp; 17:30</div>
     <div class="footer-copy">© 2026 Norfolk Barre. All rights reserved.</div>
   </div>
   <nav class="footer-nav">
@@ -735,6 +771,11 @@ footer{background:var(--charcoal);border-top:2px solid var(--sage);padding:64px 
 </footer>
 
 <script>
+
+
+// Class capacities — update these numbers to change limits
+var INTRO_CAPACITY = 6;
+var INTRO_BOOKED = 5; // Update this manually when someone books
 
 function toggleMenu(){
   const menu=document.getElementById('mobileMenu');
@@ -749,6 +790,36 @@ function toggleMenu(){
     spans[0].style.transform='';spans[1].style.opacity='';spans[2].style.transform='';
   }
 }
+
+
+function checkIntroCapacity() {
+  if (INTRO_BOOKED >= INTRO_CAPACITY) {
+    // Class full - show waitlist message
+    alert('Sorry, this course is now full! Please get in touch with Jessica at jessnorfolkbarre@gmail.com to join the waiting list for the next course.');
+    return;
+  }
+  openBooking('Introduction to Barre (Tue 08:45)','https://pay.sumup.com/b2c/Q379WGS0','£50');
+}
+
+// Show spaces remaining if nearly full
+(function() {
+  var remaining = INTRO_CAPACITY - INTRO_BOOKED;
+  var note = document.getElementById('introCapacityNote');
+  var btn = document.getElementById('introCTA');
+  if (note && btn) {
+    if (INTRO_BOOKED >= INTRO_CAPACITY) {
+      btn.textContent = 'Class Full';
+      btn.style.background = 'rgba(247,244,239,0.2)';
+      btn.style.cursor = 'default';
+      btn.style.boxShadow = 'none';
+      note.style.display = 'block';
+      note.textContent = 'Join the waiting list — email jessnorfolkbarre@gmail.com';
+    } else if (remaining <= 2) {
+      note.style.display = 'block';
+      note.textContent = 'Only ' + remaining + ' space' + (remaining !== 1 ? 's' : '') + ' left!';
+    }
+  }
+})();
 
 function toggleFaq(btn){const item=btn.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
 async function submitForm(){
@@ -783,6 +854,9 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 window.addEventListener('scroll',()=>{document.querySelector('nav').style.boxShadow=window.scrollY>10?'0 2px 20px rgba(0,0,0,0.08)':'none';});
 
 function openBooking(cls, paymentUrl, price) {
+  // Show date picker only for drop in
+  const isDropIn = cls.indexOf('Drop in') >= 0;
+  document.getElementById('dropInDateGroup').style.display = isDropIn ? 'block' : 'none';
   document.getElementById('regFirstName').value='';
   document.getElementById('regLastName').value='';
   document.getElementById('regEmail').value='';
@@ -815,7 +889,7 @@ async function submitReg(){
     const res=await fetch('https://api.web3forms.com/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({access_key:'7d8bf3b0-61bd-4092-8540-d7d500243ea6',subject:'New Class Booking - Norfolk Barre',name:firstName+' '+document.getElementById('regLastName').value.trim(),email:email,phone:document.getElementById('regPhone').value.trim(),class_booked:document.getElementById('regClass').value,notes:document.getElementById('regNotes').value.trim(),type:'Class Booking'})
+      body:JSON.stringify({access_key:'7d8bf3b0-61bd-4092-8540-d7d500243ea6',subject:'New Class Booking - Norfolk Barre',name:firstName+' '+document.getElementById('regLastName').value.trim(),email:email,phone:document.getElementById('regPhone').value.trim(),class_booked:document.getElementById('regClass').value + (document.getElementById('dropInDateGroup').style.display!=='none' ? ' — '+document.getElementById('regDropInDate').value : ''),notes:document.getElementById('regNotes').value.trim(),type:'Class Booking'})
     });
     const data=await res.json();
     if(res.ok&&data.success){
@@ -871,6 +945,14 @@ async function submitReg(){
           <select id="regClass">
             <option value="Introduction to Barre (Tue 08:45)">Introduction to Barre. Tuesday 08:45</option>
             <option value="Open Level Barre (Tue 17:30)">Open Level Barre. Tuesday 17:30</option>
+          </select>
+        </div>
+        <div class="reg-form-group" id="dropInDateGroup" style="display:none;">
+          <label>Which date would you like?</label>
+          <select id="regDropInDate">
+            <option value="Tuesday 9th June">Tuesday 9th June</option>
+            <option value="Tuesday 16th June">Tuesday 16th June</option>
+            <option value="Tuesday 23rd June">Tuesday 23rd June</option>
           </select>
         </div>
         <div class="reg-form-group">
