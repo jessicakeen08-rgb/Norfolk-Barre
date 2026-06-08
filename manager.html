@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Manager — Norfolk Barre</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brown:#3d2b1f;--brown-mid:#4a3428;
+  --gold:#c49a2a;--gold-light:#dbb94e;--gold-pale:#faf3dc;
+  --off-white:#f7f4ef;--white:#fdfcf9;--border:#e2ddd6;
+  --text:#3d3428;--text-mid:#6e6458;--text-faint:#a8a098;
+  --red:#c0392b;--red-pale:#fdecea;--green:#2d7a4f;--green-pale:#e8f5ee;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--off-white);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;}
+
+/* PASSWORD */
+#passwordScreen{position:fixed;inset:0;background:var(--brown);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.pw-box{background:var(--white);padding:48px 40px;width:100%;max-width:380px;text-align:center;}
+.pw-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.12em;color:var(--brown);margin-bottom:4px;}
+.pw-logo span{color:var(--gold);}
+.pw-sub{font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--text-faint);margin-bottom:32px;}
+.pw-label{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mid);display:block;margin-bottom:8px;}
+.pw-input{width:100%;background:var(--off-white);border:1.5px solid var(--border);padding:14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--text);outline:none;text-align:center;letter-spacing:0.1em;margin-bottom:12px;}
+.pw-input:focus{border-color:var(--gold);}
+.pw-btn{width:100%;padding:14px;background:var(--gold);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;}
+.pw-btn:hover{background:var(--gold-light);}
+.pw-error{font-size:13px;color:var(--red);margin-top:10px;display:none;}
+
+/* LAYOUT */
+header{background:var(--brown);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;}
+.hdr-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;color:var(--off-white);}
+.hdr-logo span{color:var(--gold);}
+.hdr-date{font-size:11px;color:rgba(247,244,239,0.35);letter-spacing:0.08em;}
+.nav-tabs{background:var(--white);border-bottom:1px solid var(--border);display:flex;padding:0 28px;position:sticky;top:58px;z-index:99;overflow-x:auto;}
+.tab{padding:13px 20px;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;white-space:nowrap;background:none;border-left:none;border-right:none;border-top:none;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+main{padding:28px;max-width:1200px;margin:0 auto;}
+.panel{display:none;}
+.panel.active{display:block;}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+.pt{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.04em;color:var(--brown);}
+.pt em{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-gold{background:var(--gold);color:white;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-dark{background:var(--brown);color:var(--off-white);}
+.btn-dark:hover{background:var(--brown-mid);}
+.btn-ghost{background:transparent;color:var(--text-mid);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-sm{padding:7px 14px;font-size:11px;}
+.btn-red{background:var(--red-pale);color:var(--red);border:1px solid #f5c6c2;}
+.btn-red:hover{background:var(--red);color:white;}
+.bgrp{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:28px;}
+.stat{background:var(--brown);padding:20px 24px;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--gold);display:block;margin-bottom:3px;}
+.stat-l{font-size:10px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,244,239,0.4);}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);padding:24px;margin-bottom:14px;}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.04em;color:var(--brown);}
+
+/* TABLE */
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--brown);color:var(--off-white);padding:11px 14px;text-align:left;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;}
+th:first-child{color:var(--gold);}
+td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;font-weight:300;color:var(--text);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--gold-pale);}
+.tdn{font-weight:500;color:var(--brown);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.tdn:hover{color:var(--gold);}
+
+/* CREDITS PILL */
+.cp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;font-size:16px;font-weight:600;border-radius:50%;}
+.cp-good{background:var(--green-pale);color:var(--green);}
+.cp-low{background:#fff3cd;color:#856404;}
+.cp-none{background:var(--red-pale);color:var(--red);}
+
+/* BADGE */
+.badge{display:inline-block;padding:2px 8px;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;}
+.badge-block{background:var(--gold-pale);color:var(--gold);}
+.badge-dropin{background:#e8f0fa;color:#2c5f8a;}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(61,43,31,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;}
+.modal{background:var(--white);width:100%;max-width:540px;max-height:90vh;overflow-y:auto;}
+.modal-hdr{background:var(--brown);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.06em;color:var(--off-white);}
+.modal-title span{color:var(--gold);}
+.modal-x{background:none;border:none;color:rgba(247,244,239,0.45);font-size:22px;cursor:pointer;}
+.modal-x:hover{color:var(--off-white);}
+.modal-body{padding:24px;}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.fg label{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mid);}
+.fg input,.fg select,.fg textarea{background:var(--off-white);border:1.5px solid var(--border);padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;color:var(--text);outline:none;transition:border-color 0.2s;width:100%;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fa{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;}
+
+/* ATTENDANCE */
+.att-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.att-row:last-child{border-bottom:none;}
+.att-check{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;}
+
+/* EMPTY */
+.empty{text-align:center;padding:40px 20px;color:var(--text-faint);}
+.empty-icon{font-size:36px;margin-bottom:10px;}
+.empty-title{font-size:20px;font-weight:600;color:var(--brown);margin-bottom:6px;}
+.empty-body{font-size:13px;font-weight:300;line-height:1.7;}
+
+/* SETTINGS */
+.set-row{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:10px;align-items:end;padding:14px 0;border-bottom:1px solid var(--border);}
+.set-input{background:var(--off-white);border:1.5px solid var(--border);padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;width:100%;}
+.set-input:focus{border-color:var(--gold);}
+.set-lbl{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-mid);margin-bottom:5px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;z-index:2000;background:var(--brown);color:var(--off-white);padding:12px 22px;font-size:13px;transform:translateY(70px);opacity:0;transition:all 0.3s;pointer-events:none;border-left:3px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+
+@media(max-width:768px){main{padding:16px;}.stats{grid-template-columns:1fr 1fr;}.fr{grid-template-columns:1fr;}.set-row{grid-template-columns:1fr 1fr;gap:8px;}}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="passwordScreen">
+  <div class="pw-box">
+    <div class="pw-logo">NORFOLK <span>BARRE</span></div>
+    <div class="pw-sub">Class Manager</div>
+    <label class="pw-label">Password</label>
+    <input type="password" class="pw-input" id="pwInput" placeholder="Enter password">
+    <button class="pw-btn" id="pwBtn">Enter</button>
+    <div class="pw-error" id="pwError">Incorrect password — please try again.</div>
+  </div>
+</div>
+
+<header>
+  <div class="hdr-logo">NORFOLK <span>BARRE</span></div>
+  <div class="hdr-date" id="hdrDate"></div>
+</header>
+
+<div class="nav-tabs">
+  <button class="tab active" onclick="showPanel('dashboard')">Dashboard</button>
+  <button class="tab" onclick="showPanel('members')">Members</button>
+  <button class="tab" onclick="showPanel('purchases')">Purchases</button>
+  <button class="tab" onclick="showPanel('attendance')">Attendance</button>
+  <button class="tab" onclick="showPanel('settings')">Settings</button>
+</div>
+
+<main>
+
+<!-- DASHBOARD -->
+<div class="panel active" id="panel-dashboard">
+  <div class="ph">
+    <div class="pt">Good morning, <em>Jessica</em></div>
+    <button class="btn btn-gold" onclick="showPanel('attendance')">+ Log Attendance</button>
+  </div>
+  <div class="stats" id="dashStats"></div>
+  <div id="dashNext" style="margin-bottom:14px;"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+    <div class="card"><div class="card-hdr"><div class="card-title">Credits Low</div></div><div id="dashLow"></div></div>
+    <div class="card"><div class="card-hdr"><div class="card-title">Recent Attendance</div></div><div id="dashRecent"></div></div>
+  </div>
+</div>
+
+<!-- MEMBERS -->
+<div class="panel" id="panel-members">
+  <div class="ph">
+    <div class="pt">Members</div>
+    <div class="bgrp">
+      <button class="btn btn-ghost btn-sm" onclick="copyAllEmails()">📋 Copy All Emails</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportMembersCSV()">Export CSV</button>
+      <button class="btn btn-ghost btn-sm" onclick="emailAll()">✉ Email All</button>
+      <button class="btn btn-gold" onclick="openAddMember()">+ Add Member</button>
+    </div>
+  </div>
+  <div class="card" style="padding:0;"><div class="tw">
+    <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Class</th><th style="text-align:center;">Credits</th><th>Actions</th></tr></thead>
+    <tbody id="membersTable"></tbody></table>
+  </div></div>
+</div>
+
+<!-- PURCHASES -->
+<div class="panel" id="panel-purchases">
+  <div class="ph">
+    <div class="pt">Purchases</div>
+    <div class="bgrp">
+      <button class="btn btn-ghost btn-sm" onclick="exportEarningsCSV()">Export Earnings</button>
+      <button class="btn btn-gold" onclick="openAddPurchase()">+ Add Purchase</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px;"><div class="card-hdr"><div class="card-title">Earnings Summary</div></div><div id="earningsSummary"></div></div>
+  <div class="card" style="padding:0;"><div class="tw">
+    <table><thead><tr><th>Date</th><th>Member</th><th>Class</th><th>Package</th><th>Credits</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
+    <tbody id="purchasesTable"></tbody></table>
+  </div></div>
+</div>
+
+<!-- ATTENDANCE -->
+<div class="panel" id="panel-attendance">
+  <div class="ph"><div class="pt">Log <em>Attendance</em></div></div>
+  <div id="attendanceSections"></div>
+  <div style="margin-top:32px;">
+    <div class="ph" style="margin-bottom:14px;">
+      <div class="pt" style="font-size:24px;">History</div>
+      <button class="btn btn-ghost btn-sm" onclick="exportAttendanceCSV()">Export CSV</button>
+    </div>
+    <div id="attendHistory"></div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="panel" id="panel-settings">
+  <div class="ph"><div class="pt">Settings</div></div>
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-hdr"><div class="card-title">Classes</div><button class="btn btn-gold btn-sm" onclick="addCls()">+ Add Class</button></div>
+    <div id="clsSettings"></div>
+    <div style="margin-top:16px;"><button class="btn btn-dark" onclick="saveClsSettings()">Save Changes</button></div>
+  </div>
+  <div class="card" style="border-color:#f5c6c2;">
+    <div class="card-hdr"><div class="card-title" style="color:var(--red);">Danger Zone</div></div>
+    <p style="font-size:14px;font-weight:300;color:var(--text-mid);margin-bottom:14px;">Clear all data. Cannot be undone.</p>
+    <button class="btn btn-red" onclick="clearAll()">Clear all data</button>
+  </div>
+</div>
+
+</main>
+
+<!-- MEMBER MODAL -->
+<div class="overlay" id="modalMember">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-title" id="memberModalTitle">Add <span>Member</span></div><button class="modal-x" onclick="closeModal('modalMember')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="mId">
+      <div class="fr">
+        <div class="fg"><label>First Name *</label><input type="text" id="mFirst" placeholder="Jane"></div>
+        <div class="fg"><label>Last Name</label><input type="text" id="mLast" placeholder="Smith"></div>
+      </div>
+      <div class="fg"><label>Email *</label><input type="email" id="mEmail" placeholder="jane@email.com"></div>
+      <div class="fg"><label>Phone</label><input type="tel" id="mPhone" placeholder="07700 000000"></div>
+      <div class="fg"><label>Primary Class</label><select id="mClass"></select></div>
+      <div class="fg"><label>Notes</label><input type="text" id="mNotes" placeholder="e.g. post-partum, bad knee..."></div>
+      <div class="fa">
+        <button class="btn btn-ghost" onclick="closeModal('modalMember')">Cancel</button>
+        <button class="btn btn-gold" onclick="saveMember()">Save Member</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PURCHASE MODAL -->
+<div class="overlay" id="modalPurchase">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-title">Add <span>Purchase</span></div><button class="modal-x" onclick="closeModal('modalPurchase')">✕</button></div>
+    <div class="modal-body">
+      <div class="fg"><label>Member *</label><select id="pMember"></select></div>
+      <div class="fg"><label>Class</label><select id="pClass"></select></div>
+      <div class="fg">
+        <label>Package *</label>
+        <select id="pPackage" onchange="updatePkgAmount()">
+          <option value="4week">Introduction to Barre — 4 Week Course (4 credits)</option>
+          <option value="block4">Open Level — Block of 4 (4 credits)</option>
+          <option value="payg">Open Level — Drop in (1 credit)</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Credits</label><input type="number" id="pCredits" min="1" max="20" value="4"></div>
+        <div class="fg"><label>Amount (£)</label><input type="number" id="pAmount" min="0" step="0.01" value="50"></div>
+      </div>
+      <div class="fg"><label>Date</label><input type="date" id="pDate"></div>
+      <div class="fg"><label>Notes</label><input type="text" id="pNotes" placeholder="e.g. paid cash, SumUp ref..."></div>
+      <div class="fa">
+        <button class="btn btn-ghost" onclick="closeModal('modalPurchase')">Cancel</button>
+        <button class="btn btn-gold" onclick="savePurchase()">Save Purchase</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="overlay" id="modalProfile">
+  <div class="modal" style="max-width:600px;">
+    <div class="modal-hdr"><div class="modal-title" id="profileTitle">Member <span>Profile</span></div><button class="modal-x" onclick="closeModal('modalProfile')">✕</button></div>
+    <div class="modal-body" id="profileBody"></div>
+  </div>
+</div>
+
+<!-- EMAIL MODAL -->
+<div class="overlay" id="modalEmail">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-title">Send <span>Email</span></div><button class="modal-x" onclick="closeModal('modalEmail')">✕</button></div>
+    <div class="modal-body">
+      <div id="emailTo" style="background:var(--off-white);border:1px solid var(--border);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--text-mid);"></div>
+      <div class="fg"><label>Subject</label><input type="text" id="emailSubject" placeholder="e.g. Class reminder — Tuesday"></div>
+      <div class="fg"><label>Message (optional)</label><textarea id="emailBody" style="min-height:120px;" placeholder="Write your message here..."></textarea></div>
+      <div style="background:var(--gold-pale);border:1px solid var(--border);padding:12px 14px;font-size:12px;color:var(--text-mid);margin-bottom:16px;line-height:1.6;">Opens your email app with everyone BCC'd so recipients cannot see each other.</div>
+      <div class="fa">
+        <button class="btn btn-ghost" onclick="closeModal('modalEmail')">Cancel</button>
+        <button class="btn btn-gold" onclick="sendEmail()">Open in email app</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// PASSWORD
+document.getElementById('pwBtn').addEventListener('click', checkPw);
+document.getElementById('pwInput').addEventListener('keyup', function(e) {
+  if (e.key === 'Enter') checkPw();
+});
+function checkPw() {
+  var val = document.getElementById('pwInput').value.trim();
+  if (val === 'BarreLife26') {
+    document.getElementById('passwordScreen').style.display = 'none';
+    try { sessionStorage.setItem('nb_auth', '1'); } catch(e) {}
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+// Auto-login if already authenticated
+(function() {
+  try {
+    if (sessionStorage.getItem('nb_auth') === '1') {
+      document.getElementById('passwordScreen').style.display = 'none';
+    }
+  } catch(e) {}
+})();
+
+// STATE
+var S = {
+  members: [],
+  purchases: [],
+  attendance: [],
+  sessions: [],
+  todayChecked: {},
+  classes: [
+    {id:'morning', name:'Introduction to Barre', day:'Tuesday', time:'08:45', slot:'morning'},
+    {id:'evening', name:'Open Level Barre', day:'Tuesday', time:'17:30', slot:'evening'}
+  ]
+};
+
+function save() { try { localStorage.setItem('nb3', JSON.stringify(S)); } catch(e) {} }
+
+function load() {
+  try {
+    var raw = localStorage.getItem('nb3');
+    if (raw) {
+      var p = JSON.parse(raw);
+      S.members = p.members || [];
+      S.purchases = p.purchases || [];
+      S.attendance = (p.attendance || []).map(function(a) {
+        return a.id ? a : Object.assign({}, a, {id: Date.now().toString() + Math.floor(Math.random()*10000)});
+      });
+      S.sessions = p.sessions || [];
+      S.todayChecked = p.todayChecked || {};
+      if (p.classes && p.classes.length) S.classes = p.classes;
+      return;
+    }
+    // Migrate from old keys
+    var old = localStorage.getItem('nb2') || localStorage.getItem('nb_state');
+    if (old) {
+      var o = JSON.parse(old);
+      S.members = o.members || [];
+      S.purchases = o.purchases || o.payments || [];
+      S.attendance = o.attendance || [];
+      S.sessions = o.sessions || [];
+      if (o.classes && o.classes.length) S.classes = o.classes;
+      save();
+      toast('Data imported from previous version!');
+    }
+  } catch(e) { console.error('Load error:', e); }
+}
+
+// HELPERS
+function totalPurchased(mid) {
+  return S.purchases.filter(function(p) { return p.memberId === mid; })
+    .reduce(function(s, p) { return s + (p.credits || 0); }, 0);
+}
+function totalAttended(mid) {
+  return S.attendance.filter(function(a) { return a.memberId === mid; }).length;
+}
+function creditsLeft(mid) { return totalPurchased(mid) - totalAttended(mid); }
+function cpClass(n) {
+  if (n <= 0) return 'cp-none';
+  if (n === 1) return 'cp-low';
+  return 'cp-good';
+}
+function mName(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  return m ? m.firstName + ' ' + (m.lastName || '') : 'Unknown';
+}
+function clsName(slot) {
+  var c = S.classes.find(function(c) { return c.slot === slot; });
+  return c ? c.day + ' ' + c.time + ' — ' + c.name : slot;
+}
+function todayStr() {
+  return new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+function toISO() { return new Date().toISOString().split('T')[0]; }
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay').forEach(function(o) {
+  o.addEventListener('click', function(e) { if (e.target === o) o.classList.remove('open'); });
+});
+function getBookingType(m) {
+  var pp = S.purchases.filter(function(p) { return p.memberId === m.id; });
+  if (!pp.length) return '';
+  var last = pp[pp.length - 1];
+  if (last.package === 'payg') return 'dropin';
+  return 'block';
+}
+
+// NAV
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(function(t) {
+    if (t.textContent.toLowerCase().indexOf(id.substring(0, 5)) >= 0) t.classList.add('active');
+  });
+  render();
+}
+
+// RENDER
+function render() {
+  renderDashboard();
+  renderMembers();
+  renderPurchases();
+  renderAttendance();
+  renderSettings();
+}
+
+function renderDashboard() {
+  var rev = S.purchases.reduce(function(s, p) { return s + (p.amount || 0); }, 0);
+  var low = S.members.filter(function(m) { var r = creditsLeft(m.id); return r <= 1 && r >= 0; });
+
+  document.getElementById('dashStats').innerHTML =
+    '<div class="stat"><span class="stat-n">' + S.members.length + '</span><span class="stat-l">Members</span></div>' +
+    '<div class="stat"><span class="stat-n">' + S.attendance.length + '</span><span class="stat-l">Classes Logged</span></div>' +
+    '<div class="stat"><span class="stat-n">£' + rev.toFixed(0) + '</span><span class="stat-l">Revenue</span></div>' +
+    '<div class="stat"><span class="stat-n">' + low.length + '</span><span class="stat-l">Credits Low</span></div>';
+
+  // Next class
+  var nextEl = document.getElementById('dashNext');
+  var nextTue = new Date();
+  var dow = nextTue.getDay();
+  var diff = dow <= 2 ? 2 - dow : 9 - dow;
+  if (diff === 0) diff = 7;
+  nextTue.setDate(nextTue.getDate() + diff);
+  var nextDate = nextTue.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+  var cards = S.classes.map(function(cls) {
+    var members = S.members.filter(function(m) {
+      return (m.class === cls.slot || m.class === 'both') && creditsLeft(m.id) > 0;
+    });
+    var rows = members.length
+      ? members.map(function(m) {
+          var type = getBookingType(m);
+          var badge = type === 'dropin'
+            ? '<span class="badge badge-dropin">Drop in</span>'
+            : '<span class="badge badge-block">Block</span>';
+          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;">' +
+            '<span style="font-weight:500;color:var(--brown);">' + m.firstName + ' ' + (m.lastName || '') + '</span>' +
+            badge + '</div>';
+        }).join('')
+      : '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No members booked.</div>';
+
+    return '<div class="card" style="margin-bottom:0;">' +
+      '<div class="card-hdr" style="margin-bottom:10px;padding-bottom:10px;">' +
+        '<div><div class="card-title">' + cls.time + ' — ' + cls.name + '</div>' +
+        '<div style="font-size:12px;color:var(--text-mid);margin-top:2px;">' + members.length + ' booked</div></div>' +
+        '<div class="bgrp">' +
+          '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" onclick="copyClsEmails(this.dataset.slot)">📋</button>' +
+          '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" onclick="emailCls(this.dataset.slot)">✉</button>' +
+        '</div>' +
+      '</div>' + rows + '</div>';
+  }).join('');
+
+  nextEl.innerHTML =
+    '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--off-white);">NEXT CLASS</span>' +
+      '<span style="font-size:13px;color:var(--gold);">' + nextDate + '</span>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">' + cards + '</div>';
+
+  // Low credits
+  var lcEl = document.getElementById('dashLow');
+  lcEl.innerHTML = !low.length
+    ? '<div class="empty" style="padding:16px;"><div class="empty-body">Everyone has credits!</div></div>'
+    : low.map(function(m) {
+        var r = creditsLeft(m.id);
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">' +
+          '<div><div style="font-weight:500;font-size:14px;color:var(--brown);">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
+          '<div style="font-size:11px;color:var(--text-faint);">' + m.email + '</div></div>' +
+          '<span class="cp ' + cpClass(r) + '">' + r + '</span></div>';
+      }).join('');
+
+  // Recent
+  var recent = S.attendance.slice().reverse().slice(0, 6);
+  var raEl = document.getElementById('dashRecent');
+  raEl.innerHTML = !recent.length
+    ? '<div class="empty" style="padding:16px;"><div class="empty-body">No attendance yet.</div></div>'
+    : recent.map(function(a) {
+        return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
+          '<div><div style="font-weight:500;">' + a.memberName + '</div><div style="color:var(--text-faint);font-size:11px;">' + a.date + '</div></div>' +
+          '<div style="color:var(--text-mid);">' + a.class + '</div></div>';
+      }).join('');
+}
+
+function renderMembers() {
+  var tbody = document.getElementById('membersTable');
+  if (!S.members.length) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty"><div class="empty-icon">🌿</div><div class="empty-title">No members yet</div><div class="empty-body">Add your first member to get started.</div></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = S.members.map(function(m) {
+    var r = creditsLeft(m.id);
+    var cls = S.classes.find(function(c) { return c.slot === m.class; });
+    var badge = cls ? '<span class="badge ' + (m.class === 'morning' ? 'badge-block' : 'badge-dropin') + '">' + cls.time + '</span>' : '';
+    return '<tr>' +
+      '<td><div class="tdn" data-id="' + m.id + '" onclick="openProfile(this.dataset.id)">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
+        (m.notes ? '<div style="font-size:11px;color:var(--text-faint);margin-top:2px;">' + m.notes + '</div>' : '') + '</td>' +
+      '<td style="font-size:13px;">' + m.email + '</td>' +
+      '<td style="font-size:13px;">' + (m.phone || '') + '</td>' +
+      '<td>' + badge + '</td>' +
+      '<td style="text-align:center;"><span class="cp ' + cpClass(r) + '">' + r + '</span></td>' +
+      '<td><div style="display:flex;gap:6px;">' +
+        '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="openEditMember(this.dataset.id)">Edit</button>' +
+        '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="openAddPurchaseFor(this.dataset.id)">+ Credits</button>' +
+        '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="copyMemberEmail(this.dataset.id)" title="Copy email">📋</button>' +
+        '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="emailMember(this.dataset.id)">✉</button>' +
+        '<button class="btn btn-red btn-sm" data-id="' + m.id + '" onclick="deleteMember(this.dataset.id)">✕</button>' +
+      '</div></td></tr>';
+  }).join('');
+}
+
+function renderPurchases() {
+  var byType = {};
+  S.purchases.forEach(function(p) {
+    var k = (p.class || '') + '|' + (p.packageLabel || p.package || '');
+    if (!byType[k]) byType[k] = {cls: p.class || '', pkg: p.packageLabel || p.package || '', count: 0, amount: 0, credits: 0};
+    byType[k].count++;
+    byType[k].amount += (p.amount || 0);
+    byType[k].credits += (p.credits || 0);
+  });
+  var total = S.purchases.reduce(function(s, p) { return s + (p.amount || 0); }, 0);
+  var sumEl = document.getElementById('earningsSummary');
+  if (!S.purchases.length) {
+    sumEl.innerHTML = '<div style="font-size:14px;font-weight:300;color:var(--text-faint);">No purchases yet.</div>';
+  } else {
+    var rows = Object.values(byType).map(function(r) {
+      return '<tr><td style="font-size:13px;">' + r.cls + '</td><td style="font-size:13px;">' + r.pkg + '</td>' +
+        '<td style="text-align:center;">' + r.count + '</td><td style="text-align:center;">' + r.credits + '</td>' +
+        '<td style="text-align:right;font-weight:500;color:var(--gold);">£' + r.amount.toFixed(0) + '</td></tr>';
+    }).join('');
+    sumEl.innerHTML = '<div style="overflow-x:auto;"><table><thead><tr><th>Class</th><th>Package</th><th>Bookings</th><th>Credits</th><th style="text-align:right;">Revenue</th></tr></thead><tbody>' +
+      rows +
+      '<tr style="background:var(--brown);"><td colspan="4" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(247,244,239,0.5);">TOTAL</td>' +
+      '<td style="text-align:right;font-size:20px;font-weight:600;color:var(--gold);">£' + total.toFixed(0) + '</td></tr>' +
+      '</tbody></table></div>';
+  }
+
+  var tbody = document.getElementById('purchasesTable');
+  if (!S.purchases.length) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">💳</div><div class="empty-title">No purchases yet</div></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = S.purchases.slice().reverse().map(function(p) {
+    return '<tr><td style="font-size:13px;">' + (p.date || '') + '</td>' +
+      '<td><div class="tdn" data-id="' + p.memberId + '" onclick="openProfile(this.dataset.id)">' + (p.memberName || '') + '</div></td>' +
+      '<td style="font-size:13px;">' + (p.class || '') + '</td>' +
+      '<td style="font-size:13px;">' + (p.packageLabel || p.package || '') + '</td>' +
+      '<td style="text-align:center;">' + (p.credits || 0) + '</td>' +
+      '<td style="text-align:right;font-weight:500;color:var(--gold);">£' + (p.amount || 0).toFixed(0) + '</td>' +
+      '<td><button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button></td></tr>';
+  }).join('');
+}
+
+function getCourseDates() {
+  return ['Tuesday 2nd June', 'Tuesday 9th June', 'Tuesday 16th June', 'Tuesday 23rd June'];
+}
+
+function renderAttendance() {
+  var container = document.getElementById('attendanceSections');
+  if (!container) return;
+  var dates = getCourseDates();
+  var html = '';
+  dates.forEach(function(dateStr) {
+    html += '<div style="margin-bottom:28px;">';
+    html += '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;align-items:center;">' +
+      '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--gold);">' + dateStr + '</span></div>';
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">';
+    S.classes.forEach(function(cls) {
+      var members = S.members.filter(function(m) {
+        return (m.class === cls.slot || m.class === 'both') && creditsLeft(m.id) > 0;
+      });
+      var saved = S.attendance.filter(function(a) {
+        return a.date === dateStr && a.slot === cls.slot;
+      }).map(function(a) { return a.memberId; });
+
+      var rows = !members.length
+        ? '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No members with active credits.</div>'
+        : members.map(function(m) {
+            var key = m.id + '_' + cls.slot + '_' + dateStr;
+            var isSaved = saved.indexOf(m.id) >= 0;
+            var isChecked = S.todayChecked[key] ? 'checked' : '';
+            var type = getBookingType(m);
+            var badge = type === 'dropin'
+              ? '<span class="badge badge-dropin">Drop in</span>'
+              : '<span class="badge badge-block">Block</span>';
+            return '<div class="att-row">' +
+              '<div style="display:flex;align-items:center;gap:10px;">' +
+                '<input type="checkbox" class="att-check" ' + (isSaved ? 'checked disabled' : isChecked) +
+                  ' data-mid="' + m.id + '" data-slot="' + cls.slot + '" data-date="' + dateStr + '"' +
+                  (isSaved ? '' : ' onchange="toggleAtt(this)"') + '>' +
+                '<div>' +
+                  '<div style="font-weight:500;font-size:13px;color:var(--brown)' + (isSaved ? ';opacity:0.6' : '') + ';">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
+                  badge +
+                '</div>' +
+              '</div>' +
+              (isSaved ? '<span style="font-size:10px;color:var(--green);font-weight:600;">✓ Saved</span>' : '') +
+            '</div>';
+          }).join('');
+
+      var encDate = dateStr.replace(/'/g, "\\'");
+      html += '<div class="card" style="margin-bottom:0;">' +
+        '<div style="padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">' +
+          '<div style="font-size:16px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
+          '<div style="display:flex;gap:6px;">' +
+            '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="tickAll(this.dataset.slot,this.dataset.date,true)">All</button>' +
+            '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="tickAll(this.dataset.slot,this.dataset.date,false)">Clear</button>' +
+          '</div>' +
+        '</div>' +
+        rows +
+        '<div style="padding-top:10px;">' +
+          '<button class="btn btn-dark btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="saveAtt(this.dataset.slot,this.dataset.date)" style="width:100%;">Save ' + dateStr + '</button>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+
+  // History
+  var histEl = document.getElementById('attendHistory');
+  if (!S.attendance.length) {
+    histEl.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No history yet</div></div>';
+    return;
+  }
+  var grouped = {};
+  S.attendance.slice().reverse().forEach(function(a) {
+    if (!grouped[a.date]) grouped[a.date] = [];
+    grouped[a.date].push(a);
+  });
+  histEl.innerHTML = Object.entries(grouped).map(function(entry) {
+    var date = entry[0], recs = entry[1];
+    return '<div style="background:var(--gold-pale);border:1px solid var(--border);padding:10px 14px;margin-bottom:1px;display:flex;justify-content:space-between;">' +
+      '<span style="font-size:14px;font-weight:500;color:var(--brown);">' + date + '</span>' +
+      '<span style="font-size:12px;color:var(--text-mid);">' + recs.length + ' attended</span></div>' +
+      recs.map(function(r) {
+        return '<div style="background:var(--white);border:1px solid var(--border);border-top:none;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1px;">' +
+          '<div><div style="font-weight:500;font-size:14px;">' + r.memberName + '</div><div style="font-size:12px;color:var(--text-faint);">' + r.class + '</div></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<div style="font-size:12px;color:var(--text-mid);">' + r.creditsAfter + ' left</div>' +
+            '<button class="btn btn-ghost btn-sm" data-id="' + r.id + '" onclick="editAttDate(this.dataset.id)" style="padding:4px 10px;font-size:10px;">Edit date</button>' +
+            '<button class="btn btn-red btn-sm" data-id="' + r.id + '" onclick="deleteAtt(this.dataset.id)" style="padding:4px 10px;font-size:10px;">✕</button>' +
+          '</div></div>';
+      }).join('') + '<div style="margin-bottom:14px;"></div>';
+  }).join('');
+}
+
+function renderSettings() {
+  var el = document.getElementById('clsSettings');
+  if (!el) return;
+  el.innerHTML = S.classes.map(function(cls, i) {
+    return '<div class="set-row">' +
+      '<div><div class="set-lbl">Day</div><input class="set-input" value="' + cls.day + '" data-i="' + i + '" data-f="day" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
+      '<div><div class="set-lbl">Time</div><input class="set-input" value="' + cls.time + '" data-i="' + i + '" data-f="time" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
+      '<div><div class="set-lbl">Name</div><input class="set-input" value="' + cls.name + '" data-i="' + i + '" data-f="name" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
+      '<button class="btn btn-red btn-sm" data-i="' + i + '" onclick="removeCls(parseInt(this.dataset.i))">✕</button></div>';
+  }).join('');
+}
+
+// ATTENDANCE
+function toggleAtt(input) {
+  var key = input.dataset.mid + '_' + input.dataset.slot + '_' + input.dataset.date;
+  S.todayChecked[key] = input.checked;
+  save();
+}
+function tickAll(slot, date, val) {
+  S.members.filter(function(m) {
+    return (m.class === slot || m.class === 'both') && creditsLeft(m.id) > 0;
+  }).forEach(function(m) {
+    S.todayChecked[m.id + '_' + slot + '_' + date] = val;
+  });
+  save(); renderAttendance();
+}
+function saveAtt(slot, date) {
+  var count = 0;
+  var cls = S.classes.find(function(c) { return c.slot === slot; });
+  Object.keys(S.todayChecked).forEach(function(key) {
+    if (!S.todayChecked[key]) return;
+    var parts = key.split('_');
+    var mid = parts[0];
+    var kSlot = parts[1];
+    var kDate = parts.slice(2).join('_');
+    if (kSlot !== slot || kDate !== date) return;
+    var member = S.members.find(function(m) { return m.id === mid; });
+    if (!member) return;
+    var already = S.attendance.find(function(a) { return a.memberId === mid && a.slot === slot && a.date === date; });
+    if (already) return;
+    S.attendance.push({
+      id: Date.now().toString() + Math.floor(Math.random() * 10000),
+      date: date, memberId: mid,
+      memberName: member.firstName + ' ' + (member.lastName || ''),
+      slot: slot,
+      class: cls ? cls.name + ' (' + cls.time + ')' : slot,
+      creditsAfter: creditsLeft(mid) - 1
+    });
+    count++;
+  });
+  // Clear saved keys
+  Object.keys(S.todayChecked).forEach(function(key) {
+    var parts = key.split('_');
+    if (parts[1] === slot && parts.slice(2).join('_') === date) delete S.todayChecked[key];
+  });
+  save(); render();
+  toast(count + ' record' + (count !== 1 ? 's' : '') + ' saved for ' + date + '!');
+}
+function deleteAtt(id) {
+  var r = S.attendance.find(function(a) { return a.id === id; });
+  if (!r) return;
+  if (!confirm('Remove attendance for ' + r.memberName + ' on ' + r.date + '? Credit restored.')) return;
+  S.attendance = S.attendance.filter(function(a) { return a.id !== id; });
+  save(); render(); toast('Attendance removed. Credit restored.');
+}
+function editAttDate(id) {
+  var r = S.attendance.find(function(a) { return a.id === id; });
+  if (!r) return;
+  var nd = prompt('Enter new date:', r.date);
+  if (!nd || !nd.trim()) return;
+  r.date = nd.trim(); save(); render(); toast('Date updated.');
+}
+
+// MEMBERS
+function openAddMember() {
+  document.getElementById('mId').value = '';
+  document.getElementById('mFirst').value = '';
+  document.getElementById('mLast').value = '';
+  document.getElementById('mEmail').value = '';
+  document.getElementById('mPhone').value = '';
+  document.getElementById('mNotes').value = '';
+  document.getElementById('memberModalTitle').innerHTML = 'Add <span>Member</span>';
+  var sel = document.getElementById('mClass');
+  sel.innerHTML = S.classes.map(function(c) {
+    return '<option value="' + c.slot + '">' + c.day + ' ' + c.time + ' — ' + c.name + '</option>';
+  }).join('') + '<option value="both">Both Classes</option>';
+  openModal('modalMember');
+}
+function openEditMember(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!m) return;
+  document.getElementById('mId').value = m.id;
+  document.getElementById('mFirst').value = m.firstName;
+  document.getElementById('mLast').value = m.lastName || '';
+  document.getElementById('mEmail').value = m.email;
+  document.getElementById('mPhone').value = m.phone || '';
+  document.getElementById('mNotes').value = m.notes || '';
+  document.getElementById('memberModalTitle').innerHTML = 'Edit <span>Member</span>';
+  var sel = document.getElementById('mClass');
+  sel.innerHTML = S.classes.map(function(c) {
+    return '<option value="' + c.slot + '"' + (m.class === c.slot ? ' selected' : '') + '>' + c.day + ' ' + c.time + ' — ' + c.name + '</option>';
+  }).join('') + '<option value="both"' + (m.class === 'both' ? ' selected' : '') + '>Both Classes</option>';
+  openModal('modalMember');
+}
+function saveMember() {
+  var first = document.getElementById('mFirst').value.trim();
+  var email = document.getElementById('mEmail').value.trim();
+  if (!first || !email) { toast('Please fill in name and email.'); return; }
+  var id = document.getElementById('mId').value;
+  var data = {
+    firstName: first, lastName: document.getElementById('mLast').value.trim(),
+    email: email, phone: document.getElementById('mPhone').value.trim(),
+    class: document.getElementById('mClass').value, notes: document.getElementById('mNotes').value.trim()
+  };
+  if (id) {
+    Object.assign(S.members.find(function(m) { return m.id === id; }), data);
+    toast(first + ' updated!');
+  } else {
+    S.members.push(Object.assign({id: Date.now().toString(), joinDate: toISO()}, data));
+    toast(first + ' added!');
+  }
+  save(); closeModal('modalMember'); render();
+}
+function deleteMember(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!confirm('Remove ' + (m ? m.firstName : 'this member') + '?')) return;
+  S.members = S.members.filter(function(m) { return m.id !== id; });
+  save(); render(); toast('Member removed.');
+}
+
+// PURCHASES
+function openAddPurchase() {
+  document.getElementById('pMember').innerHTML = '<option value="">Select member...</option>' +
+    S.members.map(function(m) {
+      return '<option value="' + m.id + '">' + m.firstName + ' ' + (m.lastName || '') + '</option>';
+    }).join('');
+  document.getElementById('pClass').innerHTML = S.classes.map(function(c) {
+    return '<option value="' + c.slot + '">' + c.day + ' ' + c.time + ' — ' + c.name + '</option>';
+  }).join('');
+  document.getElementById('pPackage').value = '4week';
+  document.getElementById('pDate').value = toISO();
+  document.getElementById('pNotes').value = '';
+  updatePkgAmount();
+  openModal('modalPurchase');
+}
+function openAddPurchaseFor(mid) {
+  openAddPurchase();
+  document.getElementById('pMember').value = mid;
+  var m = S.members.find(function(m) { return m.id === mid; });
+  if (m && m.class) document.getElementById('pClass').value = m.class;
+}
+function updatePkgAmount() {
+  var pkg = document.getElementById('pPackage').value;
+  var map = {payg:{c:1,a:15}, block4:{c:4,a:50}, '4week':{c:4,a:50}, custom:{c:1,a:0}};
+  var v = map[pkg] || map.custom;
+  document.getElementById('pCredits').value = v.c;
+  document.getElementById('pAmount').value = v.a;
+}
+function savePurchase() {
+  var mid = document.getElementById('pMember').value;
+  if (!mid) { toast('Please select a member.'); return; }
+  var pkg = document.getElementById('pPackage').value;
+  var labels = {payg:'Drop in', block4:'Block of 4', '4week':'4 Week Course', custom:'Custom'};
+  var slot = document.getElementById('pClass').value;
+  var clsObj = S.classes.find(function(c) { return c.slot === slot; });
+  var credits = parseInt(document.getElementById('pCredits').value) || 0;
+  S.purchases.push({
+    id: Date.now().toString(), memberId: mid, memberName: mName(mid),
+    class: clsObj ? clsObj.name : slot, classSlot: slot,
+    package: pkg, packageLabel: labels[pkg] || pkg,
+    credits: credits, amount: parseFloat(document.getElementById('pAmount').value) || 0,
+    date: document.getElementById('pDate').value, notes: document.getElementById('pNotes').value.trim()
+  });
+  save(); closeModal('modalPurchase'); render(); toast('Purchase saved!');
+}
+function deletePurchase(id) {
+  if (!confirm('Delete this purchase?')) return;
+  S.purchases = S.purchases.filter(function(p) { return p.id !== id; });
+  save(); render(); toast('Purchase deleted.');
+}
+
+// PROFILE
+function openProfile(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!m) return;
+  var purchases = S.purchases.filter(function(p) { return p.memberId === id; });
+  var attended = S.attendance.filter(function(a) { return a.memberId === id; });
+  var totalSpend = purchases.reduce(function(s, p) { return s + (p.amount || 0); }, 0);
+  var rem = creditsLeft(id);
+  var cls = S.classes.find(function(c) { return c.slot === m.class; });
+
+  var html =
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:20px;">' +
+      '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:36px;font-weight:700;color:var(--gold);line-height:1;">' + attended.length + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Classes</div></div>' +
+      '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:36px;font-weight:700;color:var(--gold);line-height:1;">£' + totalSpend.toFixed(0) + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Spent</div></div>' +
+      '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:36px;font-weight:700;color:' + (rem <= 0 ? '#c0392b' : rem === 1 ? '#f39c12' : 'var(--gold)') + ';line-height:1;">' + rem + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Credits</div></div>' +
+    '</div>' +
+    '<table style="width:100%;font-size:14px;border-collapse:collapse;margin-bottom:16px;">' +
+      '<tr><td style="color:var(--text-mid);padding:5px 0;width:35%;">Email</td><td style="font-weight:500;">' + m.email + '</td></tr>' +
+      (m.phone ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Phone</td><td style="font-weight:500;">' + m.phone + '</td></tr>' : '') +
+      '<tr><td style="color:var(--text-mid);padding:5px 0;">Class</td><td style="font-weight:500;">' + (cls ? cls.day + ' ' + cls.time + ' — ' + cls.name : m.class) + '</td></tr>' +
+      (m.joinDate ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Joined</td><td style="font-weight:500;">' + m.joinDate + '</td></tr>' : '') +
+      (m.notes ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Notes</td><td style="font-weight:500;">' + m.notes + '</td></tr>' : '') +
+    '</table>' +
+    '<div style="display:flex;gap:8px;margin-bottom:16px;">' +
+      '<button class="btn btn-gold btn-sm" data-id="' + id + '" onclick="closeModal(\'modalProfile\');openEditMember(this.dataset.id)">Edit</button>' +
+      '<button class="btn btn-ghost btn-sm" data-id="' + id + '" onclick="closeModal(\'modalProfile\');openAddPurchaseFor(this.dataset.id)">+ Purchase</button>' +
+      '<button class="btn btn-ghost btn-sm" data-id="' + id + '" onclick="copyMemberEmail(this.dataset.id)">📋 Copy email</button>' +
+    '</div>';
+
+  if (purchases.length) {
+    html += '<div style="font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mid);margin-bottom:10px;">Purchase History</div>';
+    html += purchases.map(function(p) {
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
+        '<div><div style="font-weight:500;">' + (p.packageLabel || p.package) + '</div>' +
+        '<div style="color:var(--text-faint);font-size:11px;">' + (p.date || '') + ' · ' + (p.class || '') + '</div></div>' +
+        '<div style="font-weight:500;color:var(--gold);">£' + (p.amount || 0).toFixed(0) + '</div></div>';
+    }).join('');
+  }
+
+  if (attended.length) {
+    html += '<div style="font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mid);margin:16px 0 10px;">Attendance (' + attended.length + ')</div>';
+    html += attended.slice().reverse().map(function(a) {
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
+        '<div style="color:var(--text-mid);">' + a.date + '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+          '<span style="font-weight:500;">' + a.class + '</span>' +
+          '<button class="btn btn-red btn-sm" data-attid="' + a.id + '" data-mid="' + id + '" onclick="deleteAttFromProfile(this.dataset.attid,this.dataset.mid)" style="padding:3px 8px;font-size:10px;">✕</button>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  document.getElementById('profileTitle').innerHTML = m.firstName + ' <span>' + (m.lastName || '') + '</span>';
+  document.getElementById('profileBody').innerHTML = html;
+  openModal('modalProfile');
+}
+function deleteAttFromProfile(attId, mid) {
+  var r = S.attendance.find(function(a) { return a.id === attId; });
+  if (!r) return;
+  if (!confirm('Remove attendance for ' + r.memberName + ' on ' + r.date + '? Credit restored.')) return;
+  S.attendance = S.attendance.filter(function(a) { return a.id !== attId; });
+  save(); render(); closeModal('modalProfile'); openProfile(mid); toast('Attendance removed.');
+}
+
+// EMAIL
+function copyToClipboard(text, msg) {
+  navigator.clipboard.writeText(text).then(function() {
+    toast(msg || 'Copied!');
+  }).catch(function() {
+    var el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    toast(msg || 'Copied!');
+  });
+}
+function copyAllEmails() {
+  if (!S.members.length) { toast('No members yet.'); return; }
+  copyToClipboard(S.members.map(function(m) { return m.email; }).join(', '), 'All emails copied!');
+}
+function copyClsEmails(slot) {
+  var members = S.members.filter(function(m) {
+    return (m.class === slot || m.class === 'both') && creditsLeft(m.id) > 0;
+  });
+  if (!members.length) { toast('No active members in this class.'); return; }
+  copyToClipboard(members.map(function(m) { return m.email; }).join(', '), members.length + ' emails copied!');
+}
+function copyMemberEmail(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!m) return;
+  copyToClipboard(m.email, m.firstName + "'s email copied!");
+}
+function emailAll() {
+  if (!S.members.length) { toast('No members yet.'); return; }
+  openEmailModal(S.members, 'All Members');
+}
+function emailCls(slot) {
+  var members = S.members.filter(function(m) {
+    return (m.class === slot || m.class === 'both') && creditsLeft(m.id) > 0;
+  });
+  if (!members.length) { toast('No active members.'); return; }
+  var cls = S.classes.find(function(c) { return c.slot === slot; });
+  openEmailModal(members, cls ? cls.name : slot);
+}
+function emailMember(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!m) return;
+  openEmailModal([m], m.firstName);
+}
+function openEmailModal(members, label) {
+  document.getElementById('emailTo').innerHTML = '<strong>To:</strong> ' +
+    members.map(function(m) { return m.firstName + ' ' + (m.lastName || ''); }).join(', ') +
+    ' <span style="color:var(--text-faint);">(' + members.length + ' recipient' + (members.length !== 1 ? 's' : '') + ')</span>';
+  document.getElementById('emailSubject').value = '';
+  document.getElementById('emailBody').value = '';
+  document.getElementById('emailSubject').dataset.emails = members.map(function(m) { return m.email; }).join(',');
+  openModal('modalEmail');
+}
+function sendEmail() {
+  var subject = document.getElementById('emailSubject').value.trim();
+  if (!subject) { toast('Please add a subject.'); return; }
+  var emails = document.getElementById('emailSubject').dataset.emails || '';
+  var body = document.getElementById('emailBody').value.trim();
+  window.location.href = 'mailto:?bcc=' + encodeURIComponent(emails) +
+    '&subject=' + encodeURIComponent(subject) +
+    (body ? '&body=' + encodeURIComponent(body) : '');
+  closeModal('modalEmail');
+  toast('Opening email app...');
+}
+
+// SETTINGS
+function addCls() {
+  S.classes.push({id:'cls'+Date.now(), name:'New Class', day:'Tuesday', time:'09:00', slot:'cls'+Date.now()});
+  renderSettings();
+}
+function removeCls(i) {
+  if (S.classes.length <= 1) { toast('Need at least one class.'); return; }
+  if (!confirm('Remove this class?')) return;
+  S.classes.splice(i, 1); renderSettings(); toast('Class removed.');
+}
+function saveClsSettings() { save(); render(); toast('Classes saved!'); }
+function clearAll() {
+  if (!confirm('Delete ALL data? Cannot be undone.')) return;
+  S = {
+    members: [], purchases: [], attendance: [], sessions: [], todayChecked: {},
+    classes: [
+      {id:'morning', name:'Introduction to Barre', day:'Tuesday', time:'08:45', slot:'morning'},
+      {id:'evening', name:'Open Level Barre', day:'Tuesday', time:'17:30', slot:'evening'}
+    ]
+  };
+  save(); render(); toast('All data cleared.');
+}
+
+// EXPORTS
+function exportMembersCSV() {
+  if (!S.members.length) { toast('No members to export.'); return; }
+  var rows = [['First Name','Last Name','Email','Phone','Class','Notes','Joined','Credits']];
+  S.members.forEach(function(m) {
+    var cls = S.classes.find(function(c) { return c.slot === m.class; });
+    rows.push([m.firstName, m.lastName||'', m.email, m.phone||'', cls?cls.name:m.class, m.notes||'', m.joinDate||'', creditsLeft(m.id)]);
+  });
+  dlCSV(rows, 'norfolk-barre-members.csv'); toast('Members exported!');
+}
+function exportEarningsCSV() {
+  if (!S.purchases.length) { toast('No purchases to export.'); return; }
+  var rows = [['Date','Member','Class','Package','Credits','Amount']];
+  S.purchases.forEach(function(p) {
+    rows.push([p.date||'', p.memberName||'', p.class||'', p.packageLabel||p.package||'', p.credits||0, '£'+(p.amount||0).toFixed(2)]);
+  });
+  var total = S.purchases.reduce(function(s,p){return s+(p.amount||0);},0);
+  rows.push([]); rows.push(['','','','','TOTAL','£'+total.toFixed(2)]);
+  dlCSV(rows, 'norfolk-barre-earnings.csv'); toast('Earnings exported!');
+}
+function exportAttendanceCSV() {
+  if (!S.attendance.length) { toast('No attendance to export.'); return; }
+  var rows = [['Date','Member','Class','Credits After']];
+  S.attendance.forEach(function(a) { rows.push([a.date, a.memberName, a.class, a.creditsAfter]); });
+  dlCSV(rows, 'norfolk-barre-attendance.csv'); toast('Attendance exported!');
+}
+function dlCSV(rows, filename) {
+  var csv = rows.map(function(r) {
+    return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\n');
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = filename; a.click();
+}
+
+// INIT
+load();
+document.getElementById('hdrDate').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+render();
+</script>
+</body>
+</html>
