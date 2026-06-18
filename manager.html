@@ -171,7 +171,7 @@ tr:hover td{background:var(--gold-pale);}
   <div id="dashNext" style="margin-bottom:14px;"></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
     <div class="card"><div class="card-hdr"><div class="card-title">Credits Low</div></div><div id="dashLow"></div></div>
-    <div class="card"><div class="card-hdr"><div class="card-title">Recent Attendance</div></div><div id="dashRecent"></div></div>
+    <div class="card"><div class="card-hdr"><div class="card-title">Top Clients</div></div><div id="dashTop"></div></div>
   </div>
 </div>
 
@@ -180,14 +180,15 @@ tr:hover td{background:var(--gold-pale);}
   <div class="ph">
     <div class="pt">Members</div>
     <div class="bgrp">
-      <button class="btn btn-ghost btn-sm" onclick="copyAllEmails()">📋 Copy All Emails</button>
+      <button class="btn btn-ghost btn-sm" onclick="copySelectedEmails()">📋 Copy Selected</button>
+      <button class="btn btn-ghost btn-sm" onclick="copyAllEmails()">📋 Copy All</button>
       <button class="btn btn-ghost btn-sm" onclick="exportMembersCSV()">Export CSV</button>
       <button class="btn btn-ghost btn-sm" onclick="emailAll()">✉ Email All</button>
       <button class="btn btn-gold" onclick="openAddMember()">+ Add Member</button>
     </div>
   </div>
   <div class="card" style="padding:0;"><div class="tw">
-    <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Class</th><th style="text-align:center;">Credits</th><th>Actions</th></tr></thead>
+    <table><thead><tr><th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"></th><th>Name</th><th>Email</th><th>Phone</th><th>Class</th><th style="text-align:center;">Credits</th><th>Actions</th></tr></thead>
     <tbody id="membersTable"></tbody></table>
   </div></div>
 </div>
@@ -518,16 +519,25 @@ function renderDashboard() {
           '<span class="cp ' + cpClass(r) + '">' + r + '</span></div>';
       }).join('');
 
-  // Recent
-  var recent = S.attendance.slice().reverse().slice(0, 6);
-  var raEl = document.getElementById('dashRecent');
-  raEl.innerHTML = !recent.length
-    ? '<div class="empty" style="padding:16px;"><div class="empty-body">No attendance yet.</div></div>'
-    : recent.map(function(a) {
-        return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
-          '<div><div style="font-weight:500;">' + a.memberName + '</div><div style="color:var(--text-faint);font-size:11px;">' + a.date + '</div></div>' +
-          '<div style="color:var(--text-mid);">' + a.class + '</div></div>';
-      }).join('');
+  // Top clients
+  var topEl = document.getElementById('dashTop');
+  if (topEl) {
+    var counts = {};
+    S.attendance.forEach(function(a) {
+      if (!counts[a.memberId]) counts[a.memberId] = {name: a.memberName, count: 0};
+      counts[a.memberId].count++;
+    });
+    var sorted = Object.values(counts).sort(function(a,b){return b.count - a.count;}).slice(0,8);
+    topEl.innerHTML = !sorted.length
+      ? '<div class="empty" style="padding:16px;"><div class="empty-body">No attendance yet.</div></div>'
+      : sorted.map(function(c, i) {
+          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
+            '<div style="display:flex;align-items:center;gap:10px;">' +
+            '<span style="font-size:11px;color:var(--text-faint);width:16px;">' + (i+1) + '</span>' +
+            '<span style="font-weight:500;color:var(--brown);">' + c.name + '</span></div>' +
+            '<span style="background:var(--brown);color:var(--gold);font-size:12px;font-weight:600;padding:3px 10px;">' + c.count + ' class' + (c.count !== 1 ? 'es' : '') + '</span></div>';
+        }).join('');
+  }
 }
 
 function renderMembers() {
@@ -541,6 +551,7 @@ function renderMembers() {
     var cls = S.classes.find(function(c) { return c.slot === m.class; });
     var badge = cls ? '<span class="badge ' + (m.class === 'morning' ? 'badge-block' : 'badge-dropin') + '">' + cls.time + '</span>' : '';
     return '<tr>' +
+      '<td><input type="checkbox" class="member-check" data-email="' + m.email + '" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"></td>' +
       '<td><div class="tdn" data-id="' + m.id + '" onclick="openProfile(this.dataset.id)">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
         (m.notes ? '<div style="font-size:11px;color:var(--text-faint);margin-top:2px;">' + m.notes + '</div>' : '') + '</td>' +
       '<td style="font-size:13px;">' + m.email + '</td>' +
@@ -615,11 +626,15 @@ function renderAttendance() {
     html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">';
     S.classes.forEach(function(cls) {
       var members = S.members.filter(function(m) {
-        return (m.class === cls.slot || m.class === 'both') && creditsLeft(m.id) > 0;
+        var hasCredit = creditsLeft(m.id) > 0;
+        var inClass = m.class === cls.slot || m.class === 'both';
+        return hasCredit && inClass;
       });
-      var saved = S.attendance.filter(function(a) {
+      var savedRecs = S.attendance.filter(function(a) {
         return a.date === dateStr && a.slot === cls.slot;
-      }).map(function(a) { return a.memberId; });
+      });
+      var saved = savedRecs.map(function(a) { return a.memberId; });
+      var totalSaved = savedRecs.length;
 
       var rows = !members.length
         ? '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No members with active credits.</div>'
@@ -648,7 +663,8 @@ function renderAttendance() {
       var encDate = dateStr.replace(/'/g, "\\'");
       html += '<div class="card" style="margin-bottom:0;">' +
         '<div style="padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">' +
-          '<div style="font-size:16px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
+          '<div><div style="font-size:16px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
+          (totalSaved > 0 ? '<div style="font-size:11px;color:var(--text-mid);margin-top:2px;">✓ ' + totalSaved + ' attended · ' + (members.length - totalSaved) + ' not yet logged</div>' : '') + '</div>' +
           '<div style="display:flex;gap:6px;">' +
             '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="tickAll(this.dataset.slot,this.dataset.date,true)">All</button>' +
             '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="tickAll(this.dataset.slot,this.dataset.date,false)">Clear</button>' +
@@ -824,8 +840,9 @@ function deleteMember(id) {
 
 // PURCHASES
 function openAddPurchase() {
+  var sortedMembers = S.members.slice().sort(function(a,b){return (a.firstName+' '+(a.lastName||'')).localeCompare(b.firstName+' '+(b.lastName||''));});
   document.getElementById('pMember').innerHTML = '<option value="">Select member...</option>' +
-    S.members.map(function(m) {
+    sortedMembers.map(function(m) {
       return '<option value="' + m.id + '">' + m.firstName + ' ' + (m.lastName || '') + '</option>';
     }).join('');
   document.getElementById('pClass').innerHTML = S.classes.map(function(c) {
@@ -937,6 +954,17 @@ function deleteAttFromProfile(attId, mid) {
 }
 
 // EMAIL
+
+function toggleSelectAll(cb) {
+  document.querySelectorAll('.member-check').forEach(function(c) { c.checked = cb.checked; });
+}
+function copySelectedEmails() {
+  var checked = document.querySelectorAll('.member-check:checked');
+  if (!checked.length) { toast('No members selected.'); return; }
+  var emails = Array.from(checked).map(function(c) { return c.dataset.email; }).join(', ');
+  copyToClipboard(emails, checked.length + ' email' + (checked.length !== 1 ? 's' : '') + ' copied!');
+}
+
 function copyToClipboard(text, msg) {
   navigator.clipboard.writeText(text).then(function() {
     toast(msg || 'Copied!');
