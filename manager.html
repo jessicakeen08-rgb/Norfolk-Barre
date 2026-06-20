@@ -264,8 +264,9 @@ tr:hover td{background:var(--gold-pale);}
 <!-- PURCHASE MODAL -->
 <div class="overlay" id="modalPurchase">
   <div class="modal">
-    <div class="modal-hdr"><div class="modal-title">Add <span>Purchase</span></div><button class="modal-x" onclick="closeModal('modalPurchase')">✕</button></div>
+    <div class="modal-hdr"><div class="modal-title" id="purchaseModalTitle">Add <span>Purchase</span></div><button class="modal-x" onclick="closeModal('modalPurchase')">✕</button></div>
     <div class="modal-body">
+      <input type="hidden" id="pId">
       <div class="fg"><label>Member *</label><select id="pMember"></select></div>
       <div class="fg"><label>Class</label><select id="pClass"></select></div>
       <div class="fg">
@@ -285,7 +286,7 @@ tr:hover td{background:var(--gold-pale);}
       <div class="fg"><label>Notes</label><input type="text" id="pNotes" placeholder="e.g. paid cash, SumUp ref..."></div>
       <div class="fa">
         <button class="btn btn-ghost" onclick="closeModal('modalPurchase')">Cancel</button>
-        <button class="btn btn-gold" onclick="savePurchase()">Save Purchase</button>
+        <button class="btn btn-gold" id="purchaseSaveBtn" onclick="savePurchase()">Save Purchase</button>
       </div>
     </div>
   </div>
@@ -606,7 +607,7 @@ function renderPurchases() {
       '<td style="font-size:13px;">' + (p.packageLabel || p.package || '') + '</td>' +
       '<td style="text-align:center;">' + (p.credits || 0) + '</td>' +
       '<td style="text-align:right;font-weight:500;color:var(--gold);">£' + (p.amount || 0).toFixed(0) + '</td>' +
-      '<td><button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button></td></tr>';
+      '<td><div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" data-id="' + p.id + '" onclick="openEditPurchase(this.dataset.id)">Edit</button><button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button></div></td></tr>';
   }).join('');
 }
 
@@ -840,6 +841,9 @@ function deleteMember(id) {
 
 // PURCHASES
 function openAddPurchase() {
+  document.getElementById('pId').value = '';
+  document.getElementById('purchaseModalTitle').innerHTML = 'Add <span>Purchase</span>';
+  document.getElementById('purchaseSaveBtn').textContent = 'Save Purchase';
   var sortedMembers = S.members.slice().sort(function(a,b){return (a.firstName+' '+(a.lastName||'')).localeCompare(b.firstName+' '+(b.lastName||''));});
   document.getElementById('pMember').innerHTML = '<option value="">Select member...</option>' +
     sortedMembers.map(function(m) {
@@ -853,6 +857,21 @@ function openAddPurchase() {
   document.getElementById('pNotes').value = '';
   updatePkgAmount();
   openModal('modalPurchase');
+}
+function openEditPurchase(id) {
+  var p = S.purchases.find(function(p) { return p.id === id; });
+  if (!p) return;
+  openAddPurchase();
+  document.getElementById('pId').value = p.id;
+  document.getElementById('purchaseModalTitle').innerHTML = 'Edit <span>Purchase</span>';
+  document.getElementById('purchaseSaveBtn').textContent = 'Update Purchase';
+  document.getElementById('pMember').value = p.memberId;
+  document.getElementById('pClass').value = p.classSlot || '';
+  document.getElementById('pPackage').value = p.package || 'custom';
+  document.getElementById('pCredits').value = p.credits || 0;
+  document.getElementById('pAmount').value = p.amount || 0;
+  document.getElementById('pDate').value = p.date || '';
+  document.getElementById('pNotes').value = p.notes || '';
 }
 function openAddPurchaseFor(mid) {
   openAddPurchase();
@@ -875,14 +894,23 @@ function savePurchase() {
   var slot = document.getElementById('pClass').value;
   var clsObj = S.classes.find(function(c) { return c.slot === slot; });
   var credits = parseInt(document.getElementById('pCredits').value) || 0;
-  S.purchases.push({
-    id: Date.now().toString(), memberId: mid, memberName: mName(mid),
+  var pid = document.getElementById('pId').value;
+  var data = {
+    memberId: mid, memberName: mName(mid),
     class: clsObj ? clsObj.name : slot, classSlot: slot,
     package: pkg, packageLabel: labels[pkg] || pkg,
     credits: credits, amount: parseFloat(document.getElementById('pAmount').value) || 0,
     date: document.getElementById('pDate').value, notes: document.getElementById('pNotes').value.trim()
-  });
-  save(); closeModal('modalPurchase'); render(); toast('Purchase saved!');
+  };
+  if (pid) {
+    var existing = S.purchases.find(function(p) { return p.id === pid; });
+    if (existing) Object.assign(existing, data);
+    toast('Purchase updated!');
+  } else {
+    S.purchases.push(Object.assign({id: Date.now().toString()}, data));
+    toast('Purchase saved!');
+  }
+  save(); closeModal('modalPurchase'); render();
 }
 function deletePurchase(id) {
   if (!confirm('Delete this purchase?')) return;
