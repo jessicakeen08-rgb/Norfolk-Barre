@@ -226,6 +226,16 @@ tr:hover td{background:var(--gold-pale);}
 <div class="panel" id="panel-settings">
   <div class="ph"><div class="pt">Settings</div></div>
   <div class="card" style="margin-bottom:14px;">
+    <div class="card-hdr"><div class="card-title">Course Blocks</div></div>
+    <p style="font-size:14px;font-weight:300;color:var(--text-mid);margin-bottom:18px;line-height:1.6;">Add a new block whenever you start a fresh set of classes. The attendance dates update automatically — no more manual date editing!</p>
+    <div id="courseBlocksList" style="margin-bottom:18px;"></div>
+    <div class="fr" style="margin-bottom:12px;">
+      <div class="fg"><label>Start date (first Tuesday)</label><input type="date" id="newBlockStart"></div>
+      <div class="fg"><label>Number of weeks</label><input type="number" id="newBlockWeeks" min="1" max="12" value="4"></div>
+    </div>
+    <button class="btn btn-gold" onclick="addCourseBlock()">+ Add Course Block</button>
+  </div>
+  <div class="card" style="margin-bottom:14px;">
     <div class="card-hdr"><div class="card-title">Classes</div><button class="btn btn-gold btn-sm" onclick="addCls()">+ Add Class</button></div>
     <div id="clsSettings"></div>
     <div style="margin-top:16px;"><button class="btn btn-dark" onclick="saveClsSettings()">Save Changes</button></div>
@@ -352,6 +362,7 @@ var S = {
   attendance: [],
   sessions: [],
   todayChecked: {},
+  courseBlocks: [],
   classes: [
     {id:'morning', name:'Introduction to Barre', day:'Tuesday', time:'08:45', slot:'morning'},
     {id:'evening', name:'Open Level Barre', day:'Tuesday', time:'17:30', slot:'evening'}
@@ -372,6 +383,7 @@ function load() {
       });
       S.sessions = p.sessions || [];
       S.todayChecked = p.todayChecked || {};
+      S.courseBlocks = p.courseBlocks || [];
       if (p.classes && p.classes.length) S.classes = p.classes;
       return;
     }
@@ -453,6 +465,7 @@ function render() {
   renderPurchases();
   renderAttendance();
   renderSettings();
+  renderCourseBlocks();
 }
 
 function renderDashboard() {
@@ -611,8 +624,75 @@ function renderPurchases() {
   }).join('');
 }
 
+function formatDateLong(d) {
+  return d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+
 function getCourseDates() {
-  return ['Tuesday 2nd June', 'Tuesday 9th June', 'Tuesday 16th June', 'Tuesday 23rd June'];
+  // Generate date strings from all stored course blocks (sorted chronologically)
+  if (!S.courseBlocks || !S.courseBlocks.length) {
+    return [];
+  }
+  var allDates = [];
+  S.courseBlocks.forEach(function(block) {
+    var start = new Date(block.startDate + 'T00:00:00');
+    for (var i = 0; i < block.weeks; i++) {
+      var d = new Date(start);
+      d.setDate(start.getDate() + (i * 7));
+      allDates.push({iso: d.toISOString().split('T')[0], label: formatDateLong(d)});
+    }
+  });
+  // Dedupe and sort chronologically
+  var seen = {};
+  var unique = allDates.filter(function(d) {
+    if (seen[d.iso]) return false;
+    seen[d.iso] = true;
+    return true;
+  });
+  unique.sort(function(a,b){ return a.iso.localeCompare(b.iso); });
+  return unique.map(function(d){ return d.label; });
+}
+
+function addCourseBlock() {
+  var startInput = document.getElementById('newBlockStart').value;
+  var weeks = parseInt(document.getElementById('newBlockWeeks').value) || 4;
+  if (!startInput) { toast('Please choose a start date.'); return; }
+  if (!S.courseBlocks) S.courseBlocks = [];
+  S.courseBlocks.push({ id: Date.now().toString(), startDate: startInput, weeks: weeks });
+  save();
+  renderCourseBlocks();
+  renderAttendance();
+  document.getElementById('newBlockStart').value = '';
+  document.getElementById('newBlockWeeks').value = 4;
+  toast('Course block added — ' + weeks + ' classes scheduled!');
+}
+
+function removeCourseBlock(id) {
+  if (!confirm('Remove this course block? Any attendance already logged for these dates will stay in your history.')) return;
+  S.courseBlocks = S.courseBlocks.filter(function(b) { return b.id !== id; });
+  save();
+  renderCourseBlocks();
+  renderAttendance();
+  toast('Course block removed.');
+}
+
+function renderCourseBlocks() {
+  var el = document.getElementById('courseBlocksList');
+  if (!el) return;
+  if (!S.courseBlocks || !S.courseBlocks.length) {
+    el.innerHTML = '<div class="empty" style="padding:20px;"><div class="empty-body">No course blocks yet. Add your first one below.</div></div>';
+    return;
+  }
+  var sorted = S.courseBlocks.slice().sort(function(a,b){ return a.startDate.localeCompare(b.startDate); });
+  el.innerHTML = sorted.map(function(block) {
+    var start = new Date(block.startDate + 'T00:00:00');
+    var end = new Date(start);
+    end.setDate(start.getDate() + (block.weeks - 1) * 7);
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--off-white);border:1px solid var(--border);margin-bottom:8px;">' +
+      '<div><div style="font-weight:500;font-size:14px;color:var(--brown);">' + formatDateLong(start) + ' → ' + formatDateLong(end) + '</div>' +
+      '<div style="font-size:12px;color:var(--text-faint);margin-top:2px;">' + block.weeks + ' weeks</div></div>' +
+      '<button class="btn btn-red btn-sm" data-id="' + block.id + '" onclick="removeCourseBlock(this.dataset.id)">✕</button></div>';
+  }).join('');
 }
 
 function renderAttendance() {
