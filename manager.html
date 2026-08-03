@@ -12,11 +12,11 @@
   --off-white:#f7f4ef;--white:#fdfcf9;--border:#e2ddd6;
   --text:#3d3428;--text-mid:#6e6458;--text-faint:#a8a098;
   --red:#c0392b;--red-pale:#fdecea;--green:#2d7a4f;--green-pale:#e8f5ee;
+  --blue:#2c5f8a;--blue-pale:#e8f0fa;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--off-white);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;}
 
-/* PASSWORD */
 #passwordScreen{position:fixed;inset:0;background:var(--brown);z-index:9999;display:flex;align-items:center;justify-content:center;}
 .pw-box{background:var(--white);padding:48px 40px;width:100%;max-width:380px;text-align:center;}
 .pw-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.12em;color:var(--brown);margin-bottom:4px;}
@@ -29,7 +29,6 @@ body{background:var(--off-white);font-family:'DM Sans',sans-serif;color:var(--te
 .pw-btn:hover{background:var(--gold-light);}
 .pw-error{font-size:13px;color:var(--red);margin-top:10px;display:none;}
 
-/* LAYOUT */
 header{background:var(--brown);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;}
 .hdr-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;color:var(--off-white);}
 .hdr-logo span{color:var(--gold);}
@@ -44,8 +43,9 @@ main{padding:28px;max-width:1200px;margin:0 auto;}
 .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
 .pt{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.04em;color:var(--brown);}
 .pt em{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);}
+.section-label{font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin:32px 0 14px;}
+.section-label:first-child{margin-top:0;}
 
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.2s;}
 .btn-gold{background:var(--gold);color:white;}
 .btn-gold:hover{background:var(--gold-light);}
@@ -58,18 +58,15 @@ main{padding:28px;max-width:1200px;margin:0 auto;}
 .btn-red:hover{background:var(--red);color:white;}
 .bgrp{display:flex;gap:8px;flex-wrap:wrap;}
 
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:28px;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:14px;}
 .stat{background:var(--brown);padding:20px 24px;}
 .stat-n{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--gold);display:block;margin-bottom:3px;}
 .stat-l{font-size:10px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,244,239,0.4);}
 
-/* CARDS */
 .card{background:var(--white);border:1px solid var(--border);padding:24px;margin-bottom:14px;}
-.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px;}
 .card-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.04em;color:var(--brown);}
 
-/* TABLE */
 .tw{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 th{background:var(--brown);color:var(--off-white);padding:11px 14px;text-align:left;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;}
@@ -80,18 +77,19 @@ tr:hover td{background:var(--gold-pale);}
 .tdn{font-weight:500;color:var(--brown);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
 .tdn:hover{color:var(--gold);}
 
-/* CREDITS PILL */
 .cp{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;font-size:16px;font-weight:600;border-radius:50%;}
 .cp-good{background:var(--green-pale);color:var(--green);}
 .cp-low{background:#fff3cd;color:#856404;}
 .cp-none{background:var(--red-pale);color:var(--red);}
 
-/* BADGE */
 .badge{display:inline-block;padding:2px 8px;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;}
 .badge-block{background:var(--gold-pale);color:var(--gold);}
-.badge-dropin{background:#e8f0fa;color:#2c5f8a;}
+.badge-dropin{background:var(--blue-pale);color:var(--blue);}
+.badge-attended{background:var(--green-pale);color:var(--green);}
+.badge-noshow{background:var(--red-pale);color:var(--red);}
+.badge-pending{background:#f0ede7;color:var(--text-mid);}
+.badge-expired{background:#f0ede7;color:var(--text-faint);}
 
-/* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(61,43,31,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px;}
 .overlay.open{display:flex;}
 .modal{background:var(--white);width:100%;max-width:540px;max-height:90vh;overflow-y:auto;}
@@ -108,24 +106,20 @@ tr:hover td{background:var(--gold-pale);}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .fa{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;}
 
-/* ATTENDANCE */
 .att-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
 .att-row:last-child{border-bottom:none;}
 .att-check{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;}
 
-/* EMPTY */
 .empty{text-align:center;padding:40px 20px;color:var(--text-faint);}
 .empty-icon{font-size:36px;margin-bottom:10px;}
 .empty-title{font-size:20px;font-weight:600;color:var(--brown);margin-bottom:6px;}
 .empty-body{font-size:13px;font-weight:300;line-height:1.7;}
 
-/* SETTINGS */
 .set-row{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:10px;align-items:end;padding:14px 0;border-bottom:1px solid var(--border);}
 .set-input{background:var(--off-white);border:1.5px solid var(--border);padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;width:100%;}
 .set-input:focus{border-color:var(--gold);}
 .set-lbl{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-mid);margin-bottom:5px;}
 
-/* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;z-index:2000;background:var(--brown);color:var(--off-white);padding:12px 22px;font-size:13px;transform:translateY(70px);opacity:0;transition:all 0.3s;pointer-events:none;border-left:3px solid var(--gold);}
 .toast.show{transform:translateY(0);opacity:1;}
 
@@ -134,7 +128,6 @@ tr:hover td{background:var(--gold-pale);}
 </head>
 <body>
 
-<!-- PASSWORD SCREEN -->
 <div id="passwordScreen">
   <div class="pw-box">
     <div class="pw-logo">NORFOLK <span>BARRE</span></div>
@@ -167,8 +160,17 @@ tr:hover td{background:var(--gold-pale);}
     <div class="pt">Good morning, <em>Jessica</em></div>
     <button class="btn btn-gold" onclick="showPanel('attendance')">+ Log Attendance</button>
   </div>
-  <div class="stats" id="dashStats"></div>
-  <div id="dashNext" style="margin-bottom:14px;"></div>
+
+  <div class="section-label">Business</div>
+  <div class="stats" id="dashBusinessStats"></div>
+
+  <div class="section-label">Class Bookings — Current Block</div>
+  <div id="dashBookings" style="margin-bottom:14px;"></div>
+
+  <div class="section-label">Financials</div>
+  <div class="stats" id="dashFinanceStats"></div>
+  <div id="dashFinanceDetail" style="margin-bottom:14px;"></div>
+
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
     <div class="card"><div class="card-hdr"><div class="card-title">Credits Low</div></div><div id="dashLow"></div></div>
     <div class="card"><div class="card-hdr"><div class="card-title">Top Clients</div></div><div id="dashTop"></div></div>
@@ -188,7 +190,7 @@ tr:hover td{background:var(--gold-pale);}
     </div>
   </div>
   <div class="card" style="padding:0;"><div class="tw">
-    <table><thead><tr><th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"></th><th>Name</th><th>Email</th><th>Phone</th><th>Class</th><th style="text-align:center;">Credits</th><th>Actions</th></tr></thead>
+    <table><thead><tr><th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"></th><th>Name</th><th>Email</th><th>Phone</th><th>Class</th><th style="text-align:center;">Active Credits</th><th>Actions</th></tr></thead>
     <tbody id="membersTable"></tbody></table>
   </div></div>
 </div>
@@ -212,10 +214,11 @@ tr:hover td{background:var(--gold-pale);}
 <!-- ATTENDANCE -->
 <div class="panel" id="panel-attendance">
   <div class="ph"><div class="pt">Log <em>Attendance</em></div></div>
+  <p style="font-size:13px;font-weight:300;color:var(--text-faint);margin-bottom:20px;">Everyone registered for a class shows here automatically. Tick attended, or leave unticked to mark as a no-show.</p>
   <div id="attendanceSections"></div>
   <div style="margin-top:32px;">
     <div class="ph" style="margin-bottom:14px;">
-      <div class="pt" style="font-size:24px;">History</div>
+      <div class="pt" style="font-size:24px;">History <em>by class</em></div>
       <button class="btn btn-ghost btn-sm" onclick="exportAttendanceCSV()">Export CSV</button>
     </div>
     <div id="attendHistory"></div>
@@ -278,13 +281,12 @@ tr:hover td{background:var(--gold-pale);}
     <div class="modal-body">
       <input type="hidden" id="pId">
       <div class="fg"><label>Member *</label><select id="pMember"></select></div>
-      <div class="fg"><label>Class</label><select id="pClass"></select></div>
+      <div class="fg"><label>Class</label><select id="pClass" onchange="onPurchaseClassChange()"></select></div>
       <div class="fg">
         <label>Package *</label>
         <select id="pPackage" onchange="updatePkgAmount()">
-          <option value="4week">Introduction to Barre — 4 Week Course (4 credits)</option>
-          <option value="block4">Open Level — Block of 4 (4 credits)</option>
-          <option value="payg">Open Level — Drop in (1 credit)</option>
+          <option value="block4">Block of 4 (4 credits)</option>
+          <option value="payg">Drop in (1 credit)</option>
           <option value="custom">Custom</option>
         </select>
       </div>
@@ -292,7 +294,15 @@ tr:hover td{background:var(--gold-pale);}
         <div class="fg"><label>Credits</label><input type="number" id="pCredits" min="1" max="20" value="4"></div>
         <div class="fg"><label>Amount (£)</label><input type="number" id="pAmount" min="0" step="0.01" value="50"></div>
       </div>
-      <div class="fg"><label>Date</label><input type="date" id="pDate"></div>
+      <div class="fg" id="pBlockGroup">
+        <label>Which course block?</label>
+        <select id="pCourseBlock"></select>
+      </div>
+      <div class="fg" id="pDropInGroup" style="display:none;">
+        <label>Which date is this drop in for?</label>
+        <select id="pDropInDate"></select>
+      </div>
+      <div class="fg"><label>Purchase date</label><input type="date" id="pDate"></div>
       <div class="fg"><label>Notes</label><input type="text" id="pNotes" placeholder="e.g. paid cash, SumUp ref..."></div>
       <div class="fa">
         <button class="btn btn-ghost" onclick="closeModal('modalPurchase')">Cancel</button>
@@ -330,7 +340,7 @@ tr:hover td{background:var(--gold-pale);}
 <div class="toast" id="toast"></div>
 
 <script>
-// PASSWORD
+// ============ PASSWORD ============
 document.getElementById('pwBtn').addEventListener('click', checkPw);
 document.getElementById('pwInput').addEventListener('keyup', function(e) {
   if (e.key === 'Enter') checkPw();
@@ -346,7 +356,6 @@ function checkPw() {
     document.getElementById('pwInput').focus();
   }
 }
-// Auto-login if already authenticated
 (function() {
   try {
     if (sessionStorage.getItem('nb_auth') === '1') {
@@ -355,13 +364,18 @@ function checkPw() {
   } catch(e) {}
 })();
 
-// STATE
+// ============ STATE ============
+// Data model:
+// - members: people
+// - purchases: financial records (who paid, how much, for what package) - linked to a courseBlockId or a specific drop-in date
+// - registrations: who is signed up for which class on which date (the source of truth for attendance lists)
+// - attendance: actual attended/no-show marks against a registration
+// - courseBlocks: { id, startDate, weeks }
 var S = {
   members: [],
   purchases: [],
+  registrations: [],
   attendance: [],
-  sessions: [],
-  todayChecked: {},
   courseBlocks: [],
   classes: [
     {id:'morning', name:'Introduction to Barre', day:'Tuesday', time:'08:45', slot:'morning'},
@@ -369,65 +383,61 @@ var S = {
   ]
 };
 
-function save() { try { localStorage.setItem('nb3', JSON.stringify(S)); } catch(e) {} }
+function save() { try { localStorage.setItem('nb4', JSON.stringify(S)); } catch(e) {} }
 
 function load() {
   try {
-    var raw = localStorage.getItem('nb3');
+    var raw = localStorage.getItem('nb4');
     if (raw) {
       var p = JSON.parse(raw);
       S.members = p.members || [];
       S.purchases = p.purchases || [];
-      S.attendance = (p.attendance || []).map(function(a) {
-        return a.id ? a : Object.assign({}, a, {id: Date.now().toString() + Math.floor(Math.random()*10000)});
-      });
-      S.sessions = p.sessions || [];
-      S.todayChecked = p.todayChecked || {};
+      S.registrations = p.registrations || [];
+      S.attendance = p.attendance || [];
       S.courseBlocks = p.courseBlocks || [];
       if (p.classes && p.classes.length) S.classes = p.classes;
       return;
     }
-    // Migrate from old keys
-    var old = localStorage.getItem('nb2') || localStorage.getItem('nb_state');
+    // Migrate from older version (nb3) - best effort
+    var old = localStorage.getItem('nb3');
     if (old) {
       var o = JSON.parse(old);
       S.members = o.members || [];
-      S.purchases = o.purchases || o.payments || [];
-      S.attendance = o.attendance || [];
-      S.sessions = o.sessions || [];
+      S.purchases = (o.purchases || []).map(function(p) {
+        return Object.assign({}, p, {id: p.id || (Date.now().toString() + Math.floor(Math.random()*10000))});
+      });
       if (o.classes && o.classes.length) S.classes = o.classes;
+      if (o.courseBlocks) S.courseBlocks = o.courseBlocks;
+      // Old attendance becomes registrations marked attended (best-effort migration)
+      S.registrations = [];
+      S.attendance = [];
+      (o.attendance || []).forEach(function(a) {
+        var regId = Date.now().toString() + Math.floor(Math.random()*100000);
+        S.registrations.push({
+          id: regId, memberId: a.memberId, slot: a.slot, date: a.date, purchaseId: null
+        });
+        S.attendance.push({ id: regId, registrationId: regId, status: 'attended' });
+      });
       save();
-      toast('Data imported from previous version!');
+      toast('Data migrated to new version. Please review Purchases and re-link course blocks if needed.');
     }
   } catch(e) { console.error('Load error:', e); }
 }
 
-// HELPERS
-function totalPurchased(mid) {
-  return S.purchases.filter(function(p) { return p.memberId === mid; })
-    .reduce(function(s, p) { return s + (p.credits || 0); }, 0);
-}
-function totalAttended(mid) {
-  return S.attendance.filter(function(a) { return a.memberId === mid; }).length;
-}
-function creditsLeft(mid) { return totalPurchased(mid) - totalAttended(mid); }
-function cpClass(n) {
-  if (n <= 0) return 'cp-none';
-  if (n === 1) return 'cp-low';
-  return 'cp-good';
-}
+// ============ HELPERS ============
 function mName(id) {
   var m = S.members.find(function(m) { return m.id === id; });
   return m ? m.firstName + ' ' + (m.lastName || '') : 'Unknown';
 }
+function clsObj(slot) { return S.classes.find(function(c) { return c.slot === slot; }); }
 function clsName(slot) {
-  var c = S.classes.find(function(c) { return c.slot === slot; });
+  var c = clsObj(slot);
   return c ? c.day + ' ' + c.time + ' — ' + c.name : slot;
 }
-function todayStr() {
-  return new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+function toISO(d) { return (d || new Date()).toISOString().split('T')[0]; }
+function formatDateLong(d) {
+  return d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 }
-function toISO() { return new Date().toISOString().split('T')[0]; }
 function toast(msg) {
   var t = document.getElementById('toast');
   t.textContent = msg;
@@ -439,15 +449,84 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 document.querySelectorAll('.overlay').forEach(function(o) {
   o.addEventListener('click', function(e) { if (e.target === o) o.classList.remove('open'); });
 });
-function getBookingType(m) {
-  var pp = S.purchases.filter(function(p) { return p.memberId === m.id; });
-  if (!pp.length) return '';
-  var last = pp[pp.length - 1];
-  if (last.package === 'payg') return 'dropin';
-  return 'block';
+
+function sortedMembers() {
+  return S.members.slice().sort(function(a, b) {
+    return (a.firstName + ' ' + (a.lastName||'')).localeCompare(b.firstName + ' ' + (b.lastName||''));
+  });
 }
 
-// NAV
+// Course block helpers
+function getCourseBlockDates(block) {
+  var dates = [];
+  var start = new Date(block.startDate + 'T00:00:00');
+  for (var i = 0; i < block.weeks; i++) {
+    var d = new Date(start);
+    d.setDate(start.getDate() + (i * 7));
+    dates.push({ iso: toISO(d), label: formatDateLong(d) });
+  }
+  return dates;
+}
+function getAllCourseDates() {
+  var all = [];
+  (S.courseBlocks || []).forEach(function(block) {
+    getCourseBlockDates(block).forEach(function(d) { all.push(d); });
+  });
+  var seen = {};
+  var unique = all.filter(function(d) {
+    if (seen[d.iso]) return false;
+    seen[d.iso] = true;
+    return true;
+  });
+  unique.sort(function(a,b){ return a.iso.localeCompare(b.iso); });
+  return unique;
+}
+function getCurrentOrNextBlock() {
+  // The block that contains today, or the next upcoming one
+  var todayIso = toISO();
+  var blocks = (S.courseBlocks || []).slice().sort(function(a,b){ return a.startDate.localeCompare(b.startDate); });
+  for (var i = 0; i < blocks.length; i++) {
+    var dates = getCourseBlockDates(blocks[i]);
+    var lastDate = dates[dates.length-1].iso;
+    if (lastDate >= todayIso) return blocks[i];
+  }
+  return blocks.length ? blocks[blocks.length-1] : null;
+}
+
+// Registration + credits logic
+function registrationsForMember(mid) {
+  return S.registrations.filter(function(r) { return r.memberId === mid; });
+}
+function attendanceForReg(regId) {
+  return S.attendance.find(function(a) { return a.registrationId === regId; });
+}
+function regStatus(reg) {
+  var att = attendanceForReg(reg.id);
+  if (att) return att.status; // 'attended' or 'noshow'
+  // Not yet logged - check if date has passed
+  return reg.date < toISO() ? 'pending-past' : 'pending';
+}
+// "Active credits" = registrations in the CURRENT/future block(s) that haven't happened yet
+// (i.e. credits still usable). Once a class date has passed, that credit/registration is consumed,
+// whether attended or not - it does not roll over.
+function activeCreditsForMember(mid) {
+  var todayIso = toISO();
+  return S.registrations.filter(function(r) {
+    return r.memberId === mid && r.date >= todayIso;
+  }).length;
+}
+function cpClass(n) {
+  if (n <= 0) return 'cp-none';
+  if (n === 1) return 'cp-low';
+  return 'cp-good';
+}
+function getBookingType(reg) {
+  var purchase = S.purchases.find(function(p) { return p.id === reg.purchaseId; });
+  if (!purchase) return 'block';
+  return purchase.package === 'payg' ? 'dropin' : 'block';
+}
+
+// ============ NAV ============
 function showPanel(id) {
   document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
@@ -458,7 +537,6 @@ function showPanel(id) {
   render();
 }
 
-// RENDER
 function render() {
   renderDashboard();
   renderMembers();
@@ -468,102 +546,119 @@ function render() {
   renderCourseBlocks();
 }
 
+// ============ DASHBOARD ============
 function renderDashboard() {
-  var rev = S.purchases.reduce(function(s, p) { return s + (p.amount || 0); }, 0);
-  var low = S.members.filter(function(m) { var r = creditsLeft(m.id); return r <= 1 && r >= 0; });
+  var totalRevenue = S.purchases.reduce(function(s,p){return s+(p.amount||0);},0);
+  var activeMembers = S.members.filter(function(m){ return activeCreditsForMember(m.id) > 0; });
+  var lowCredits = S.members.filter(function(m){ var c = activeCreditsForMember(m.id); return c > 0 && c <= 1; });
 
-  document.getElementById('dashStats').innerHTML =
-    '<div class="stat"><span class="stat-n">' + S.members.length + '</span><span class="stat-l">Members</span></div>' +
-    '<div class="stat"><span class="stat-n">' + S.attendance.length + '</span><span class="stat-l">Classes Logged</span></div>' +
-    '<div class="stat"><span class="stat-n">£' + rev.toFixed(0) + '</span><span class="stat-l">Revenue</span></div>' +
-    '<div class="stat"><span class="stat-n">' + low.length + '</span><span class="stat-l">Credits Low</span></div>';
+  // BUSINESS
+  document.getElementById('dashBusinessStats').innerHTML =
+    '<div class="stat"><span class="stat-n">' + S.members.length + '</span><span class="stat-l">Total Members</span></div>' +
+    '<div class="stat"><span class="stat-n">' + activeMembers.length + '</span><span class="stat-l">Active This Block</span></div>' +
+    '<div class="stat"><span class="stat-n">' + S.registrations.filter(function(r){return r.date>=toISO();}).length + '</span><span class="stat-l">Active Credits</span></div>' +
+    '<div class="stat"><span class="stat-n">' + lowCredits.length + '</span><span class="stat-l">Credits Low</span></div>';
 
-  // Next class
-  var nextEl = document.getElementById('dashNext');
-  var nextTue = new Date();
-  var dow = nextTue.getDay();
-  var diff = dow <= 2 ? 2 - dow : 9 - dow;
-  if (diff === 0) diff = 7;
-  nextTue.setDate(nextTue.getDate() + diff);
-  var nextDate = nextTue.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
-  var cards = S.classes.map(function(cls) {
-    var members = S.members.filter(function(m) {
-      return (m.class === cls.slot || m.class === 'both') && creditsLeft(m.id) > 0;
-    });
-    var rows = members.length
-      ? members.map(function(m) {
-          var type = getBookingType(m);
-          var badge = type === 'dropin'
-            ? '<span class="badge badge-dropin">Drop in</span>'
-            : '<span class="badge badge-block">Block</span>';
-          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;">' +
-            '<span style="font-weight:500;color:var(--brown);">' + m.firstName + ' ' + (m.lastName || '') + '</span>' +
-            badge + '</div>';
-        }).join('')
-      : '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No members booked.</div>';
-
-    return '<div class="card" style="margin-bottom:0;">' +
-      '<div class="card-hdr" style="margin-bottom:10px;padding-bottom:10px;">' +
-        '<div><div class="card-title">' + cls.time + ' — ' + cls.name + '</div>' +
-        '<div style="font-size:12px;color:var(--text-mid);margin-top:2px;">' + members.length + ' booked</div></div>' +
-        '<div class="bgrp">' +
-          '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" onclick="copyClsEmails(this.dataset.slot)">📋</button>' +
-          '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" onclick="emailCls(this.dataset.slot)">✉</button>' +
+  // CLASS BOOKINGS - current block
+  var currentBlock = getCurrentOrNextBlock();
+  var bookingsEl = document.getElementById('dashBookings');
+  if (!currentBlock) {
+    bookingsEl.innerHTML = '<div class="empty"><div class="empty-body">No course block set up yet. Add one in Settings.</div></div>';
+  } else {
+    var blockDates = getCourseBlockDates(currentBlock);
+    var blockIsoSet = {};
+    blockDates.forEach(function(d){ blockIsoSet[d.iso] = true; });
+    var cards = S.classes.map(function(cls) {
+      var regs = S.registrations.filter(function(r) { return r.slot === cls.slot && blockIsoSet[r.date]; });
+      var uniqueMembers = {};
+      regs.forEach(function(r){ uniqueMembers[r.memberId] = true; });
+      var blockBookers = regs.filter(function(r){ return getBookingType(r) === 'block'; });
+      var dropIns = regs.filter(function(r){ return getBookingType(r) === 'dropin'; });
+      var uniqueBlockMembers = {};
+      blockBookers.forEach(function(r){ uniqueBlockMembers[r.memberId] = true; });
+      return '<div class="card" style="margin-bottom:0;">' +
+        '<div class="card-hdr" style="margin-bottom:10px;padding-bottom:10px;">' +
+          '<div class="card-title">' + cls.time + ' — ' + cls.name + '</div>' +
         '</div>' +
-      '</div>' + rows + '</div>';
-  }).join('');
+        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;">' +
+          '<div style="background:var(--brown);padding:14px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">' + Object.keys(uniqueBlockMembers).length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Block Members</div></div>' +
+          '<div style="background:var(--brown);padding:14px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">' + dropIns.length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Drop Ins</div></div>' +
+          '<div style="background:var(--brown);padding:14px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">' + Object.keys(uniqueMembers).length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Total Booked</div></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    bookingsEl.innerHTML = '<div style="font-size:13px;color:var(--text-mid);margin-bottom:10px;">Block: ' + formatDateLong(new Date(currentBlock.startDate+'T00:00:00')) + ' (' + currentBlock.weeks + ' weeks)</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' + cards + '</div>';
+  }
 
-  nextEl.innerHTML =
-    '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center;">' +
-      '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--off-white);">NEXT CLASS</span>' +
-      '<span style="font-size:13px;color:var(--gold);">' + nextDate + '</span>' +
-    '</div>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">' + cards + '</div>';
+  // FINANCIALS
+  var now = new Date();
+  var weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 7);
+  var revenueThisWeek = S.purchases.filter(function(p){ return p.date && p.date >= toISO(weekAgo); })
+    .reduce(function(s,p){return s+(p.amount||0);},0);
 
-  // Low credits
-  var lcEl = document.getElementById('dashLow');
-  lcEl.innerHTML = !low.length
-    ? '<div class="empty" style="padding:16px;"><div class="empty-body">Everyone has credits!</div></div>'
-    : low.map(function(m) {
-        var r = creditsLeft(m.id);
+  document.getElementById('dashFinanceStats').innerHTML =
+    '<div class="stat"><span class="stat-n">£' + totalRevenue.toFixed(0) + '</span><span class="stat-l">Total Revenue</span></div>' +
+    '<div class="stat"><span class="stat-n">£' + revenueThisWeek.toFixed(0) + '</span><span class="stat-l">Last 7 Days</span></div>' +
+    '<div class="stat"><span class="stat-n">' + S.purchases.length + '</span><span class="stat-l">Total Purchases</span></div>' +
+    '<div class="stat"><span class="stat-n">£' + (S.purchases.length ? (totalRevenue/S.purchases.length).toFixed(0) : '0') + '</span><span class="stat-l">Avg Purchase</span></div>';
+
+  var revenueByClass = {};
+  S.purchases.forEach(function(p) {
+    var key = p.class || 'Unknown';
+    revenueByClass[key] = (revenueByClass[key]||0) + (p.amount||0);
+  });
+  var detailEl = document.getElementById('dashFinanceDetail');
+  if (Object.keys(revenueByClass).length) {
+    detailEl.innerHTML = '<div class="card"><div class="card-hdr"><div class="card-title">Revenue per Class</div></div>' +
+      Object.entries(revenueByClass).map(function(entry) {
+        return '<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;"><span>' + entry[0] + '</span><span style="font-weight:500;color:var(--gold);">£' + entry[1].toFixed(0) + '</span></div>';
+      }).join('') + '</div>';
+  } else {
+    detailEl.innerHTML = '';
+  }
+
+  // Low credits list
+  document.getElementById('dashLow').innerHTML = !lowCredits.length
+    ? '<div class="empty" style="padding:16px;"><div class="empty-body">Everyone has plenty of credits!</div></div>'
+    : lowCredits.map(function(m) {
+        var c = activeCreditsForMember(m.id);
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">' +
           '<div><div style="font-weight:500;font-size:14px;color:var(--brown);">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
           '<div style="font-size:11px;color:var(--text-faint);">' + m.email + '</div></div>' +
-          '<span class="cp ' + cpClass(r) + '">' + r + '</span></div>';
+          '<span class="cp ' + cpClass(c) + '">' + c + '</span></div>';
       }).join('');
 
-  // Top clients
-  var topEl = document.getElementById('dashTop');
-  if (topEl) {
-    var counts = {};
-    S.attendance.forEach(function(a) {
-      if (!counts[a.memberId]) counts[a.memberId] = {name: a.memberName, count: 0};
-      counts[a.memberId].count++;
-    });
-    var sorted = Object.values(counts).sort(function(a,b){return b.count - a.count;}).slice(0,8);
-    topEl.innerHTML = !sorted.length
-      ? '<div class="empty" style="padding:16px;"><div class="empty-body">No attendance yet.</div></div>'
-      : sorted.map(function(c, i) {
-          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
-            '<div style="display:flex;align-items:center;gap:10px;">' +
-            '<span style="font-size:11px;color:var(--text-faint);width:16px;">' + (i+1) + '</span>' +
-            '<span style="font-weight:500;color:var(--brown);">' + c.name + '</span></div>' +
-            '<span style="background:var(--brown);color:var(--gold);font-size:12px;font-weight:600;padding:3px 10px;">' + c.count + ' class' + (c.count !== 1 ? 'es' : '') + '</span></div>';
-        }).join('');
-  }
+  // Top clients - all time attended count
+  var counts = {};
+  S.attendance.filter(function(a){ return a.status === 'attended'; }).forEach(function(a) {
+    var reg = S.registrations.find(function(r) { return r.id === a.registrationId; });
+    if (!reg) return;
+    if (!counts[reg.memberId]) counts[reg.memberId] = { name: mName(reg.memberId), count: 0 };
+    counts[reg.memberId].count++;
+  });
+  var sorted = Object.values(counts).sort(function(a,b){return b.count-a.count;}).slice(0,8);
+  document.getElementById('dashTop').innerHTML = !sorted.length
+    ? '<div class="empty" style="padding:16px;"><div class="empty-body">No attendance logged yet.</div></div>'
+    : sorted.map(function(c, i) {
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
+          '<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:11px;color:var(--text-faint);width:16px;">' + (i+1) + '</span>' +
+          '<span style="font-weight:500;color:var(--brown);">' + c.name + '</span></div>' +
+          '<span style="background:var(--brown);color:var(--gold);font-size:12px;font-weight:600;padding:3px 10px;">' + c.count + ' class' + (c.count!==1?'es':'') + '</span></div>';
+      }).join('');
 }
 
+// ============ MEMBERS ============
 function renderMembers() {
   var tbody = document.getElementById('membersTable');
   if (!S.members.length) {
-    tbody.innerHTML = '<tr><td colspan="6"><div class="empty"><div class="empty-icon">🌿</div><div class="empty-title">No members yet</div><div class="empty-body">Add your first member to get started.</div></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">🌿</div><div class="empty-title">No members yet</div><div class="empty-body">Add your first member to get started.</div></div></td></tr>';
     return;
   }
-  tbody.innerHTML = S.members.map(function(m) {
-    var r = creditsLeft(m.id);
-    var cls = S.classes.find(function(c) { return c.slot === m.class; });
-    var badge = cls ? '<span class="badge ' + (m.class === 'morning' ? 'badge-block' : 'badge-dropin') + '">' + cls.time + '</span>' : '';
+  tbody.innerHTML = sortedMembers().map(function(m) {
+    var c = activeCreditsForMember(m.id);
+    var cls = clsObj(m.class);
+    var badge = cls ? '<span class="badge ' + (m.class==='morning'?'badge-block':'badge-dropin') + '">' + cls.time + '</span>' : '';
     return '<tr>' +
       '<td><input type="checkbox" class="member-check" data-email="' + m.email + '" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;"></td>' +
       '<td><div class="tdn" data-id="' + m.id + '" onclick="openProfile(this.dataset.id)">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
@@ -571,43 +666,37 @@ function renderMembers() {
       '<td style="font-size:13px;">' + m.email + '</td>' +
       '<td style="font-size:13px;">' + (m.phone || '') + '</td>' +
       '<td>' + badge + '</td>' +
-      '<td style="text-align:center;"><span class="cp ' + cpClass(r) + '">' + r + '</span></td>' +
+      '<td style="text-align:center;"><span class="cp ' + cpClass(c) + '">' + c + '</span></td>' +
       '<td><div style="display:flex;gap:6px;">' +
         '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="openEditMember(this.dataset.id)">Edit</button>' +
         '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="openAddPurchaseFor(this.dataset.id)">+ Credits</button>' +
-        '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="copyMemberEmail(this.dataset.id)" title="Copy email">📋</button>' +
+        '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="copyMemberEmail(this.dataset.id)">📋</button>' +
         '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="emailMember(this.dataset.id)">✉</button>' +
         '<button class="btn btn-red btn-sm" data-id="' + m.id + '" onclick="deleteMember(this.dataset.id)">✕</button>' +
       '</div></td></tr>';
   }).join('');
 }
 
+// ============ PURCHASES ============
 function renderPurchases() {
   var byType = {};
   S.purchases.forEach(function(p) {
-    var k = (p.class || '') + '|' + (p.packageLabel || p.package || '');
-    if (!byType[k]) byType[k] = {cls: p.class || '', pkg: p.packageLabel || p.package || '', count: 0, amount: 0, credits: 0};
-    byType[k].count++;
-    byType[k].amount += (p.amount || 0);
-    byType[k].credits += (p.credits || 0);
+    var key = (p.class || '') + '|' + (p.packageLabel || p.package || '');
+    if (!byType[key]) byType[key] = {cls: p.class || '', pkg: p.packageLabel || p.package || '', count: 0, amount: 0, credits: 0};
+    byType[key].count++; byType[key].amount += (p.amount||0); byType[key].credits += (p.credits||0);
   });
-  var total = S.purchases.reduce(function(s, p) { return s + (p.amount || 0); }, 0);
+  var total = S.purchases.reduce(function(s,p){return s+(p.amount||0);},0);
   var sumEl = document.getElementById('earningsSummary');
   if (!S.purchases.length) {
     sumEl.innerHTML = '<div style="font-size:14px;font-weight:300;color:var(--text-faint);">No purchases yet.</div>';
   } else {
     var rows = Object.values(byType).map(function(r) {
-      return '<tr><td style="font-size:13px;">' + r.cls + '</td><td style="font-size:13px;">' + r.pkg + '</td>' +
-        '<td style="text-align:center;">' + r.count + '</td><td style="text-align:center;">' + r.credits + '</td>' +
-        '<td style="text-align:right;font-weight:500;color:var(--gold);">£' + r.amount.toFixed(0) + '</td></tr>';
+      return '<tr><td style="font-size:13px;">' + r.cls + '</td><td style="font-size:13px;">' + r.pkg + '</td><td style="text-align:center;">' + r.count + '</td><td style="text-align:center;">' + r.credits + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + r.amount.toFixed(0) + '</td></tr>';
     }).join('');
     sumEl.innerHTML = '<div style="overflow-x:auto;"><table><thead><tr><th>Class</th><th>Package</th><th>Bookings</th><th>Credits</th><th style="text-align:right;">Revenue</th></tr></thead><tbody>' +
-      rows +
-      '<tr style="background:var(--brown);"><td colspan="4" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(247,244,239,0.5);">TOTAL</td>' +
-      '<td style="text-align:right;font-size:20px;font-weight:600;color:var(--gold);">£' + total.toFixed(0) + '</td></tr>' +
-      '</tbody></table></div>';
+      rows + '<tr style="background:var(--brown);"><td colspan="4" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(247,244,239,0.5);">TOTAL</td>' +
+      '<td style="text-align:right;font-size:18px;font-weight:600;color:var(--gold);">£' + total.toFixed(0) + '</td></tr></tbody></table></div>';
   }
-
   var tbody = document.getElementById('purchasesTable');
   if (!S.purchases.length) {
     tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">💳</div><div class="empty-title">No purchases yet</div></div></td></tr>';
@@ -615,328 +704,39 @@ function renderPurchases() {
   }
   tbody.innerHTML = S.purchases.slice().reverse().map(function(p) {
     return '<tr><td style="font-size:13px;">' + (p.date || '') + '</td>' +
-      '<td><div class="tdn" data-id="' + p.memberId + '" onclick="openProfile(this.dataset.id)">' + (p.memberName || '') + '</div></td>' +
+      '<td><div class="tdn" data-id="' + p.memberId + '" onclick="openProfile(this.dataset.id)">' + p.memberName + '</div></td>' +
       '<td style="font-size:13px;">' + (p.class || '') + '</td>' +
       '<td style="font-size:13px;">' + (p.packageLabel || p.package || '') + '</td>' +
       '<td style="text-align:center;">' + (p.credits || 0) + '</td>' +
       '<td style="text-align:right;font-weight:500;color:var(--gold);">£' + (p.amount || 0).toFixed(0) + '</td>' +
-      '<td><div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" data-id="' + p.id + '" onclick="openEditPurchase(this.dataset.id)">Edit</button><button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button></div></td></tr>';
+      '<td><div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" data-id="' + p.id + '" onclick="openEditPurchase(this.dataset.id)">Edit</button>' +
+      '<button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button></div></td></tr>';
   }).join('');
 }
 
-function formatDateLong(d) {
-  return d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-}
-
-function getCourseDates() {
-  // Generate date strings from all stored course blocks (sorted chronologically)
-  if (!S.courseBlocks || !S.courseBlocks.length) {
-    return [];
-  }
-  var allDates = [];
-  S.courseBlocks.forEach(function(block) {
-    var start = new Date(block.startDate + 'T00:00:00');
-    for (var i = 0; i < block.weeks; i++) {
-      var d = new Date(start);
-      d.setDate(start.getDate() + (i * 7));
-      allDates.push({iso: d.toISOString().split('T')[0], label: formatDateLong(d)});
-    }
-  });
-  // Dedupe and sort chronologically
-  var seen = {};
-  var unique = allDates.filter(function(d) {
-    if (seen[d.iso]) return false;
-    seen[d.iso] = true;
-    return true;
-  });
-  unique.sort(function(a,b){ return a.iso.localeCompare(b.iso); });
-  return unique.map(function(d){ return d.label; });
-}
-
-function addCourseBlock() {
-  var startInput = document.getElementById('newBlockStart').value;
-  var weeks = parseInt(document.getElementById('newBlockWeeks').value) || 4;
-  if (!startInput) { toast('Please choose a start date.'); return; }
-  if (!S.courseBlocks) S.courseBlocks = [];
-  S.courseBlocks.push({ id: Date.now().toString(), startDate: startInput, weeks: weeks });
-  save();
-  renderCourseBlocks();
-  renderAttendance();
-  document.getElementById('newBlockStart').value = '';
-  document.getElementById('newBlockWeeks').value = 4;
-  toast('Course block added — ' + weeks + ' classes scheduled!');
-}
-
-function removeCourseBlock(id) {
-  if (!confirm('Remove this course block? Any attendance already logged for these dates will stay in your history.')) return;
-  S.courseBlocks = S.courseBlocks.filter(function(b) { return b.id !== id; });
-  save();
-  renderCourseBlocks();
-  renderAttendance();
-  toast('Course block removed.');
-}
-
-function renderCourseBlocks() {
-  var el = document.getElementById('courseBlocksList');
-  if (!el) return;
-  if (!S.courseBlocks || !S.courseBlocks.length) {
-    el.innerHTML = '<div class="empty" style="padding:20px;"><div class="empty-body">No course blocks yet. Add your first one below.</div></div>';
-    return;
-  }
-  var sorted = S.courseBlocks.slice().sort(function(a,b){ return a.startDate.localeCompare(b.startDate); });
-  el.innerHTML = sorted.map(function(block) {
-    var start = new Date(block.startDate + 'T00:00:00');
-    var end = new Date(start);
-    end.setDate(start.getDate() + (block.weeks - 1) * 7);
-    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--off-white);border:1px solid var(--border);margin-bottom:8px;">' +
-      '<div><div style="font-weight:500;font-size:14px;color:var(--brown);">' + formatDateLong(start) + ' → ' + formatDateLong(end) + '</div>' +
-      '<div style="font-size:12px;color:var(--text-faint);margin-top:2px;">' + block.weeks + ' weeks</div></div>' +
-      '<button class="btn btn-red btn-sm" data-id="' + block.id + '" onclick="removeCourseBlock(this.dataset.id)">✕</button></div>';
-  }).join('');
-}
-
-function renderAttendance() {
-  var container = document.getElementById('attendanceSections');
-  if (!container) return;
-  var dates = getCourseDates();
-  var html = '';
-  dates.forEach(function(dateStr) {
-    html += '<div style="margin-bottom:28px;">';
-    html += '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;align-items:center;">' +
-      '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--gold);">' + dateStr + '</span></div>';
-    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">';
-    S.classes.forEach(function(cls) {
-      var members = S.members.filter(function(m) {
-        var hasCredit = creditsLeft(m.id) > 0;
-        var inClass = m.class === cls.slot || m.class === 'both';
-        return hasCredit && inClass;
-      });
-      var savedRecs = S.attendance.filter(function(a) {
-        return a.date === dateStr && a.slot === cls.slot;
-      });
-      var saved = savedRecs.map(function(a) { return a.memberId; });
-      var totalSaved = savedRecs.length;
-
-      var rows = !members.length
-        ? '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No members with active credits.</div>'
-        : members.map(function(m) {
-            var key = m.id + '_' + cls.slot + '_' + dateStr;
-            var isSaved = saved.indexOf(m.id) >= 0;
-            var isChecked = S.todayChecked[key] ? 'checked' : '';
-            var type = getBookingType(m);
-            var badge = type === 'dropin'
-              ? '<span class="badge badge-dropin">Drop in</span>'
-              : '<span class="badge badge-block">Block</span>';
-            return '<div class="att-row">' +
-              '<div style="display:flex;align-items:center;gap:10px;">' +
-                '<input type="checkbox" class="att-check" ' + (isSaved ? 'checked disabled' : isChecked) +
-                  ' data-mid="' + m.id + '" data-slot="' + cls.slot + '" data-date="' + dateStr + '"' +
-                  (isSaved ? '' : ' onchange="toggleAtt(this)"') + '>' +
-                '<div>' +
-                  '<div style="font-weight:500;font-size:13px;color:var(--brown)' + (isSaved ? ';opacity:0.6' : '') + ';">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
-                  badge +
-                '</div>' +
-              '</div>' +
-              (isSaved ? '<span style="font-size:10px;color:var(--green);font-weight:600;">✓ Saved</span>' : '') +
-            '</div>';
-          }).join('');
-
-      var encDate = dateStr.replace(/'/g, "\\'");
-      html += '<div class="card" style="margin-bottom:0;">' +
-        '<div style="padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">' +
-          '<div><div style="font-size:16px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
-          (totalSaved > 0 ? '<div style="font-size:11px;color:var(--text-mid);margin-top:2px;">✓ ' + totalSaved + ' attended · ' + (members.length - totalSaved) + ' not yet logged</div>' : '') + '</div>' +
-          '<div style="display:flex;gap:6px;">' +
-            '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="tickAll(this.dataset.slot,this.dataset.date,true)">All</button>' +
-            '<button class="btn btn-ghost btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="tickAll(this.dataset.slot,this.dataset.date,false)">Clear</button>' +
-          '</div>' +
-        '</div>' +
-        rows +
-        '<div style="padding-top:10px;">' +
-          '<button class="btn btn-dark btn-sm" data-slot="' + cls.slot + '" data-date="' + encDate + '" onclick="saveAtt(this.dataset.slot,this.dataset.date)" style="width:100%;">Save ' + dateStr + '</button>' +
-        '</div>' +
-      '</div>';
-    });
-    html += '</div></div>';
-  });
-  container.innerHTML = html;
-
-  // History
-  var histEl = document.getElementById('attendHistory');
-  if (!S.attendance.length) {
-    histEl.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No history yet</div></div>';
-    return;
-  }
-  var grouped = {};
-  S.attendance.slice().reverse().forEach(function(a) {
-    if (!grouped[a.date]) grouped[a.date] = [];
-    grouped[a.date].push(a);
-  });
-  histEl.innerHTML = Object.entries(grouped).map(function(entry) {
-    var date = entry[0], recs = entry[1];
-    return '<div style="background:var(--gold-pale);border:1px solid var(--border);padding:10px 14px;margin-bottom:1px;display:flex;justify-content:space-between;">' +
-      '<span style="font-size:14px;font-weight:500;color:var(--brown);">' + date + '</span>' +
-      '<span style="font-size:12px;color:var(--text-mid);">' + recs.length + ' attended</span></div>' +
-      recs.map(function(r) {
-        return '<div style="background:var(--white);border:1px solid var(--border);border-top:none;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:1px;">' +
-          '<div><div style="font-weight:500;font-size:14px;">' + r.memberName + '</div><div style="font-size:12px;color:var(--text-faint);">' + r.class + '</div></div>' +
-          '<div style="display:flex;align-items:center;gap:8px;">' +
-            '<div style="font-size:12px;color:var(--text-mid);">' + r.creditsAfter + ' left</div>' +
-            '<button class="btn btn-ghost btn-sm" data-id="' + r.id + '" onclick="editAttDate(this.dataset.id)" style="padding:4px 10px;font-size:10px;">Edit date</button>' +
-            '<button class="btn btn-red btn-sm" data-id="' + r.id + '" onclick="deleteAtt(this.dataset.id)" style="padding:4px 10px;font-size:10px;">✕</button>' +
-          '</div></div>';
-      }).join('') + '<div style="margin-bottom:14px;"></div>';
-  }).join('');
-}
-
-function renderSettings() {
-  var el = document.getElementById('clsSettings');
-  if (!el) return;
-  el.innerHTML = S.classes.map(function(cls, i) {
-    return '<div class="set-row">' +
-      '<div><div class="set-lbl">Day</div><input class="set-input" value="' + cls.day + '" data-i="' + i + '" data-f="day" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
-      '<div><div class="set-lbl">Time</div><input class="set-input" value="' + cls.time + '" data-i="' + i + '" data-f="time" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
-      '<div><div class="set-lbl">Name</div><input class="set-input" value="' + cls.name + '" data-i="' + i + '" data-f="name" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
-      '<button class="btn btn-red btn-sm" data-i="' + i + '" onclick="removeCls(parseInt(this.dataset.i))">✕</button></div>';
-  }).join('');
-}
-
-// ATTENDANCE
-function toggleAtt(input) {
-  var key = input.dataset.mid + '_' + input.dataset.slot + '_' + input.dataset.date;
-  S.todayChecked[key] = input.checked;
-  save();
-}
-function tickAll(slot, date, val) {
-  S.members.filter(function(m) {
-    return (m.class === slot || m.class === 'both') && creditsLeft(m.id) > 0;
-  }).forEach(function(m) {
-    S.todayChecked[m.id + '_' + slot + '_' + date] = val;
-  });
-  save(); renderAttendance();
-}
-function saveAtt(slot, date) {
-  var count = 0;
-  var cls = S.classes.find(function(c) { return c.slot === slot; });
-  Object.keys(S.todayChecked).forEach(function(key) {
-    if (!S.todayChecked[key]) return;
-    var parts = key.split('_');
-    var mid = parts[0];
-    var kSlot = parts[1];
-    var kDate = parts.slice(2).join('_');
-    if (kSlot !== slot || kDate !== date) return;
-    var member = S.members.find(function(m) { return m.id === mid; });
-    if (!member) return;
-    var already = S.attendance.find(function(a) { return a.memberId === mid && a.slot === slot && a.date === date; });
-    if (already) return;
-    S.attendance.push({
-      id: Date.now().toString() + Math.floor(Math.random() * 10000),
-      date: date, memberId: mid,
-      memberName: member.firstName + ' ' + (member.lastName || ''),
-      slot: slot,
-      class: cls ? cls.name + ' (' + cls.time + ')' : slot,
-      creditsAfter: creditsLeft(mid) - 1
-    });
-    count++;
-  });
-  // Clear saved keys
-  Object.keys(S.todayChecked).forEach(function(key) {
-    var parts = key.split('_');
-    if (parts[1] === slot && parts.slice(2).join('_') === date) delete S.todayChecked[key];
-  });
-  save(); render();
-  toast(count + ' record' + (count !== 1 ? 's' : '') + ' saved for ' + date + '!');
-}
-function deleteAtt(id) {
-  var r = S.attendance.find(function(a) { return a.id === id; });
-  if (!r) return;
-  if (!confirm('Remove attendance for ' + r.memberName + ' on ' + r.date + '? Credit restored.')) return;
-  S.attendance = S.attendance.filter(function(a) { return a.id !== id; });
-  save(); render(); toast('Attendance removed. Credit restored.');
-}
-function editAttDate(id) {
-  var r = S.attendance.find(function(a) { return a.id === id; });
-  if (!r) return;
-  var nd = prompt('Enter new date:', r.date);
-  if (!nd || !nd.trim()) return;
-  r.date = nd.trim(); save(); render(); toast('Date updated.');
-}
-
-// MEMBERS
-function openAddMember() {
-  document.getElementById('mId').value = '';
-  document.getElementById('mFirst').value = '';
-  document.getElementById('mLast').value = '';
-  document.getElementById('mEmail').value = '';
-  document.getElementById('mPhone').value = '';
-  document.getElementById('mNotes').value = '';
-  document.getElementById('memberModalTitle').innerHTML = 'Add <span>Member</span>';
-  var sel = document.getElementById('mClass');
-  sel.innerHTML = S.classes.map(function(c) {
-    return '<option value="' + c.slot + '">' + c.day + ' ' + c.time + ' — ' + c.name + '</option>';
-  }).join('') + '<option value="both">Both Classes</option>';
-  openModal('modalMember');
-}
-function openEditMember(id) {
-  var m = S.members.find(function(m) { return m.id === id; });
-  if (!m) return;
-  document.getElementById('mId').value = m.id;
-  document.getElementById('mFirst').value = m.firstName;
-  document.getElementById('mLast').value = m.lastName || '';
-  document.getElementById('mEmail').value = m.email;
-  document.getElementById('mPhone').value = m.phone || '';
-  document.getElementById('mNotes').value = m.notes || '';
-  document.getElementById('memberModalTitle').innerHTML = 'Edit <span>Member</span>';
-  var sel = document.getElementById('mClass');
-  sel.innerHTML = S.classes.map(function(c) {
-    return '<option value="' + c.slot + '"' + (m.class === c.slot ? ' selected' : '') + '>' + c.day + ' ' + c.time + ' — ' + c.name + '</option>';
-  }).join('') + '<option value="both"' + (m.class === 'both' ? ' selected' : '') + '>Both Classes</option>';
-  openModal('modalMember');
-}
-function saveMember() {
-  var first = document.getElementById('mFirst').value.trim();
-  var email = document.getElementById('mEmail').value.trim();
-  if (!first || !email) { toast('Please fill in name and email.'); return; }
-  var id = document.getElementById('mId').value;
-  var data = {
-    firstName: first, lastName: document.getElementById('mLast').value.trim(),
-    email: email, phone: document.getElementById('mPhone').value.trim(),
-    class: document.getElementById('mClass').value, notes: document.getElementById('mNotes').value.trim()
-  };
-  if (id) {
-    Object.assign(S.members.find(function(m) { return m.id === id; }), data);
-    toast(first + ' updated!');
-  } else {
-    S.members.push(Object.assign({id: Date.now().toString(), joinDate: toISO()}, data));
-    toast(first + ' added!');
-  }
-  save(); closeModal('modalMember'); render();
-}
-function deleteMember(id) {
-  var m = S.members.find(function(m) { return m.id === id; });
-  if (!confirm('Remove ' + (m ? m.firstName : 'this member') + '?')) return;
-  S.members = S.members.filter(function(m) { return m.id !== id; });
-  save(); render(); toast('Member removed.');
-}
-
-// PURCHASES
 function openAddPurchase() {
   document.getElementById('pId').value = '';
   document.getElementById('purchaseModalTitle').innerHTML = 'Add <span>Purchase</span>';
   document.getElementById('purchaseSaveBtn').textContent = 'Save Purchase';
-  var sortedMembers = S.members.slice().sort(function(a,b){return (a.firstName+' '+(a.lastName||'')).localeCompare(b.firstName+' '+(b.lastName||''));});
   document.getElementById('pMember').innerHTML = '<option value="">Select member...</option>' +
-    sortedMembers.map(function(m) {
-      return '<option value="' + m.id + '">' + m.firstName + ' ' + (m.lastName || '') + '</option>';
-    }).join('');
+    sortedMembers().map(function(m) { return '<option value="' + m.id + '">' + m.firstName + ' ' + (m.lastName||'') + '</option>'; }).join('');
   document.getElementById('pClass').innerHTML = S.classes.map(function(c) {
     return '<option value="' + c.slot + '">' + c.day + ' ' + c.time + ' — ' + c.name + '</option>';
   }).join('');
-  document.getElementById('pPackage').value = '4week';
+  document.getElementById('pPackage').value = 'block4';
   document.getElementById('pDate').value = toISO();
   document.getElementById('pNotes').value = '';
+  populateCourseBlockSelect();
+  populateDropInDateSelect();
   updatePkgAmount();
+  onPurchaseClassChange();
   openModal('modalPurchase');
+}
+function openAddPurchaseFor(mid) {
+  openAddPurchase();
+  document.getElementById('pMember').value = mid;
+  var m = S.members.find(function(m) { return m.id === mid; });
+  if (m && m.class) { document.getElementById('pClass').value = m.class; onPurchaseClassChange(); }
 }
 function openEditPurchase(id) {
   var p = S.purchases.find(function(p) { return p.id === id; });
@@ -952,117 +752,413 @@ function openEditPurchase(id) {
   document.getElementById('pAmount').value = p.amount || 0;
   document.getElementById('pDate').value = p.date || '';
   document.getElementById('pNotes').value = p.notes || '';
+  onPurchaseClassChange();
+  if (p.courseBlockId) document.getElementById('pCourseBlock').value = p.courseBlockId;
+  if (p.dropInDate) document.getElementById('pDropInDate').value = p.dropInDate;
 }
-function openAddPurchaseFor(mid) {
-  openAddPurchase();
-  document.getElementById('pMember').value = mid;
-  var m = S.members.find(function(m) { return m.id === mid; });
-  if (m && m.class) document.getElementById('pClass').value = m.class;
+function populateCourseBlockSelect() {
+  var sel = document.getElementById('pCourseBlock');
+  var blocks = (S.courseBlocks||[]).slice().sort(function(a,b){return a.startDate.localeCompare(b.startDate);});
+  if (!blocks.length) {
+    sel.innerHTML = '<option value="">No course blocks set up — add one in Settings first</option>';
+    return;
+  }
+  sel.innerHTML = blocks.map(function(b) {
+    var dates = getCourseBlockDates(b);
+    return '<option value="' + b.id + '">' + formatDateLong(new Date(b.startDate+'T00:00:00')) + ' (' + b.weeks + ' weeks)</option>';
+  }).join('');
+}
+function populateDropInDateSelect() {
+  var sel = document.getElementById('pDropInDate');
+  var dates = getAllCourseDates().filter(function(d) { return d.iso >= toISO(); });
+  if (!dates.length) {
+    sel.innerHTML = '<option value="">No upcoming dates — add a course block in Settings</option>';
+    return;
+  }
+  sel.innerHTML = dates.map(function(d) {
+    return '<option value="' + d.iso + '">' + d.label + '</option>';
+  }).join('');
+}
+function onPurchaseClassChange() {
+  // No-op placeholder for potential future per-class drop-in filtering
 }
 function updatePkgAmount() {
   var pkg = document.getElementById('pPackage').value;
-  var map = {payg:{c:1,a:15}, block4:{c:4,a:50}, '4week':{c:4,a:50}, custom:{c:1,a:0}};
+  var map = {payg:{c:1,a:15}, block4:{c:4,a:50}, custom:{c:1,a:0}};
   var v = map[pkg] || map.custom;
   document.getElementById('pCredits').value = v.c;
   document.getElementById('pAmount').value = v.a;
+  document.getElementById('pBlockGroup').style.display = pkg === 'payg' ? 'none' : 'flex';
+  document.getElementById('pDropInGroup').style.display = pkg === 'payg' ? 'flex' : 'none';
 }
+
 function savePurchase() {
   var mid = document.getElementById('pMember').value;
   if (!mid) { toast('Please select a member.'); return; }
   var pkg = document.getElementById('pPackage').value;
-  var labels = {payg:'Drop in', block4:'Block of 4', '4week':'4 Week Course', custom:'Custom'};
+  var labels = {payg:'Drop in', block4:'Block of 4', custom:'Custom'};
   var slot = document.getElementById('pClass').value;
-  var clsObj = S.classes.find(function(c) { return c.slot === slot; });
+  var cls = clsObj(slot);
   var credits = parseInt(document.getElementById('pCredits').value) || 0;
+  var amount = parseFloat(document.getElementById('pAmount').value) || 0;
   var pid = document.getElementById('pId').value;
+  var courseBlockId = document.getElementById('pCourseBlock').value;
+  var dropInDate = document.getElementById('pDropInDate').value;
+
   var data = {
     memberId: mid, memberName: mName(mid),
-    class: clsObj ? clsObj.name : slot, classSlot: slot,
+    class: cls ? cls.name : slot, classSlot: slot,
     package: pkg, packageLabel: labels[pkg] || pkg,
-    credits: credits, amount: parseFloat(document.getElementById('pAmount').value) || 0,
-    date: document.getElementById('pDate').value, notes: document.getElementById('pNotes').value.trim()
+    credits: credits, amount: amount,
+    date: document.getElementById('pDate').value,
+    notes: document.getElementById('pNotes').value.trim(),
+    courseBlockId: pkg !== 'payg' ? courseBlockId : null,
+    dropInDate: pkg === 'payg' ? dropInDate : null
   };
+
+  var purchaseId;
   if (pid) {
+    // Editing: remove old registrations tied to this purchase, then recreate
+    S.registrations = S.registrations.filter(function(r) { return r.purchaseId !== pid; });
     var existing = S.purchases.find(function(p) { return p.id === pid; });
-    if (existing) Object.assign(existing, data);
+    Object.assign(existing, data);
+    purchaseId = pid;
     toast('Purchase updated!');
   } else {
-    S.purchases.push(Object.assign({id: Date.now().toString()}, data));
+    purchaseId = Date.now().toString() + Math.floor(Math.random()*10000);
+    S.purchases.push(Object.assign({id: purchaseId}, data));
     toast('Purchase saved!');
   }
+
+  // Auto-register based on package type
+  if (pkg === 'payg') {
+    if (dropInDate) {
+      S.registrations.push({
+        id: Date.now().toString() + Math.floor(Math.random()*10000),
+        memberId: mid, slot: slot, date: dropInDate, purchaseId: purchaseId
+      });
+    }
+  } else {
+    var block = (S.courseBlocks||[]).find(function(b) { return b.id === courseBlockId; });
+    if (block) {
+      getCourseBlockDates(block).forEach(function(d) {
+        S.registrations.push({
+          id: Date.now().toString() + Math.floor(Math.random()*10000),
+          memberId: mid, slot: slot, date: d.iso, purchaseId: purchaseId
+        });
+      });
+    }
+  }
+
   save(); closeModal('modalPurchase'); render();
 }
+
 function deletePurchase(id) {
-  if (!confirm('Delete this purchase?')) return;
+  if (!confirm('Delete this purchase? This will also remove their registrations for these classes (any attendance already logged will be kept in history but unlinked).')) return;
   S.purchases = S.purchases.filter(function(p) { return p.id !== id; });
+  var regsToRemove = S.registrations.filter(function(r) { return r.purchaseId === id; }).map(function(r){return r.id;});
+  S.registrations = S.registrations.filter(function(r) { return r.purchaseId !== id; });
+  // Keep attendance history but it becomes orphaned (registrationId no longer matches a live reg) - that's fine, it stays in history export
   save(); render(); toast('Purchase deleted.');
 }
 
-// PROFILE
+// ============ ATTENDANCE ============
+function renderAttendance() {
+  var container = document.getElementById('attendanceSections');
+  if (!container) return;
+  var dates = getAllCourseDates();
+  if (!dates.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-body">No course blocks set up yet. Add one in Settings to get started.</div></div>';
+  } else {
+    var html = '';
+    dates.forEach(function(d) {
+      html += '<div style="margin-bottom:28px;">';
+      html += '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;align-items:center;">' +
+        '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--gold);">' + d.label + '</span></div>';
+      html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">';
+      S.classes.forEach(function(cls) {
+        var regs = S.registrations.filter(function(r) { return r.slot === cls.slot && r.date === d.iso; });
+        var rows = !regs.length
+          ? '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No one registered.</div>'
+          : regs.map(function(reg) {
+              var member = S.members.find(function(m) { return m.id === reg.memberId; });
+              if (!member) return '';
+              var att = attendanceForReg(reg.id);
+              var status = att ? att.status : null;
+              var type = getBookingType(reg);
+              var typeBadge = type === 'dropin'
+                ? '<span class="badge badge-dropin">Drop in</span>'
+                : '<span class="badge badge-block">Block</span>';
+              var checked = status === 'attended' ? 'checked' : '';
+              return '<div class="att-row">' +
+                '<div style="display:flex;align-items:center;gap:10px;">' +
+                  '<input type="checkbox" class="att-check" ' + checked +
+                  ' data-regid="' + reg.id + '" onchange="toggleAttendance(this.dataset.regid,this.checked)">' +
+                  '<div>' +
+                    '<div style="font-weight:500;font-size:13px;color:var(--brown);">' + member.firstName + ' ' + (member.lastName||'') + '</div>' +
+                    typeBadge +
+                  '</div>' +
+                '</div>' +
+                (status === 'attended' ? '<span class="badge badge-attended">✓ Attended</span>' :
+                 status === 'noshow' ? '<span class="badge badge-noshow">No show</span>' :
+                 d.iso < toISO() ? '<span class="badge badge-pending">Not logged</span>' : '<span class="badge badge-pending">Upcoming</span>') +
+              '</div>';
+            }).join('');
+        html += '<div class="card" style="margin-bottom:0;">' +
+          '<div style="padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">' +
+            '<div style="font-size:16px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
+            '<span style="font-size:11px;color:var(--text-mid);">' + regs.length + ' registered</span>' +
+          '</div>' + rows + '</div>';
+      });
+      html += '</div></div>';
+    });
+    container.innerHTML = html;
+  }
+
+  // History grouped by CLASS then date
+  var histEl = document.getElementById('attendHistory');
+  var loggedRegIds = {};
+  S.attendance.forEach(function(a) { loggedRegIds[a.registrationId] = a; });
+  var hasHistory = Object.keys(loggedRegIds).length > 0;
+  if (!hasHistory) {
+    histEl.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No history yet</div></div>';
+    return;
+  }
+  var byClass = {};
+  S.attendance.forEach(function(a) {
+    var reg = S.registrations.find(function(r) { return r.id === a.registrationId; });
+    var slot = reg ? reg.slot : (a.slot || 'unknown');
+    if (!byClass[slot]) byClass[slot] = [];
+    byClass[slot].push({ a: a, reg: reg });
+  });
+  histEl.innerHTML = Object.keys(byClass).map(function(slot) {
+    var cls = clsObj(slot);
+    var entries = byClass[slot].slice().sort(function(x,y) {
+      var dx = x.reg ? x.reg.date : '';
+      var dy = y.reg ? y.reg.date : '';
+      return dy.localeCompare(dx);
+    });
+    var attendedCount = entries.filter(function(e){return e.a.status==='attended';}).length;
+    var noshowCount = entries.filter(function(e){return e.a.status==='noshow';}).length;
+    var rows = entries.map(function(e) {
+      var member = e.reg ? S.members.find(function(m){return m.id===e.reg.memberId;}) : null;
+      var name = member ? (member.firstName + ' ' + (member.lastName||'')) : 'Unknown (deleted)';
+      var dateStr = e.reg ? e.reg.date : '';
+      var dateLabel = dateStr ? formatDateLong(new Date(dateStr+'T00:00:00')) : 'Unknown date';
+      var statusBadge = e.a.status === 'attended' ? '<span class="badge badge-attended">Attended</span>' : '<span class="badge badge-noshow">No show</span>';
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid var(--border);font-size:13px;">' +
+        '<div><div style="font-weight:500;">' + name + '</div><div style="font-size:11px;color:var(--text-faint);">' + dateLabel + '</div></div>' +
+        '<div style="display:flex;align-items:center;gap:10px;">' + statusBadge +
+        '<button class="btn btn-ghost btn-sm" data-id="' + e.a.id + '" onclick="undoAttendance(this.dataset.id)" style="padding:4px 10px;font-size:10px;">Undo</button></div></div>';
+    }).join('');
+    return '<div class="card" style="padding:0;margin-bottom:14px;">' +
+      '<div class="card-hdr" style="margin:0;padding:16px 20px;">' +
+        '<div class="card-title">' + (cls ? cls.day + ' ' + cls.time + ' — ' + cls.name : slot) + '</div>' +
+        '<div style="font-size:12px;color:var(--text-mid);">' + attendedCount + ' attended · ' + noshowCount + ' no show</div>' +
+      '</div>' + rows + '</div>';
+  }).join('');
+}
+
+function toggleAttendance(regId, checked) {
+  var existing = S.attendance.find(function(a) { return a.registrationId === regId; });
+  if (checked) {
+    if (existing) { existing.status = 'attended'; }
+    else { S.attendance.push({ id: Date.now().toString()+Math.floor(Math.random()*10000), registrationId: regId, status: 'attended' }); }
+  } else {
+    if (existing) { existing.status = 'noshow'; }
+    else { S.attendance.push({ id: Date.now().toString()+Math.floor(Math.random()*10000), registrationId: regId, status: 'noshow' }); }
+  }
+  save(); render();
+}
+function undoAttendance(attId) {
+  if (!confirm('Remove this attendance record?')) return;
+  S.attendance = S.attendance.filter(function(a) { return a.id !== attId; });
+  save(); render(); toast('Attendance record removed.');
+}
+
+// ============ PROFILE ============
 function openProfile(id) {
   var m = S.members.find(function(m) { return m.id === id; });
   if (!m) return;
   var purchases = S.purchases.filter(function(p) { return p.memberId === id; });
-  var attended = S.attendance.filter(function(a) { return a.memberId === id; });
-  var totalSpend = purchases.reduce(function(s, p) { return s + (p.amount || 0); }, 0);
-  var rem = creditsLeft(id);
-  var cls = S.classes.find(function(c) { return c.slot === m.class; });
+  var regs = registrationsForMember(id);
+  var attendedCount = 0, noshowCount = 0;
+  regs.forEach(function(r) {
+    var att = attendanceForReg(r.id);
+    if (att && att.status === 'attended') attendedCount++;
+    if (att && att.status === 'noshow') noshowCount++;
+  });
+  var totalSpend = purchases.reduce(function(s,p){return s+(p.amount||0);},0);
+  var activeCredits = activeCreditsForMember(id);
+  var cls = clsObj(m.class);
 
-  var html =
-    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:20px;">' +
-      '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:36px;font-weight:700;color:var(--gold);line-height:1;">' + attended.length + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Classes</div></div>' +
-      '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:36px;font-weight:700;color:var(--gold);line-height:1;">£' + totalSpend.toFixed(0) + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Spent</div></div>' +
-      '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:36px;font-weight:700;color:' + (rem <= 0 ? '#c0392b' : rem === 1 ? '#f39c12' : 'var(--gold)') + ';line-height:1;">' + rem + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Credits</div></div>' +
-    '</div>' +
-    '<table style="width:100%;font-size:14px;border-collapse:collapse;margin-bottom:16px;">' +
-      '<tr><td style="color:var(--text-mid);padding:5px 0;width:35%;">Email</td><td style="font-weight:500;">' + m.email + '</td></tr>' +
-      (m.phone ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Phone</td><td style="font-weight:500;">' + m.phone + '</td></tr>' : '') +
-      '<tr><td style="color:var(--text-mid);padding:5px 0;">Class</td><td style="font-weight:500;">' + (cls ? cls.day + ' ' + cls.time + ' — ' + cls.name : m.class) + '</td></tr>' +
-      (m.joinDate ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Joined</td><td style="font-weight:500;">' + m.joinDate + '</td></tr>' : '') +
-      (m.notes ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Notes</td><td style="font-weight:500;">' + m.notes + '</td></tr>' : '') +
-    '</table>' +
-    '<div style="display:flex;gap:8px;margin-bottom:16px;">' +
-      '<button class="btn btn-gold btn-sm" data-id="' + id + '" onclick="closeModal(\'modalProfile\');openEditMember(this.dataset.id)">Edit</button>' +
-      '<button class="btn btn-ghost btn-sm" data-id="' + id + '" onclick="closeModal(\'modalProfile\');openAddPurchaseFor(this.dataset.id)">+ Purchase</button>' +
-      '<button class="btn btn-ghost btn-sm" data-id="' + id + '" onclick="copyMemberEmail(this.dataset.id)">📋 Copy email</button>' +
-    '</div>';
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:20px;">' +
+    '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:var(--gold);">' + attendedCount + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Attended</div></div>' +
+    '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:var(--gold);">£' + totalSpend.toFixed(0) + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Spent</div></div>' +
+    '<div style="background:var(--brown);padding:16px;text-align:center;"><div style="font-size:32px;font-weight:700;color:' + (activeCredits<=0?'#c0392b':activeCredits===1?'#f39c12':'var(--gold)') + ';">' + activeCredits + '</div><div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Active Credits</div></div>' +
+  '</div>';
+  html += '<table style="width:100%;font-size:14px;border-collapse:collapse;margin-bottom:16px;">' +
+    '<tr><td style="color:var(--text-mid);padding:5px 0;width:35%;">Email</td><td style="font-weight:500;">' + m.email + '</td></tr>' +
+    (m.phone ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Phone</td><td style="font-weight:500;">' + m.phone + '</td></tr>' : '') +
+    '<tr><td style="color:var(--text-mid);padding:5px 0;">Class</td><td style="font-weight:500;">' + (cls ? cls.day + ' ' + cls.time + ' — ' + cls.name : m.class) + '</td></tr>' +
+    (m.notes ? '<tr><td style="color:var(--text-mid);padding:5px 0;">Notes</td><td style="font-weight:500;">' + m.notes + '</td></tr>' : '') +
+  '</table>';
+  html += '<div style="display:flex;gap:8px;margin-bottom:16px;">' +
+    '<button class="btn btn-gold btn-sm" data-id="' + id + '" onclick="closeModal(\'modalProfile\');openEditMember(this.dataset.id)">Edit</button>' +
+    '<button class="btn btn-ghost btn-sm" data-id="' + id + '" onclick="closeModal(\'modalProfile\');openAddPurchaseFor(this.dataset.id)">+ Purchase</button>' +
+    '<button class="btn btn-ghost btn-sm" data-id="' + id + '" onclick="copyMemberEmail(this.dataset.id)">📋 Copy email</button>' +
+  '</div>';
 
   if (purchases.length) {
     html += '<div style="font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mid);margin-bottom:10px;">Purchase History</div>';
     html += purchases.map(function(p) {
       return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
-        '<div><div style="font-weight:500;">' + (p.packageLabel || p.package) + '</div>' +
-        '<div style="color:var(--text-faint);font-size:11px;">' + (p.date || '') + ' · ' + (p.class || '') + '</div></div>' +
-        '<div style="font-weight:500;color:var(--gold);">£' + (p.amount || 0).toFixed(0) + '</div></div>';
+        '<div><div style="font-weight:500;">' + (p.packageLabel||p.package) + '</div>' +
+        '<div style="color:var(--text-faint);font-size:11px;">' + (p.date||'') + ' · ' + (p.class||'') + '</div></div>' +
+        '<div style="font-weight:500;color:var(--gold);">£' + (p.amount||0).toFixed(0) + '</div></div>';
     }).join('');
   }
 
-  if (attended.length) {
-    html += '<div style="font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mid);margin:16px 0 10px;">Attendance (' + attended.length + ')</div>';
-    html += attended.slice().reverse().map(function(a) {
+  if (regs.length) {
+    html += '<div style="font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-mid);margin:16px 0 10px;">Class Registrations (' + regs.length + ')</div>';
+    html += regs.slice().sort(function(a,b){return b.date.localeCompare(a.date);}).map(function(r) {
+      var att = attendanceForReg(r.id);
+      var statusBadge = att && att.status === 'attended' ? '<span class="badge badge-attended">Attended</span>' :
+                         att && att.status === 'noshow' ? '<span class="badge badge-noshow">No show</span>' :
+                         r.date < toISO() ? '<span class="badge badge-pending">Not logged</span>' : '<span class="badge badge-pending">Upcoming</span>';
       return '<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;">' +
-        '<div style="color:var(--text-mid);">' + a.date + '</div>' +
-        '<div style="display:flex;align-items:center;gap:8px;">' +
-          '<span style="font-weight:500;">' + a.class + '</span>' +
-          '<button class="btn btn-red btn-sm" data-attid="' + a.id + '" data-mid="' + id + '" onclick="deleteAttFromProfile(this.dataset.attid,this.dataset.mid)" style="padding:3px 8px;font-size:10px;">✕</button>' +
-        '</div></div>';
+        '<div style="color:var(--text-mid);">' + formatDateLong(new Date(r.date+'T00:00:00')) + '</div>' +
+        '<div>' + statusBadge + '</div></div>';
     }).join('');
   }
 
-  document.getElementById('profileTitle').innerHTML = m.firstName + ' <span>' + (m.lastName || '') + '</span>';
+  document.getElementById('profileTitle').innerHTML = m.firstName + ' <span>' + (m.lastName||'') + '</span>';
   document.getElementById('profileBody').innerHTML = html;
   openModal('modalProfile');
 }
-function deleteAttFromProfile(attId, mid) {
-  var r = S.attendance.find(function(a) { return a.id === attId; });
-  if (!r) return;
-  if (!confirm('Remove attendance for ' + r.memberName + ' on ' + r.date + '? Credit restored.')) return;
-  S.attendance = S.attendance.filter(function(a) { return a.id !== attId; });
-  save(); render(); closeModal('modalProfile'); openProfile(mid); toast('Attendance removed.');
+
+// ============ MEMBERS CRUD ============
+function openAddMember() {
+  document.getElementById('mId').value = '';
+  document.getElementById('mFirst').value = '';
+  document.getElementById('mLast').value = '';
+  document.getElementById('mEmail').value = '';
+  document.getElementById('mPhone').value = '';
+  document.getElementById('mNotes').value = '';
+  document.getElementById('memberModalTitle').innerHTML = 'Add <span>Member</span>';
+  var sel = document.getElementById('mClass');
+  sel.innerHTML = S.classes.map(function(c) { return '<option value="' + c.slot + '">' + c.day + ' ' + c.time + ' — ' + c.name + '</option>'; }).join('') + '<option value="both">Both Classes</option>';
+  openModal('modalMember');
+}
+function openEditMember(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!m) return;
+  document.getElementById('mId').value = m.id;
+  document.getElementById('mFirst').value = m.firstName;
+  document.getElementById('mLast').value = m.lastName || '';
+  document.getElementById('mEmail').value = m.email;
+  document.getElementById('mPhone').value = m.phone || '';
+  document.getElementById('mNotes').value = m.notes || '';
+  document.getElementById('memberModalTitle').innerHTML = 'Edit <span>Member</span>';
+  var sel = document.getElementById('mClass');
+  sel.innerHTML = S.classes.map(function(c) { return '<option value="' + c.slot + '"' + (m.class===c.slot?' selected':'') + '>' + c.day + ' ' + c.time + ' — ' + c.name + '</option>'; }).join('') + '<option value="both"' + (m.class==='both'?' selected':'') + '>Both Classes</option>';
+  openModal('modalMember');
+}
+function saveMember() {
+  var first = document.getElementById('mFirst').value.trim();
+  var email = document.getElementById('mEmail').value.trim();
+  if (!first || !email) { toast('Please fill in name and email.'); return; }
+  var id = document.getElementById('mId').value;
+  var data = {
+    firstName: first, lastName: document.getElementById('mLast').value.trim(),
+    email: email, phone: document.getElementById('mPhone').value.trim(),
+    class: document.getElementById('mClass').value, notes: document.getElementById('mNotes').value.trim()
+  };
+  if (id) { Object.assign(S.members.find(function(m){return m.id===id;}), data); toast(first + ' updated!'); }
+  else { S.members.push(Object.assign({id: Date.now().toString(), joinDate: toISO()}, data)); toast(first + ' added!'); }
+  save(); closeModal('modalMember'); render();
+}
+function deleteMember(id) {
+  var m = S.members.find(function(m) { return m.id === id; });
+  if (!confirm('Remove ' + (m?m.firstName:'this member') + '? This will also remove their purchases and registrations.')) return;
+  S.members = S.members.filter(function(m) { return m.id !== id; });
+  var purchaseIds = S.purchases.filter(function(p){return p.memberId===id;}).map(function(p){return p.id;});
+  S.purchases = S.purchases.filter(function(p) { return p.memberId !== id; });
+  S.registrations = S.registrations.filter(function(r) { return r.memberId !== id; });
+  save(); render(); toast('Member removed.');
 }
 
-// EMAIL
+// ============ COURSE BLOCKS ============
+function addCourseBlock() {
+  var startInput = document.getElementById('newBlockStart').value;
+  var weeks = parseInt(document.getElementById('newBlockWeeks').value) || 4;
+  if (!startInput) { toast('Please choose a start date.'); return; }
+  if (!S.courseBlocks) S.courseBlocks = [];
+  S.courseBlocks.push({ id: Date.now().toString(), startDate: startInput, weeks: weeks });
+  save(); renderCourseBlocks(); renderAttendance();
+  document.getElementById('newBlockStart').value = '';
+  document.getElementById('newBlockWeeks').value = 4;
+  toast('Course block added — ' + weeks + ' classes scheduled!');
+}
+function removeCourseBlock(id) {
+  if (!confirm('Remove this course block? Existing registrations for these dates will stay, but new ones cannot be added.')) return;
+  S.courseBlocks = S.courseBlocks.filter(function(b) { return b.id !== id; });
+  save(); renderCourseBlocks(); renderAttendance();
+  toast('Course block removed.');
+}
+function renderCourseBlocks() {
+  var el = document.getElementById('courseBlocksList');
+  if (!el) return;
+  if (!S.courseBlocks || !S.courseBlocks.length) {
+    el.innerHTML = '<div class="empty" style="padding:20px;"><div class="empty-body">No course blocks yet. Add your first one below.</div></div>';
+    return;
+  }
+  var sorted = S.courseBlocks.slice().sort(function(a,b){ return a.startDate.localeCompare(b.startDate); });
+  el.innerHTML = sorted.map(function(block) {
+    var start = new Date(block.startDate + 'T00:00:00');
+    var end = new Date(start); end.setDate(start.getDate() + (block.weeks-1)*7);
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--off-white);border:1px solid var(--border);margin-bottom:8px;">' +
+      '<div><div style="font-weight:500;font-size:14px;color:var(--brown);">' + formatDateLong(start) + ' → ' + formatDateLong(end) + '</div>' +
+      '<div style="font-size:12px;color:var(--text-faint);margin-top:2px;">' + block.weeks + ' weeks</div></div>' +
+      '<button class="btn btn-red btn-sm" data-id="' + block.id + '" onclick="removeCourseBlock(this.dataset.id)">✕</button></div>';
+  }).join('');
+}
 
+// ============ SETTINGS ============
+function renderSettings() {
+  var el = document.getElementById('clsSettings');
+  if (!el) return;
+  el.innerHTML = S.classes.map(function(cls, i) {
+    return '<div class="set-row">' +
+      '<div><div class="set-lbl">Day</div><input class="set-input" value="' + cls.day + '" data-i="' + i + '" data-f="day" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
+      '<div><div class="set-lbl">Time</div><input class="set-input" value="' + cls.time + '" data-i="' + i + '" data-f="time" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
+      '<div><div class="set-lbl">Name</div><input class="set-input" value="' + cls.name + '" data-i="' + i + '" data-f="name" onchange="S.classes[parseInt(this.dataset.i)][this.dataset.f]=this.value"></div>' +
+      '<button class="btn btn-red btn-sm" data-i="' + i + '" onclick="removeCls(parseInt(this.dataset.i))">✕</button></div>';
+  }).join('');
+}
+function addCls() {
+  S.classes.push({id:'cls'+Date.now(), name:'New Class', day:'Tuesday', time:'09:00', slot:'cls'+Date.now()});
+  renderSettings();
+}
+function removeCls(i) {
+  if (S.classes.length <= 1) { toast('Need at least one class.'); return; }
+  if (!confirm('Remove this class?')) return;
+  S.classes.splice(i,1); renderSettings(); toast('Class removed.');
+}
+function saveClsSettings() { save(); render(); toast('Classes saved!'); }
+function clearAll() {
+  if (!confirm('Delete ALL data? Cannot be undone.')) return;
+  S = {
+    members: [], purchases: [], registrations: [], attendance: [], courseBlocks: [],
+    classes: [
+      {id:'morning', name:'Introduction to Barre', day:'Tuesday', time:'08:45', slot:'morning'},
+      {id:'evening', name:'Open Level Barre', day:'Tuesday', time:'17:30', slot:'evening'}
+    ]
+  };
+  save(); render(); toast('All data cleared.');
+}
+
+// ============ EMAIL ============
 function toggleSelectAll(cb) {
   document.querySelectorAll('.member-check').forEach(function(c) { c.checked = cb.checked; });
 }
@@ -1070,32 +1166,20 @@ function copySelectedEmails() {
   var checked = document.querySelectorAll('.member-check:checked');
   if (!checked.length) { toast('No members selected.'); return; }
   var emails = Array.from(checked).map(function(c) { return c.dataset.email; }).join(', ');
-  copyToClipboard(emails, checked.length + ' email' + (checked.length !== 1 ? 's' : '') + ' copied!');
+  copyToClipboard(emails, checked.length + ' email' + (checked.length!==1?'s':'') + ' copied!');
 }
-
 function copyToClipboard(text, msg) {
-  navigator.clipboard.writeText(text).then(function() {
-    toast(msg || 'Copied!');
-  }).catch(function() {
+  navigator.clipboard.writeText(text).then(function() { toast(msg||'Copied!'); })
+  .catch(function() {
     var el = document.createElement('textarea');
-    el.value = text;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    toast(msg || 'Copied!');
+    el.value = text; document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+    toast(msg||'Copied!');
   });
 }
 function copyAllEmails() {
   if (!S.members.length) { toast('No members yet.'); return; }
-  copyToClipboard(S.members.map(function(m) { return m.email; }).join(', '), 'All emails copied!');
-}
-function copyClsEmails(slot) {
-  var members = S.members.filter(function(m) {
-    return (m.class === slot || m.class === 'both') && creditsLeft(m.id) > 0;
-  });
-  if (!members.length) { toast('No active members in this class.'); return; }
-  copyToClipboard(members.map(function(m) { return m.email; }).join(', '), members.length + ' emails copied!');
+  copyToClipboard(S.members.map(function(m){return m.email;}).join(', '), 'All emails copied!');
 }
 function copyMemberEmail(id) {
   var m = S.members.find(function(m) { return m.id === id; });
@@ -1106,14 +1190,6 @@ function emailAll() {
   if (!S.members.length) { toast('No members yet.'); return; }
   openEmailModal(S.members, 'All Members');
 }
-function emailCls(slot) {
-  var members = S.members.filter(function(m) {
-    return (m.class === slot || m.class === 'both') && creditsLeft(m.id) > 0;
-  });
-  if (!members.length) { toast('No active members.'); return; }
-  var cls = S.classes.find(function(c) { return c.slot === slot; });
-  openEmailModal(members, cls ? cls.name : slot);
-}
 function emailMember(id) {
   var m = S.members.find(function(m) { return m.id === id; });
   if (!m) return;
@@ -1121,11 +1197,11 @@ function emailMember(id) {
 }
 function openEmailModal(members, label) {
   document.getElementById('emailTo').innerHTML = '<strong>To:</strong> ' +
-    members.map(function(m) { return m.firstName + ' ' + (m.lastName || ''); }).join(', ') +
-    ' <span style="color:var(--text-faint);">(' + members.length + ' recipient' + (members.length !== 1 ? 's' : '') + ')</span>';
+    members.map(function(m){return m.firstName+' '+(m.lastName||'');}).join(', ') +
+    ' <span style="color:var(--text-faint);">(' + members.length + ' recipient' + (members.length!==1?'s':'') + ')</span>';
   document.getElementById('emailSubject').value = '';
   document.getElementById('emailBody').value = '';
-  document.getElementById('emailSubject').dataset.emails = members.map(function(m) { return m.email; }).join(',');
+  document.getElementById('emailSubject').dataset.emails = members.map(function(m){return m.email;}).join(',');
   openModal('modalEmail');
 }
 function sendEmail() {
@@ -1133,72 +1209,49 @@ function sendEmail() {
   if (!subject) { toast('Please add a subject.'); return; }
   var emails = document.getElementById('emailSubject').dataset.emails || '';
   var body = document.getElementById('emailBody').value.trim();
-  window.location.href = 'mailto:?bcc=' + encodeURIComponent(emails) +
-    '&subject=' + encodeURIComponent(subject) +
-    (body ? '&body=' + encodeURIComponent(body) : '');
-  closeModal('modalEmail');
-  toast('Opening email app...');
+  window.location.href = 'mailto:?bcc=' + encodeURIComponent(emails) + '&subject=' + encodeURIComponent(subject) + (body ? '&body=' + encodeURIComponent(body) : '');
+  closeModal('modalEmail'); toast('Opening email app...');
 }
 
-// SETTINGS
-function addCls() {
-  S.classes.push({id:'cls'+Date.now(), name:'New Class', day:'Tuesday', time:'09:00', slot:'cls'+Date.now()});
-  renderSettings();
-}
-function removeCls(i) {
-  if (S.classes.length <= 1) { toast('Need at least one class.'); return; }
-  if (!confirm('Remove this class?')) return;
-  S.classes.splice(i, 1); renderSettings(); toast('Class removed.');
-}
-function saveClsSettings() { save(); render(); toast('Classes saved!'); }
-function clearAll() {
-  if (!confirm('Delete ALL data? Cannot be undone.')) return;
-  S = {
-    members: [], purchases: [], attendance: [], sessions: [], todayChecked: {},
-    classes: [
-      {id:'morning', name:'Introduction to Barre', day:'Tuesday', time:'08:45', slot:'morning'},
-      {id:'evening', name:'Open Level Barre', day:'Tuesday', time:'17:30', slot:'evening'}
-    ]
-  };
-  save(); render(); toast('All data cleared.');
-}
-
-// EXPORTS
+// ============ EXPORTS ============
 function exportMembersCSV() {
   if (!S.members.length) { toast('No members to export.'); return; }
-  var rows = [['First Name','Last Name','Email','Phone','Class','Notes','Joined','Credits']];
-  S.members.forEach(function(m) {
-    var cls = S.classes.find(function(c) { return c.slot === m.class; });
-    rows.push([m.firstName, m.lastName||'', m.email, m.phone||'', cls?cls.name:m.class, m.notes||'', m.joinDate||'', creditsLeft(m.id)]);
+  var rows = [['First Name','Last Name','Email','Phone','Class','Notes','Joined','Active Credits']];
+  sortedMembers().forEach(function(m) {
+    var cls = clsObj(m.class);
+    rows.push([m.firstName, m.lastName||'', m.email, m.phone||'', cls?cls.name:m.class, m.notes||'', m.joinDate||'', activeCreditsForMember(m.id)]);
   });
   dlCSV(rows, 'norfolk-barre-members.csv'); toast('Members exported!');
 }
 function exportEarningsCSV() {
   if (!S.purchases.length) { toast('No purchases to export.'); return; }
   var rows = [['Date','Member','Class','Package','Credits','Amount']];
-  S.purchases.forEach(function(p) {
-    rows.push([p.date||'', p.memberName||'', p.class||'', p.packageLabel||p.package||'', p.credits||0, '£'+(p.amount||0).toFixed(2)]);
-  });
+  S.purchases.forEach(function(p) { rows.push([p.date||'', p.memberName||'', p.class||'', p.packageLabel||p.package||'', p.credits||0, '£'+(p.amount||0).toFixed(2)]); });
   var total = S.purchases.reduce(function(s,p){return s+(p.amount||0);},0);
   rows.push([]); rows.push(['','','','','TOTAL','£'+total.toFixed(2)]);
   dlCSV(rows, 'norfolk-barre-earnings.csv'); toast('Earnings exported!');
 }
 function exportAttendanceCSV() {
   if (!S.attendance.length) { toast('No attendance to export.'); return; }
-  var rows = [['Date','Member','Class','Credits After']];
-  S.attendance.forEach(function(a) { rows.push([a.date, a.memberName, a.class, a.creditsAfter]); });
+  var rows = [['Class','Date','Member','Status']];
+  S.attendance.forEach(function(a) {
+    var reg = S.registrations.find(function(r){return r.id===a.registrationId;});
+    var cls = reg ? clsObj(reg.slot) : null;
+    var member = reg ? S.members.find(function(m){return m.id===reg.memberId;}) : null;
+    rows.push([
+      cls ? cls.name : '', reg ? reg.date : '', member ? (member.firstName+' '+(member.lastName||'')) : 'Unknown', a.status
+    ]);
+  });
   dlCSV(rows, 'norfolk-barre-attendance.csv'); toast('Attendance exported!');
 }
 function dlCSV(rows, filename) {
-  var csv = rows.map(function(r) {
-    return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
-  }).join('\n');
+  var csv = rows.map(function(r) { return r.map(function(c) { return '"' + String(c).replace(/"/g,'""') + '"'; }).join(','); }).join('\n');
   var a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
   a.download = filename; a.click();
 }
 
-// INIT
+// ============ INIT ============
 load();
 document.getElementById('hdrDate').textContent = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 render();
