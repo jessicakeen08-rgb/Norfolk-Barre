@@ -24,14 +24,1211 @@ button:disabled { background:#ccc; cursor:default; }
 <div class="box">
   <div class="logo">NORFOLK <span>BARRE</span></div>
   <h1>One-time Data Import</h1>
-  <p>This will load your migrated members, purchases, registrations and attendance history into the new Class Manager. Use this ONCE on the device/browser you use for the manager, then go to manager.html as normal.</p>
+  <p>This will load all your members, purchases, registrations and attendance history — including June and July blocks — into the new Class Manager.</p>
   <button id="importBtn" onclick="doImport()">Import My Data</button>
   <div class="status" id="status">✓ Data imported! You can now close this page and open manager.html</div>
   <div class="warn">⚠️ This will overwrite any existing data in the Class Manager on this browser. Only run this once.</div>
 </div>
 <script>
-var DATA = {"members":[{"id":"1781164589075","joinDate":"2026-06-11","firstName":"Kate","lastName":"Lewis","email":"katejlewis20@gmail.com","phone":"07556017644","class":"evening","notes":""},{"id":"1781164615619","joinDate":"2026-06-11","firstName":"Laura","lastName":"Sewell","email":"laurarafferty11@gmail.com","phone":"07508474037","class":"evening","notes":""},{"id":"1781164639123","joinDate":"2026-06-11","firstName":"Jade","lastName":"Zelos","email":"jahdiel_kennedy@hotmail.com","phone":"07539411802","class":"evening","notes":""},{"id":"1781164680519","joinDate":"2026-06-11","firstName":"Lucy","lastName":"Seletto","email":"lucyseletto@hotmail.com","phone":"07967320718","class":"evening","notes":""},{"id":"1781164709234","joinDate":"2026-06-11","firstName":"Charlotte","lastName":"Lacey","email":"charlottearenwick@gmail.com","phone":"07851632613","class":"evening","notes":""},{"id":"1781164735434","joinDate":"2026-06-11","firstName":"Linda","lastName":"Skarie","email":"englishmagpie@yahoo.com","phone":"07881050155","class":"morning","notes":""},{"id":"1781164764767","joinDate":"2026-06-11","firstName":"Julie","lastName":"White","email":"jaw1507@icloud.com","phone":"","class":"evening","notes":"2 hip replacements- 2010 & 2018 no issues though"},{"id":"1781165219816","joinDate":"2026-06-11","firstName":"Emily","lastName":"Riley-Smith","email":"emily@riley-smith.com","phone":"07948338188","class":"morning","notes":""},{"id":"1781165242534","joinDate":"2026-06-11","firstName":"Bronte","lastName":"Fulcher","email":"brontetfulcher@gmail.com","phone":"07588525661","class":"evening","notes":"9 months post partum"},{"id":"1781165264064","joinDate":"2026-06-11","firstName":"Sally","lastName":"Tanner","email":"SallyTanner58@btinternet.com","phone":"07954308556","class":"morning","notes":"Artificial Knee"},{"id":"1781165293893","joinDate":"2026-06-11","firstName":"Sharron","lastName":"Amor","email":"sharron.amor@hotmail.co.uk","phone":"07973359171","class":"morning","notes":""},{"id":"1781165318673","joinDate":"2026-06-11","firstName":"Alison","lastName":"O'Malley","email":"stone_alison@hotmail.com","phone":"07773135019","class":"evening","notes":""},{"id":"1781165362465","joinDate":"2026-06-11","firstName":"Caitlin","lastName":"Taylor","email":"tinsytaylor@icloud.com","phone":"07385910468","class":"evening","notes":""},{"id":"1781165384608","joinDate":"2026-06-11","firstName":"Helen","lastName":"Selby","email":"helen@nurturehealthandwellness.com","phone":"07821197541","class":"evening","notes":""},{"id":"1781165421872","joinDate":"2026-06-11","firstName":"Clare","lastName":"Smith","email":"tazarerin@gmail.com","phone":"07867309718","class":"evening","notes":"Partially torn right Achilles tendon 2018, sometimes it still hurts. I also have a knot beside my left shoulder which causing neck tightness (which causes headaches and migraines but under control). Wanting to tighten every muscle that I can as I'm currently on weight loss injections and lost 10lbs over a 7 week period."},{"id":"1781165454089","joinDate":"2026-06-11","firstName":"Tracey","lastName":"Hepting","email":"traceyhepting@hotmail.com","phone":"07740867252","class":"evening","notes":""},{"id":"1781165483375","joinDate":"2026-06-11","firstName":"Charlotte","lastName":"Heal","email":"clsanford26@gmail.com","phone":"07854235521","class":"morning","notes":""},{"id":"1781165514440","joinDate":"2026-06-11","firstName":"Phoebe","lastName":"Gouveia","email":"ph03bee1@gmail.com","phone":"07400490599","class":"morning","notes":""}],"purchases":[{"id":"1781176610519","memberId":"1781164589075","memberName":"Kate Lewis","class":"Open Level Barre","classSlot":"evening","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176616051","memberId":"1781164615619","memberName":"Laura Sewell","class":"Open Level Barre","classSlot":"evening","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176629326","memberId":"1781164680519","memberName":"Lucy Seletto","class":"Open Level Barre","classSlot":"evening","package":"4week","packageLabel":"4 Week Course","credits":1,"amount":15,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176646108","memberId":"1781164735434","memberName":"Linda Skarie","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176651574","memberId":"1781165219816","memberName":"Emily Riley-Smith","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176667369","memberId":"1781165264064","memberName":"Sally Tanner","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176670489","memberId":"1781165293893","memberName":"Sharron Amor","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176678227","memberId":"1781165318673","memberName":"Alison O'Malley","class":"Open Level Barre","classSlot":"evening","package":"block4","packageLabel":"Block of 4","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176686212","memberId":"1781165384608","memberName":"Helen Selby","class":"Open Level Barre","classSlot":"evening","package":"block4","packageLabel":"Block of 4","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176693373","memberId":"1781165454089","memberName":"Tracey Hepting","class":"Open Level Barre","classSlot":"evening","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176700360","memberId":"1781165483375","memberName":"Charlotte Heal","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176716714","memberId":"1781165514440","memberName":"Phoebe Gouveia","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":3,"amount":37.5,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"1781176741303","memberId":"1781165421872","memberName":"Clare Smith","class":"Open Level Barre","classSlot":"evening","package":"block4","packageLabel":"Block of 4","credits":4,"amount":50,"date":"2026-06-11","notes":"","courseBlockId":"hist_june","dropInDate":null},{"id":"178274419849967264","memberId":"1781165362465","memberName":"Caitlin Taylor","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":5.0,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-02"},{"id":"178274419850028063","memberId":"1781165362465","memberName":"Caitlin Taylor","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":5.0,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-09"},{"id":"178274419850037446","memberId":"1781165362465","memberName":"Caitlin Taylor","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":5.0,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-16"},{"id":"1781176790450","memberId":"1781164764767","memberName":"Julie White","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":15,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-02"},{"id":"178274419850067598","memberId":"1781165242534","memberName":"Bronte Fulcher","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":5.0,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-02"},{"id":"178274419850097279","memberId":"1781165242534","memberName":"Bronte Fulcher","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":5.0,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-09"},{"id":"178274419850083658","memberId":"1781165242534","memberName":"Bronte Fulcher","class":"Open Level Barre","classSlot":"evening","package":"payg","packageLabel":"Drop in","credits":1,"amount":5.0,"date":"2026-06-11","notes":"","courseBlockId":null,"dropInDate":"2026-06-16"},{"id":"1782739602734","memberId":"1781164735434","memberName":"Linda Skarie","class":"Introduction to Barre","classSlot":"morning","package":"4week","packageLabel":"4 Week Course","credits":3,"amount":50,"date":"2026-06-29","notes":"","courseBlockId":"1782734712397","dropInDate":null}],"registrations":[{"id":"178274419849944572","memberId":"1781164589075","slot":"evening","date":"2026-06-02","purchaseId":"1781176610519"},{"id":"178274419849919507","memberId":"1781164589075","slot":"evening","date":"2026-06-09","purchaseId":"1781176610519"},{"id":"178274419849949855","memberId":"1781164589075","slot":"evening","date":"2026-06-16","purchaseId":"1781176610519"},{"id":"178274419849936150","memberId":"1781164589075","slot":"evening","date":"2026-06-23","purchaseId":"1781176610519"},{"id":"178274419849929870","memberId":"1781164615619","slot":"evening","date":"2026-06-02","purchaseId":"1781176616051"},{"id":"178274419849922792","memberId":"1781164615619","slot":"evening","date":"2026-06-09","purchaseId":"1781176616051"},{"id":"178274419849969631","memberId":"1781164615619","slot":"evening","date":"2026-06-16","purchaseId":"1781176616051"},{"id":"178274419849992456","memberId":"1781164615619","slot":"evening","date":"2026-06-23","purchaseId":"1781176616051"},{"id":"178274419849978953","memberId":"1781164680519","slot":"evening","date":"2026-06-02","purchaseId":"1781176629326"},{"id":"178274419849963924","memberId":"1781164680519","slot":"evening","date":"2026-06-09","purchaseId":"1781176629326"},{"id":"178274419849913514","memberId":"1781164680519","slot":"evening","date":"2026-06-16","purchaseId":"1781176629326"},{"id":"178274419849937764","memberId":"1781164680519","slot":"evening","date":"2026-06-23","purchaseId":"1781176629326"},{"id":"178274419849966798","memberId":"1781164735434","slot":"morning","date":"2026-06-02","purchaseId":"1781176646108"},{"id":"178274419849943214","memberId":"1781164735434","slot":"morning","date":"2026-06-09","purchaseId":"1781176646108"},{"id":"178274419849915252","memberId":"1781164735434","slot":"morning","date":"2026-06-16","purchaseId":"1781176646108"},{"id":"178274419849983364","memberId":"1781164735434","slot":"morning","date":"2026-06-23","purchaseId":"1781176646108"},{"id":"178274419849915281","memberId":"1781165219816","slot":"morning","date":"2026-06-02","purchaseId":"1781176651574"},{"id":"178274419849974553","memberId":"1781165219816","slot":"morning","date":"2026-06-09","purchaseId":"1781176651574"},{"id":"178274419849943668","memberId":"1781165219816","slot":"morning","date":"2026-06-16","purchaseId":"1781176651574"},{"id":"178274419849980888","memberId":"1781165219816","slot":"morning","date":"2026-06-23","purchaseId":"1781176651574"},{"id":"178274419849977579","memberId":"1781165264064","slot":"morning","date":"2026-06-02","purchaseId":"1781176667369"},{"id":"178274419849934235","memberId":"1781165264064","slot":"morning","date":"2026-06-09","purchaseId":"1781176667369"},{"id":"178274419849964267","memberId":"1781165264064","slot":"morning","date":"2026-06-16","purchaseId":"1781176667369"},{"id":"178274419849995936","memberId":"1781165264064","slot":"morning","date":"2026-06-23","purchaseId":"1781176667369"},{"id":"178274419849970328","memberId":"1781165293893","slot":"morning","date":"2026-06-02","purchaseId":"1781176670489"},{"id":"178274419849920402","memberId":"1781165293893","slot":"morning","date":"2026-06-09","purchaseId":"1781176670489"},{"id":"178274419849979523","memberId":"1781165293893","slot":"morning","date":"2026-06-16","purchaseId":"1781176670489"},{"id":"178274419849932018","memberId":"1781165293893","slot":"morning","date":"2026-06-23","purchaseId":"1781176670489"},{"id":"178274419849984042","memberId":"1781165318673","slot":"evening","date":"2026-06-02","purchaseId":"1781176678227"},{"id":"178274419849970213","memberId":"1781165318673","slot":"evening","date":"2026-06-09","purchaseId":"1781176678227"},{"id":"178274419849972638","memberId":"1781165318673","slot":"evening","date":"2026-06-16","purchaseId":"1781176678227"},{"id":"178274419849945748","memberId":"1781165318673","slot":"evening","date":"2026-06-23","purchaseId":"1781176678227"},{"id":"178274419849941215","memberId":"1781165384608","slot":"evening","date":"2026-06-02","purchaseId":"1781176686212"},{"id":"178274419849930722","memberId":"1781165384608","slot":"evening","date":"2026-06-09","purchaseId":"1781176686212"},{"id":"17827441984994915","memberId":"1781165384608","slot":"evening","date":"2026-06-16","purchaseId":"1781176686212"},{"id":"178274419849994113","memberId":"1781165384608","slot":"evening","date":"2026-06-23","purchaseId":"1781176686212"},{"id":"178274419849932651","memberId":"1781165454089","slot":"evening","date":"2026-06-02","purchaseId":"1781176693373"},{"id":"178274419849918096","memberId":"1781165454089","slot":"evening","date":"2026-06-09","purchaseId":"1781176693373"},{"id":"178274419849939000","memberId":"1781165454089","slot":"evening","date":"2026-06-16","purchaseId":"1781176693373"},{"id":"178274419849928004","memberId":"1781165454089","slot":"evening","date":"2026-06-23","purchaseId":"1781176693373"},{"id":"178274419849923860","memberId":"1781165483375","slot":"morning","date":"2026-06-02","purchaseId":"1781176700360"},{"id":"178274419849990963","memberId":"1781165483375","slot":"morning","date":"2026-06-09","purchaseId":"1781176700360"},{"id":"178274419849937273","memberId":"1781165483375","slot":"morning","date":"2026-06-16","purchaseId":"1781176700360"},{"id":"178274419849966999","memberId":"1781165483375","slot":"morning","date":"2026-06-23","purchaseId":"1781176700360"},{"id":"178274419849953078","memberId":"1781165514440","slot":"morning","date":"2026-06-02","purchaseId":"1781176716714"},{"id":"17827441984996070","memberId":"1781165514440","slot":"morning","date":"2026-06-09","purchaseId":"1781176716714"},{"id":"178274419849974045","memberId":"1781165514440","slot":"morning","date":"2026-06-16","purchaseId":"1781176716714"},{"id":"178274419849996486","memberId":"1781165514440","slot":"morning","date":"2026-06-23","purchaseId":"1781176716714"},{"id":"178274419849948214","memberId":"1781165421872","slot":"evening","date":"2026-06-02","purchaseId":"1781176741303"},{"id":"178274419849919351","memberId":"1781165421872","slot":"evening","date":"2026-06-09","purchaseId":"1781176741303"},{"id":"17827441984993493","memberId":"1781165421872","slot":"evening","date":"2026-06-16","purchaseId":"1781176741303"},{"id":"178274419849987450","memberId":"1781165421872","slot":"evening","date":"2026-06-23","purchaseId":"1781176741303"},{"id":"178274419850096276","memberId":"1781165362465","slot":"evening","date":"2026-06-02","purchaseId":"178274419849967264"},{"id":"178274419850077449","memberId":"1781165362465","slot":"evening","date":"2026-06-09","purchaseId":"178274419850028063"},{"id":"178274419850033588","memberId":"1781165362465","slot":"evening","date":"2026-06-16","purchaseId":"178274419850037446"},{"id":"178274419850064070","memberId":"1781164764767","slot":"evening","date":"2026-06-02","purchaseId":"1781176790450"},{"id":"178274419850095424","memberId":"1781165242534","slot":"evening","date":"2026-06-02","purchaseId":"178274419850067598"},{"id":"178274419850041603","memberId":"1781165242534","slot":"evening","date":"2026-06-09","purchaseId":"178274419850097279"},{"id":"178274419850038793","memberId":"1781165242534","slot":"evening","date":"2026-06-16","purchaseId":"178274419850083658"},{"id":"178274419850160725","memberId":"1781164735434","slot":"morning","date":"2026-06-30","purchaseId":"1782739602734"},{"id":"178274419850122531","memberId":"1781164735434","slot":"morning","date":"2026-07-07","purchaseId":"1782739602734"},{"id":"178274419850118958","memberId":"1781164735434","slot":"morning","date":"2026-07-14","purchaseId":"1782739602734"},{"id":"178274419850113939","memberId":"1781164735434","slot":"morning","date":"2026-07-21","purchaseId":"1782739602734"}],"attendance":[{"id":"178274419850170311","registrationId":"178274419849966798","status":"attended"},{"id":"178274419850150919","registrationId":"178274419849915281","status":"attended"},{"id":"178274419850157838","registrationId":"178274419849977579","status":"attended"},{"id":"178274419850155470","registrationId":"178274419849970328","status":"attended"},{"id":"178274419850153603","registrationId":"178274419849923860","status":"attended"},{"id":"178274419850140367","registrationId":"178274419849929870","status":"attended"},{"id":"178274419850147668","registrationId":"178274419850095424","status":"attended"},{"id":"178274419850139963","registrationId":"178274419849984042","status":"attended"},{"id":"178274419850186257","registrationId":"178274419850096276","status":"attended"},{"id":"178274419850173990","registrationId":"178274419850064070","status":"attended"},{"id":"178274419850183379","registrationId":"178274419849932651","status":"attended"},{"id":"17827441985014674","registrationId":"178274419849943214","status":"attended"},{"id":"178274419850117295","registrationId":"178274419849974553","status":"attended"},{"id":"178274419850131040","registrationId":"178274419849920402","status":"attended"},{"id":"178274419850165613","registrationId":"178274419849990963","status":"attended"},{"id":"178274419850134381","registrationId":"17827441984996070","status":"attended"},{"id":"17827441985011738","registrationId":"178274419849919507","status":"attended"},{"id":"178274419850187444","registrationId":"178274419849922792","status":"attended"},{"id":"178274419850132578","registrationId":"178274419849963924","status":"attended"},{"id":"178274419850173969","registrationId":"178274419850041603","status":"attended"},{"id":"178274419850176757","registrationId":"178274419849970213","status":"attended"},{"id":"178274419850158735","registrationId":"178274419850077449","status":"attended"},{"id":"178274419850115768","registrationId":"178274419849918096","status":"attended"},{"id":"17827441985017683","registrationId":"178274419849943668","status":"attended"},{"id":"178274419850120583","registrationId":"178274419849964267","status":"attended"},{"id":"178274419850124044","registrationId":"178274419849979523","status":"attended"},{"id":"178274419850160704","registrationId":"178274419849937273","status":"attended"},{"id":"178274419850192187","registrationId":"178274419849974045","status":"attended"},{"id":"178274419850119257","registrationId":"178274419849949855","status":"attended"},{"id":"178274419850183996","registrationId":"178274419850038793","status":"attended"},{"id":"178274419850154865","registrationId":"178274419849972638","status":"attended"},{"id":"178274419850190644","registrationId":"178274419850033588","status":"attended"},{"id":"178274419850145799","registrationId":"178274419849939000","status":"attended"},{"id":"178274419850172627","registrationId":"178274419849983364","status":"attended"},{"id":"178274419850142220","registrationId":"178274419849980888","status":"attended"},{"id":"17827441985016240","registrationId":"178274419849932018","status":"attended"},{"id":"178274419850153898","registrationId":"178274419849966999","status":"attended"},{"id":"178274419850171193","registrationId":"178274419849996486","status":"attended"},{"id":"178274419850126092","registrationId":"178274419849936150","status":"attended"},{"id":"178274419850145004","registrationId":"178274419849945748","status":"attended"},{"id":"178274419850191007","registrationId":"178274419849928004","status":"attended"},{"id":"178276336020592811","registrationId":"178274419849948214","status":"attended"},{"id":"178276336020580054","registrationId":"17827441984993493","status":"attended"},{"id":"178276336020531443","registrationId":"178274419849987450","status":"attended"},{"id":"178276336020598252","registrationId":"178274419849919351","status":"noshow"}],"courseBlocks":[{"id":"hist_june","startDate":"2026-06-02","weeks":4},{"id":"1782734712397","startDate":"2026-06-30","weeks":4}],"classes":[{"id":"morning","name":"Introduction to Barre","day":"Tuesday","time":"08:45","slot":"morning"},{"id":"evening","name":"Open Level Barre","day":"Tuesday","time":"17:30","slot":"evening"}]}
-;
+var DATA = {
+  "members": [
+    {
+      "id": "1781164589075",
+      "joinDate": "2026-06-11",
+      "firstName": "Kate",
+      "lastName": "Lewis",
+      "email": "katejlewis20@gmail.com",
+      "phone": "07556017644",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781164615619",
+      "joinDate": "2026-06-11",
+      "firstName": "Laura",
+      "lastName": "Sewell",
+      "email": "laurarafferty11@gmail.com",
+      "phone": "07508474037",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781164639123",
+      "joinDate": "2026-06-11",
+      "firstName": "Jade",
+      "lastName": "Zelos",
+      "email": "jahdiel_kennedy@hotmail.com",
+      "phone": "07539411802",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781164680519",
+      "joinDate": "2026-06-11",
+      "firstName": "Lucy",
+      "lastName": "Seletto",
+      "email": "lucyseletto@hotmail.com",
+      "phone": "07967320718",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781164709234",
+      "joinDate": "2026-06-11",
+      "firstName": "Charlotte",
+      "lastName": "Lacey",
+      "email": "charlottearenwick@gmail.com",
+      "phone": "07851632613",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781164735434",
+      "joinDate": "2026-06-11",
+      "firstName": "Linda",
+      "lastName": "Skarie",
+      "email": "englishmagpie@yahoo.com",
+      "phone": "07881050155",
+      "class": "morning",
+      "notes": ""
+    },
+    {
+      "id": "1781164764767",
+      "joinDate": "2026-06-11",
+      "firstName": "Julie",
+      "lastName": "White",
+      "email": "jaw1507@icloud.com",
+      "phone": "",
+      "class": "evening",
+      "notes": "2 hip replacements- 2010 & 2018 no issues though"
+    },
+    {
+      "id": "1781165219816",
+      "joinDate": "2026-06-11",
+      "firstName": "Emily",
+      "lastName": "Riley-Smith",
+      "email": "emily@riley-smith.com",
+      "phone": "07948338188",
+      "class": "morning",
+      "notes": ""
+    },
+    {
+      "id": "1781165242534",
+      "joinDate": "2026-06-11",
+      "firstName": "Bronte",
+      "lastName": "Fulcher",
+      "email": "brontetfulcher@gmail.com",
+      "phone": "07588525661",
+      "class": "evening",
+      "notes": "9 months post partum"
+    },
+    {
+      "id": "1781165264064",
+      "joinDate": "2026-06-11",
+      "firstName": "Sally",
+      "lastName": "Tanner",
+      "email": "SallyTanner58@btinternet.com",
+      "phone": "07954308556",
+      "class": "morning",
+      "notes": "Artificial Knee"
+    },
+    {
+      "id": "1781165293893",
+      "joinDate": "2026-06-11",
+      "firstName": "Sharron",
+      "lastName": "Amor",
+      "email": "sharron.amor@hotmail.co.uk",
+      "phone": "07973359171",
+      "class": "morning",
+      "notes": ""
+    },
+    {
+      "id": "1781165318673",
+      "joinDate": "2026-06-11",
+      "firstName": "Alison",
+      "lastName": "O'Malley",
+      "email": "stone_alison@hotmail.com",
+      "phone": "07773135019",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781165362465",
+      "joinDate": "2026-06-11",
+      "firstName": "Caitlin",
+      "lastName": "Taylor",
+      "email": "tinsytaylor@icloud.com",
+      "phone": "07385910468",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781165384608",
+      "joinDate": "2026-06-11",
+      "firstName": "Helen",
+      "lastName": "Selby",
+      "email": "helen@nurturehealthandwellness.com",
+      "phone": "07821197541",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781165421872",
+      "joinDate": "2026-06-11",
+      "firstName": "Clare",
+      "lastName": "Smith",
+      "email": "tazarerin@gmail.com",
+      "phone": "07867309718",
+      "class": "evening",
+      "notes": "Partially torn right Achilles tendon 2018, sometimes it still hurts. I also have a knot beside my left shoulder which causing neck tightness (which causes headaches and migraines but under control). Wanting to tighten every muscle that I can as I'm currently on weight loss injections and lost 10lbs over a 7 week period."
+    },
+    {
+      "id": "1781165454089",
+      "joinDate": "2026-06-11",
+      "firstName": "Tracey",
+      "lastName": "Hepting",
+      "email": "traceyhepting@hotmail.com",
+      "phone": "07740867252",
+      "class": "evening",
+      "notes": ""
+    },
+    {
+      "id": "1781165483375",
+      "joinDate": "2026-06-11",
+      "firstName": "Charlotte",
+      "lastName": "Heal",
+      "email": "clsanford26@gmail.com",
+      "phone": "07854235521",
+      "class": "morning",
+      "notes": ""
+    },
+    {
+      "id": "1781165514440",
+      "joinDate": "2026-06-11",
+      "firstName": "Phoebe",
+      "lastName": "Gouveia",
+      "email": "ph03bee1@gmail.com",
+      "phone": "07400490599",
+      "class": "morning",
+      "notes": ""
+    }
+  ],
+  "purchases": [
+    {
+      "id": "1781176610519",
+      "memberId": "1781164589075",
+      "memberName": "Kate Lewis",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176616051",
+      "memberId": "1781164615619",
+      "memberName": "Laura Sewell",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176629326",
+      "memberId": "1781164680519",
+      "memberName": "Lucy Seletto",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 1,
+      "amount": 15,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176646108",
+      "memberId": "1781164735434",
+      "memberName": "Linda Skarie",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176651574",
+      "memberId": "1781165219816",
+      "memberName": "Emily Riley-Smith",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176667369",
+      "memberId": "1781165264064",
+      "memberName": "Sally Tanner",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176670489",
+      "memberId": "1781165293893",
+      "memberName": "Sharron Amor",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176678227",
+      "memberId": "1781165318673",
+      "memberName": "Alison O'Malley",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "block4",
+      "packageLabel": "Block of 4",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176686212",
+      "memberId": "1781165384608",
+      "memberName": "Helen Selby",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "block4",
+      "packageLabel": "Block of 4",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176693373",
+      "memberId": "1781165454089",
+      "memberName": "Tracey Hepting",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176700360",
+      "memberId": "1781165483375",
+      "memberName": "Charlotte Heal",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176716714",
+      "memberId": "1781165514440",
+      "memberName": "Phoebe Gouveia",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 3,
+      "amount": 37.5,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "1781176741303",
+      "memberId": "1781165421872",
+      "memberName": "Clare Smith",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "block4",
+      "packageLabel": "Block of 4",
+      "credits": 4,
+      "amount": 50,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": "hist_june",
+      "dropInDate": null
+    },
+    {
+      "id": "178575910853265540",
+      "memberId": "1781165362465",
+      "memberName": "Caitlin Taylor",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 5.0,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-02"
+    },
+    {
+      "id": "178575910853277425",
+      "memberId": "1781165362465",
+      "memberName": "Caitlin Taylor",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 5.0,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-09"
+    },
+    {
+      "id": "178575910853275521",
+      "memberId": "1781165362465",
+      "memberName": "Caitlin Taylor",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 5.0,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-16"
+    },
+    {
+      "id": "1781176790450",
+      "memberId": "1781164764767",
+      "memberName": "Julie White",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 15,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-02"
+    },
+    {
+      "id": "178575910853221655",
+      "memberId": "1781165242534",
+      "memberName": "Bronte Fulcher",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 5.0,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-02"
+    },
+    {
+      "id": "178575910853266634",
+      "memberId": "1781165242534",
+      "memberName": "Bronte Fulcher",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 5.0,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-09"
+    },
+    {
+      "id": "178575910853256875",
+      "memberId": "1781165242534",
+      "memberName": "Bronte Fulcher",
+      "class": "Open Level Barre",
+      "classSlot": "evening",
+      "package": "payg",
+      "packageLabel": "Drop in",
+      "credits": 1,
+      "amount": 5.0,
+      "date": "2026-06-11",
+      "notes": "",
+      "courseBlockId": null,
+      "dropInDate": "2026-06-16"
+    },
+    {
+      "id": "1782739602734",
+      "memberId": "1781164735434",
+      "memberName": "Linda Skarie",
+      "class": "Open Level Barre",
+      "classSlot": "morning",
+      "package": "4week",
+      "packageLabel": "4 Week Course",
+      "credits": 3,
+      "amount": 50,
+      "date": "2026-06-29",
+      "notes": "",
+      "courseBlockId": "1782734712397",
+      "dropInDate": null
+    }
+  ],
+  "registrations": [
+    {
+      "id": "178575910853230742",
+      "memberId": "1781164589075",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176610519"
+    },
+    {
+      "id": "178575910853272245",
+      "memberId": "1781164589075",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176610519"
+    },
+    {
+      "id": "178575910853247805",
+      "memberId": "1781164589075",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176610519"
+    },
+    {
+      "id": "178575910853235561",
+      "memberId": "1781164589075",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176610519"
+    },
+    {
+      "id": "178575910853260900",
+      "memberId": "1781164615619",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176616051"
+    },
+    {
+      "id": "178575910853275848",
+      "memberId": "1781164615619",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176616051"
+    },
+    {
+      "id": "178575910853231089",
+      "memberId": "1781164615619",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176616051"
+    },
+    {
+      "id": "178575910853269716",
+      "memberId": "1781164615619",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176616051"
+    },
+    {
+      "id": "178575910853290755",
+      "memberId": "1781164680519",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176629326"
+    },
+    {
+      "id": "178575910853287288",
+      "memberId": "1781164680519",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176629326"
+    },
+    {
+      "id": "178575910853211640",
+      "memberId": "1781164680519",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176629326"
+    },
+    {
+      "id": "178575910853231166",
+      "memberId": "1781164680519",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176629326"
+    },
+    {
+      "id": "178575910853265104",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-06-02",
+      "purchaseId": "1781176646108"
+    },
+    {
+      "id": "178575910853266560",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-06-09",
+      "purchaseId": "1781176646108"
+    },
+    {
+      "id": "178575910853255416",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-06-16",
+      "purchaseId": "1781176646108"
+    },
+    {
+      "id": "178575910853214715",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-06-23",
+      "purchaseId": "1781176646108"
+    },
+    {
+      "id": "178575910853212141",
+      "memberId": "1781165219816",
+      "slot": "morning",
+      "date": "2026-06-02",
+      "purchaseId": "1781176651574"
+    },
+    {
+      "id": "178575910853222426",
+      "memberId": "1781165219816",
+      "slot": "morning",
+      "date": "2026-06-09",
+      "purchaseId": "1781176651574"
+    },
+    {
+      "id": "178575910853246942",
+      "memberId": "1781165219816",
+      "slot": "morning",
+      "date": "2026-06-16",
+      "purchaseId": "1781176651574"
+    },
+    {
+      "id": "178575910853226457",
+      "memberId": "1781165219816",
+      "slot": "morning",
+      "date": "2026-06-23",
+      "purchaseId": "1781176651574"
+    },
+    {
+      "id": "178575910853251273",
+      "memberId": "1781165264064",
+      "slot": "morning",
+      "date": "2026-06-02",
+      "purchaseId": "1781176667369"
+    },
+    {
+      "id": "178575910853291747",
+      "memberId": "1781165264064",
+      "slot": "morning",
+      "date": "2026-06-09",
+      "purchaseId": "1781176667369"
+    },
+    {
+      "id": "178575910853212940",
+      "memberId": "1781165264064",
+      "slot": "morning",
+      "date": "2026-06-16",
+      "purchaseId": "1781176667369"
+    },
+    {
+      "id": "178575910853260331",
+      "memberId": "1781165264064",
+      "slot": "morning",
+      "date": "2026-06-23",
+      "purchaseId": "1781176667369"
+    },
+    {
+      "id": "178575910853247201",
+      "memberId": "1781165293893",
+      "slot": "morning",
+      "date": "2026-06-02",
+      "purchaseId": "1781176670489"
+    },
+    {
+      "id": "178575910853290452",
+      "memberId": "1781165293893",
+      "slot": "morning",
+      "date": "2026-06-09",
+      "purchaseId": "1781176670489"
+    },
+    {
+      "id": "178575910853221639",
+      "memberId": "1781165293893",
+      "slot": "morning",
+      "date": "2026-06-16",
+      "purchaseId": "1781176670489"
+    },
+    {
+      "id": "178575910853276328",
+      "memberId": "1781165293893",
+      "slot": "morning",
+      "date": "2026-06-23",
+      "purchaseId": "1781176670489"
+    },
+    {
+      "id": "178575910853292430",
+      "memberId": "1781165318673",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176678227"
+    },
+    {
+      "id": "178575910853250759",
+      "memberId": "1781165318673",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176678227"
+    },
+    {
+      "id": "178575910853237358",
+      "memberId": "1781165318673",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176678227"
+    },
+    {
+      "id": "178575910853266192",
+      "memberId": "1781165318673",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176678227"
+    },
+    {
+      "id": "178575910853282891",
+      "memberId": "1781165384608",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176686212"
+    },
+    {
+      "id": "178575910853295509",
+      "memberId": "1781165384608",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176686212"
+    },
+    {
+      "id": "178575910853280750",
+      "memberId": "1781165384608",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176686212"
+    },
+    {
+      "id": "178575910853238941",
+      "memberId": "1781165384608",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176686212"
+    },
+    {
+      "id": "178575910853282636",
+      "memberId": "1781165454089",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176693373"
+    },
+    {
+      "id": "178575910853284155",
+      "memberId": "1781165454089",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176693373"
+    },
+    {
+      "id": "178575910853232081",
+      "memberId": "1781165454089",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176693373"
+    },
+    {
+      "id": "178575910853229130",
+      "memberId": "1781165454089",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176693373"
+    },
+    {
+      "id": "178575910853262821",
+      "memberId": "1781165483375",
+      "slot": "morning",
+      "date": "2026-06-02",
+      "purchaseId": "1781176700360"
+    },
+    {
+      "id": "178575910853280960",
+      "memberId": "1781165483375",
+      "slot": "morning",
+      "date": "2026-06-09",
+      "purchaseId": "1781176700360"
+    },
+    {
+      "id": "178575910853218464",
+      "memberId": "1781165483375",
+      "slot": "morning",
+      "date": "2026-06-16",
+      "purchaseId": "1781176700360"
+    },
+    {
+      "id": "178575910853229076",
+      "memberId": "1781165483375",
+      "slot": "morning",
+      "date": "2026-06-23",
+      "purchaseId": "1781176700360"
+    },
+    {
+      "id": "178575910853296453",
+      "memberId": "1781165514440",
+      "slot": "morning",
+      "date": "2026-06-02",
+      "purchaseId": "1781176716714"
+    },
+    {
+      "id": "178575910853244175",
+      "memberId": "1781165514440",
+      "slot": "morning",
+      "date": "2026-06-09",
+      "purchaseId": "1781176716714"
+    },
+    {
+      "id": "178575910853292118",
+      "memberId": "1781165514440",
+      "slot": "morning",
+      "date": "2026-06-16",
+      "purchaseId": "1781176716714"
+    },
+    {
+      "id": "178575910853217049",
+      "memberId": "1781165514440",
+      "slot": "morning",
+      "date": "2026-06-23",
+      "purchaseId": "1781176716714"
+    },
+    {
+      "id": "178575910853257513",
+      "memberId": "1781165421872",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176741303"
+    },
+    {
+      "id": "178575910853264450",
+      "memberId": "1781165421872",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "1781176741303"
+    },
+    {
+      "id": "178575910853297062",
+      "memberId": "1781165421872",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "1781176741303"
+    },
+    {
+      "id": "178575910853212834",
+      "memberId": "1781165421872",
+      "slot": "evening",
+      "date": "2026-06-23",
+      "purchaseId": "1781176741303"
+    },
+    {
+      "id": "178575910853262916",
+      "memberId": "1781165362465",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "178575910853265540"
+    },
+    {
+      "id": "178575910853243527",
+      "memberId": "1781165362465",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "178575910853277425"
+    },
+    {
+      "id": "178575910853210604",
+      "memberId": "1781165362465",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "178575910853275521"
+    },
+    {
+      "id": "178575910853271559",
+      "memberId": "1781164764767",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "1781176790450"
+    },
+    {
+      "id": "178575910853224318",
+      "memberId": "1781165242534",
+      "slot": "evening",
+      "date": "2026-06-02",
+      "purchaseId": "178575910853221655"
+    },
+    {
+      "id": "178575910853241317",
+      "memberId": "1781165242534",
+      "slot": "evening",
+      "date": "2026-06-09",
+      "purchaseId": "178575910853266634"
+    },
+    {
+      "id": "178575910853251867",
+      "memberId": "1781165242534",
+      "slot": "evening",
+      "date": "2026-06-16",
+      "purchaseId": "178575910853256875"
+    },
+    {
+      "id": "178575910853245055",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-06-30",
+      "purchaseId": "1782739602734"
+    },
+    {
+      "id": "178575910853263085",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-07-07",
+      "purchaseId": "1782739602734"
+    },
+    {
+      "id": "178575910853242042",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-07-14",
+      "purchaseId": "1782739602734"
+    },
+    {
+      "id": "178575910853260598",
+      "memberId": "1781164735434",
+      "slot": "morning",
+      "date": "2026-07-21",
+      "purchaseId": "1782739602734"
+    }
+  ],
+  "attendance": [
+    {
+      "id": "178575910853380586",
+      "registrationId": "178575910853265104",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853378332",
+      "registrationId": "178575910853212141",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853353967",
+      "registrationId": "178575910853251273",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853398718",
+      "registrationId": "178575910853247201",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853361232",
+      "registrationId": "178575910853262821",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853324481",
+      "registrationId": "178575910853260900",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853339144",
+      "registrationId": "178575910853224318",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853334178",
+      "registrationId": "178575910853292430",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853344386",
+      "registrationId": "178575910853262916",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853382593",
+      "registrationId": "178575910853271559",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853350834",
+      "registrationId": "178575910853282636",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853443369",
+      "registrationId": "178575910853266560",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853499841",
+      "registrationId": "178575910853222426",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853442426",
+      "registrationId": "178575910853290452",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853447757",
+      "registrationId": "178575910853280960",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853427879",
+      "registrationId": "178575910853244175",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853440916",
+      "registrationId": "178575910853272245",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853479084",
+      "registrationId": "178575910853275848",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853472086",
+      "registrationId": "178575910853287288",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853432073",
+      "registrationId": "178575910853241317",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853467446",
+      "registrationId": "178575910853250759",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853451880",
+      "registrationId": "178575910853243527",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853467326",
+      "registrationId": "178575910853284155",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853481664",
+      "registrationId": "178575910853246942",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853439161",
+      "registrationId": "178575910853212940",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853491609",
+      "registrationId": "178575910853221639",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853484450",
+      "registrationId": "178575910853218464",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853466604",
+      "registrationId": "178575910853292118",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853491777",
+      "registrationId": "178575910853247805",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853446349",
+      "registrationId": "178575910853251867",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853499353",
+      "registrationId": "178575910853237358",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853487961",
+      "registrationId": "178575910853210604",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853462746",
+      "registrationId": "178575910853232081",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853446740",
+      "registrationId": "178575910853214715",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853416193",
+      "registrationId": "178575910853226457",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853431259",
+      "registrationId": "178575910853276328",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853426088",
+      "registrationId": "178575910853229076",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853415399",
+      "registrationId": "178575910853217049",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853430822",
+      "registrationId": "178575910853235561",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853482759",
+      "registrationId": "178575910853266192",
+      "status": "attended"
+    },
+    {
+      "id": "178575910853455606",
+      "registrationId": "178575910853229130",
+      "status": "attended"
+    },
+    {
+      "id": "178575911856414448",
+      "registrationId": "178575910853257513",
+      "status": "attended"
+    },
+    {
+      "id": "178575911856532797",
+      "registrationId": "178575910853297062",
+      "status": "attended"
+    },
+    {
+      "id": "178575911856585011",
+      "registrationId": "178575910853212834",
+      "status": "attended"
+    },
+    {
+      "id": "178575911856554017",
+      "registrationId": "178575910853264450",
+      "status": "noshow"
+    }
+  ],
+  "courseBlocks": [
+    {
+      "id": "hist_june",
+      "startDate": "2026-06-02",
+      "weeks": 4
+    },
+    {
+      "id": "1782734712397",
+      "startDate": "2026-06-30",
+      "weeks": 4
+    }
+  ],
+  "classes": [
+    {
+      "id": "morning",
+      "name": "Open Level Barre",
+      "day": "Tuesday",
+      "time": "08:45",
+      "slot": "morning"
+    },
+    {
+      "id": "evening",
+      "name": "Open Level Barre",
+      "day": "Tuesday",
+      "time": "17:30",
+      "slot": "evening"
+    }
+  ]
+};
 function doImport() {
   if (!confirm('This will overwrite any existing manager data on this device. Continue?')) return;
   try {
