@@ -59,9 +59,9 @@ main{padding:28px;max-width:1200px;margin:0 auto;}
 .bgrp{display:flex;gap:8px;flex-wrap:wrap;}
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:14px;}
-.stat{background:var(--brown);padding:20px 24px;}
-.stat-n{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--gold);display:block;margin-bottom:3px;}
-.stat-l{font-size:10px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,244,239,0.4);}
+.stat{background:var(--white);border:1px solid var(--border);border-top:3px solid var(--gold);padding:20px 24px;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--brown);display:block;margin-bottom:3px;}
+.stat-l{font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mid);}
 
 .card{background:var(--white);border:1px solid var(--border);padding:24px;margin-bottom:14px;}
 .card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px;}
@@ -445,6 +445,11 @@ function clsName(slot) {
 }
 function toISO(d) { return (d || new Date()).toISOString().split('T')[0]; }
 function formatDateLong(d) {
+  // Accept either a Date object or an ISO string 'YYYY-MM-DD'
+  if (typeof d === 'string') {
+    var parts = d.split('-');
+    d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  }
   return d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
 }
 function toast(msg) {
@@ -590,13 +595,13 @@ function renderDashboard() {
           '<div class="card-title">' + cls.time + ' — ' + cls.name + '</div>' +
         '</div>' +
         '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;">' +
-          '<div style="background:var(--brown);padding:14px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">' + Object.keys(uniqueBlockMembers).length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Block Members</div></div>' +
-          '<div style="background:var(--brown);padding:14px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">' + dropIns.length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Drop Ins</div></div>' +
-          '<div style="background:var(--brown);padding:14px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">' + Object.keys(uniqueMembers).length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Total Booked</div></div>' +
+          '<div style="background:var(--gold-pale);border:1px solid var(--border);padding:14px;text-align:center;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:var(--brown);">' + Object.keys(uniqueBlockMembers).length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);">Block</div></div>' +
+          '<div style="background:var(--gold-pale);border:1px solid var(--border);padding:14px;text-align:center;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:var(--brown);">' + dropIns.length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);">Drop Ins</div></div>' +
+          '<div style="background:var(--gold-pale);border:1px solid var(--border);padding:14px;text-align:center;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:26px;color:var(--brown);">' + Object.keys(uniqueMembers).length + '</div><div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);">Total</div></div>' +
         '</div>' +
       '</div>';
     }).join('');
-    bookingsEl.innerHTML = '<div style="font-size:13px;color:var(--text-mid);margin-bottom:10px;">Block: ' + formatDateLong(new Date(currentBlock.startDate+'T00:00:00')) + ' (' + currentBlock.weeks + ' weeks)</div>' +
+    bookingsEl.innerHTML = '<div style="font-size:13px;color:var(--text-mid);margin-bottom:10px;">Block: ' + formatDateLong(currentBlock.startDate) + ' (' + currentBlock.weeks + ' weeks)</div>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' + cards + '</div>';
   }
 
@@ -612,17 +617,21 @@ function renderDashboard() {
     '<div class="stat"><span class="stat-n">' + S.purchases.length + '</span><span class="stat-l">Total Purchases</span></div>' +
     '<div class="stat"><span class="stat-n">£' + (S.purchases.length ? (totalRevenue/S.purchases.length).toFixed(0) : '0') + '</span><span class="stat-l">Avg Purchase</span></div>';
 
-  var revenueByClass = {};
+  // Revenue per class — morning vs evening
+  var revMorning = 0, revEvening = 0;
   S.purchases.forEach(function(p) {
-    var key = p.class || 'Unknown';
-    revenueByClass[key] = (revenueByClass[key]||0) + (p.amount||0);
+    if (p.classSlot === 'morning') revMorning += (p.amount||0);
+    else if (p.classSlot === 'evening') revEvening += (p.amount||0);
   });
+  var morningCls = S.classes.find(function(c){return c.slot==='morning';});
+  var eveningCls = S.classes.find(function(c){return c.slot==='evening';});
   var detailEl = document.getElementById('dashFinanceDetail');
-  if (Object.keys(revenueByClass).length) {
+  if (revMorning > 0 || revEvening > 0) {
     detailEl.innerHTML = '<div class="card"><div class="card-hdr"><div class="card-title">Revenue per Class</div></div>' +
-      Object.entries(revenueByClass).map(function(entry) {
-        return '<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;"><span>' + entry[0] + '</span><span style="font-weight:500;color:var(--gold);">£' + entry[1].toFixed(0) + '</span></div>';
-      }).join('') + '</div>';
+      (revMorning > 0 ? '<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;"><span>' + (morningCls ? morningCls.time + ' — ' + morningCls.name : 'Morning') + '</span><span style="font-weight:500;color:var(--gold);">£' + revMorning.toFixed(0) + '</span></div>' : '') +
+      (revEvening > 0 ? '<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;"><span>' + (eveningCls ? eveningCls.time + ' — ' + eveningCls.name : 'Evening') + '</span><span style="font-weight:500;color:var(--gold);">£' + revEvening.toFixed(0) + '</span></div>' : '') +
+      '<div style="display:flex;justify-content:space-between;padding:9px 0;font-size:14px;font-weight:500;"><span style="color:var(--text-mid);">Total</span><span style="color:var(--gold);">£' + totalRevenue.toFixed(0) + '</span></div>' +
+    '</div>';
   } else {
     detailEl.innerHTML = '';
   }
@@ -725,14 +734,15 @@ function renderPurchases() {
   var total = S.purchases.reduce(function(s,p){return s+(p.amount||0);},0);
 
   // ── EARNINGS SUMMARY ──
-  // By class
-  var byClass = {};
-  // By month
+  // By class slot (morning/evening)
+  var bySlotEarnings = {morning: 0, evening: 0, other: 0};
   var byMonth = {};
   S.purchases.forEach(function(p) {
-    var cls = (p.class || p.classSlot || 'Unknown');
-    byClass[cls] = (byClass[cls]||0) + (p.amount||0);
-    var month = (p.date||'').substring(0,7); // YYYY-MM
+    var slot = p.classSlot || '';
+    if (slot === 'morning') bySlotEarnings.morning += (p.amount||0);
+    else if (slot === 'evening') bySlotEarnings.evening += (p.amount||0);
+    else bySlotEarnings.other += (p.amount||0);
+    var month = (p.date||'').substring(0,7);
     if (month) byMonth[month] = (byMonth[month]||0) + (p.amount||0);
   });
 
@@ -740,11 +750,17 @@ function renderPurchases() {
   if (!S.purchases.length) {
     sumEl.innerHTML = '<div style="font-size:14px;font-weight:300;color:var(--text-faint);">No purchases yet.</div>';
   } else {
-    var clsRows = Object.entries(byClass).map(function(e) {
-      return '<tr><td style="font-size:13px;">' + e[0] + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + e[1].toFixed(0) + '</td></tr>';
+    var morningCls = S.classes.find(function(c){return c.slot==='morning';});
+    var eveningCls = S.classes.find(function(c){return c.slot==='evening';});
+    var clsRows = [
+      {label: (morningCls ? morningCls.time + ' — ' + morningCls.name : 'Morning'), amount: bySlotEarnings.morning},
+      {label: (eveningCls ? eveningCls.time + ' — ' + eveningCls.name : 'Evening'), amount: bySlotEarnings.evening}
+    ].filter(function(r){ return r.amount > 0; }).map(function(r) {
+      return '<tr><td style="font-size:13px;">' + r.label + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + r.amount.toFixed(0) + '</td></tr>';
     }).join('');
     var monthRows = Object.entries(byMonth).sort(function(a,b){return b[0].localeCompare(a[0]);}).map(function(e) {
-      var d = new Date(e[0]+'-01');
+      var parts = e[0].split('-');
+      var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, 1);
       var label = d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
       return '<tr><td style="font-size:13px;">' + label + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + e[1].toFixed(0) + '</td></tr>';
     }).join('');
@@ -961,7 +977,7 @@ function renderAttendance() {
     container.innerHTML = '<div class="empty"><div class="empty-body">No course blocks set up yet. Add one in Settings.</div></div>';
   } else {
     var dates = getCourseBlockDates(currentBlock);
-    var blockLabel = formatDateLong(new Date(currentBlock.startDate+'T00:00:00')) + ' — ' + formatDateLong(new Date(dates[dates.length-1].iso+'T00:00:00'));
+    var blockLabel = formatDateLong(currentBlock.startDate) + ' — ' + formatDateLong(dates[dates.length-1].iso);
     var html = '<p style="font-size:13px;font-weight:300;color:var(--text-faint);margin-bottom:20px;">Current block: <strong style="color:var(--brown);">' + blockLabel + '</strong>. Tick to mark attended.</p>';
 
     dates.forEach(function(d) {
