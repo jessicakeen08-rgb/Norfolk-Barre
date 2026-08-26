@@ -204,21 +204,30 @@ tr:hover td{background:var(--gold-pale);}
       <button class="btn btn-gold" onclick="openAddPurchase()">+ Add Purchase</button>
     </div>
   </div>
-  <div class="card" style="margin-bottom:14px;"><div class="card-hdr"><div class="card-title">Earnings Summary</div></div><div id="earningsSummary"></div></div>
+
+  <div class="section-label">Earnings Summary</div>
+  <div id="earningsSummary" style="margin-bottom:28px;"></div>
+
+  <div class="section-label">Open Purchases <span style="font-size:11px;font-weight:300;color:var(--text-faint);margin-left:8px;">— future classes remaining</span></div>
+  <div class="card" style="padding:0;margin-bottom:28px;"><div class="tw">
+    <table><thead><tr><th>Date</th><th>Member</th><th>Class</th><th>Package</th><th style="text-align:center;">Remaining</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
+    <tbody id="openPurchasesTable"></tbody></table>
+  </div></div>
+
+  <div class="section-label">Closed Purchases <span style="font-size:11px;font-weight:300;color:var(--text-faint);margin-left:8px;">— completed or expired</span></div>
   <div class="card" style="padding:0;"><div class="tw">
-    <table><thead><tr><th>Date</th><th>Member</th><th>Class</th><th>Package</th><th>Credits</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
-    <tbody id="purchasesTable"></tbody></table>
+    <table><thead><tr><th>Date</th><th>Member</th><th>Class</th><th>Package</th><th style="text-align:center;">Used</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
+    <tbody id="closedPurchasesTable"></tbody></table>
   </div></div>
 </div>
 
 <!-- ATTENDANCE -->
 <div class="panel" id="panel-attendance">
   <div class="ph"><div class="pt">Log <em>Attendance</em></div></div>
-  <p style="font-size:13px;font-weight:300;color:var(--text-faint);margin-bottom:20px;">Everyone registered for a class shows here automatically. Tick attended, or leave unticked to mark as a no-show.</p>
   <div id="attendanceSections"></div>
-  <div style="margin-top:32px;">
+  <div style="margin-top:36px;">
     <div class="ph" style="margin-bottom:14px;">
-      <div class="pt" style="font-size:24px;">History <em>by class</em></div>
+      <div class="pt" style="font-size:24px;">History</div>
       <button class="btn btn-ghost btn-sm" onclick="exportAttendanceCSV()">Export CSV</button>
     </div>
     <div id="attendHistory"></div>
@@ -678,40 +687,106 @@ function renderMembers() {
 }
 
 // ============ PURCHASES ============
-function renderPurchases() {
-  var byType = {};
-  S.purchases.forEach(function(p) {
-    var key = (p.class || '') + '|' + (p.packageLabel || p.package || '');
-    if (!byType[key]) byType[key] = {cls: p.class || '', pkg: p.packageLabel || p.package || '', count: 0, amount: 0, credits: 0};
-    byType[key].count++; byType[key].amount += (p.amount||0); byType[key].credits += (p.credits||0);
+function normalisePkgLabel(p) {
+  // Amalgamate '4 Week Course' and 'Block of 4' into one label
+  var pkg = (p.packageLabel || p.package || '').toLowerCase();
+  if (pkg.indexOf('4 week') >= 0 || pkg.indexOf('block') >= 0 || pkg === 'block4') return 'Block of 4';
+  if (pkg === 'payg' || pkg.indexOf('drop') >= 0) return 'Drop in';
+  return p.packageLabel || p.package || '';
+}
+
+function isPurchaseOpen(p) {
+  // Open = at least one future registration linked to this purchase
+  var todayIso = toISO();
+  if (p.package === 'payg' || normalisePkgLabel(p) === 'Drop in') {
+    return p.dropInDate && p.dropInDate >= todayIso;
+  }
+  return S.registrations.some(function(r) {
+    return r.purchaseId === p.id && r.date >= todayIso;
   });
+}
+
+function purchaseCreditsRemaining(p) {
+  var todayIso = toISO();
+  return S.registrations.filter(function(r) {
+    return r.purchaseId === p.id && r.date >= todayIso;
+  }).length;
+}
+
+function purchaseCreditsUsed(p) {
+  var regs = S.registrations.filter(function(r){ return r.purchaseId === p.id; });
+  return regs.filter(function(r) {
+    var att = attendanceForReg(r.id);
+    return att && att.status === 'attended';
+  }).length;
+}
+
+function renderPurchases() {
   var total = S.purchases.reduce(function(s,p){return s+(p.amount||0);},0);
+
+  // ── EARNINGS SUMMARY ──
+  // By class
+  var byClass = {};
+  // By month
+  var byMonth = {};
+  S.purchases.forEach(function(p) {
+    var cls = (p.class || p.classSlot || 'Unknown');
+    byClass[cls] = (byClass[cls]||0) + (p.amount||0);
+    var month = (p.date||'').substring(0,7); // YYYY-MM
+    if (month) byMonth[month] = (byMonth[month]||0) + (p.amount||0);
+  });
+
   var sumEl = document.getElementById('earningsSummary');
   if (!S.purchases.length) {
     sumEl.innerHTML = '<div style="font-size:14px;font-weight:300;color:var(--text-faint);">No purchases yet.</div>';
   } else {
-    var rows = Object.values(byType).map(function(r) {
-      return '<tr><td style="font-size:13px;">' + r.cls + '</td><td style="font-size:13px;">' + r.pkg + '</td><td style="text-align:center;">' + r.count + '</td><td style="text-align:center;">' + r.credits + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + r.amount.toFixed(0) + '</td></tr>';
+    var clsRows = Object.entries(byClass).map(function(e) {
+      return '<tr><td style="font-size:13px;">' + e[0] + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + e[1].toFixed(0) + '</td></tr>';
     }).join('');
-    sumEl.innerHTML = '<div style="overflow-x:auto;"><table><thead><tr><th>Class</th><th>Package</th><th>Bookings</th><th>Credits</th><th style="text-align:right;">Revenue</th></tr></thead><tbody>' +
-      rows + '<tr style="background:var(--brown);"><td colspan="4" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(247,244,239,0.5);">TOTAL</td>' +
-      '<td style="text-align:right;font-size:18px;font-weight:600;color:var(--gold);">£' + total.toFixed(0) + '</td></tr></tbody></table></div>';
+    var monthRows = Object.entries(byMonth).sort(function(a,b){return b[0].localeCompare(a[0]);}).map(function(e) {
+      var d = new Date(e[0]+'-01');
+      var label = d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
+      return '<tr><td style="font-size:13px;">' + label + '</td><td style="text-align:right;font-weight:500;color:var(--gold);">£' + e[1].toFixed(0) + '</td></tr>';
+    }).join('');
+    sumEl.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+      '<div><div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Per Class</div>' +
+      '<table><thead><tr><th>Class</th><th style="text-align:right;">Revenue</th></tr></thead><tbody>' + clsRows +
+      '<tr style="background:var(--brown);"><td style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(247,244,239,0.5);">Total</td><td style="text-align:right;font-size:16px;font-weight:600;color:var(--gold);">£' + total.toFixed(0) + '</td></tr>' +
+      '</tbody></table></div>' +
+      '<div><div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Per Month</div>' +
+      '<table><thead><tr><th>Month</th><th style="text-align:right;">Revenue</th></tr></thead><tbody>' + monthRows + '</tbody></table></div>' +
+    '</div>';
   }
-  var tbody = document.getElementById('purchasesTable');
-  if (!S.purchases.length) {
-    tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">💳</div><div class="empty-title">No purchases yet</div></div></td></tr>';
-    return;
-  }
-  tbody.innerHTML = S.purchases.slice().reverse().map(function(p) {
+
+  // ── OPEN / CLOSED SPLIT ──
+  var open = S.purchases.filter(isPurchaseOpen).slice().reverse();
+  var closed = S.purchases.filter(function(p){ return !isPurchaseOpen(p); }).slice().reverse();
+
+  function purchaseRow(p, showRemaining) {
+    var label = normalisePkgLabel(p);
+    var credNum = showRemaining ? purchaseCreditsRemaining(p) : purchaseCreditsUsed(p);
+    var credLabel = showRemaining ? 'remaining' : 'attended';
     return '<tr><td style="font-size:13px;">' + (p.date || '') + '</td>' +
       '<td><div class="tdn" data-id="' + p.memberId + '" onclick="openProfile(this.dataset.id)">' + p.memberName + '</div></td>' +
-      '<td style="font-size:13px;">' + (p.class || '') + '</td>' +
-      '<td style="font-size:13px;">' + (p.packageLabel || p.package || '') + '</td>' +
-      '<td style="text-align:center;">' + (p.credits || 0) + '</td>' +
+      '<td style="font-size:13px;">' + (p.class || p.classSlot || '') + '</td>' +
+      '<td><span class="badge ' + (label==='Drop in'?'badge-dropin':'badge-block') + '">' + label + '</span></td>' +
+      '<td style="text-align:center;"><span style="font-weight:600;color:var(--brown);">' + credNum + '</span><span style="font-size:11px;color:var(--text-faint);margin-left:4px;">' + credLabel + '</span></td>' +
       '<td style="text-align:right;font-weight:500;color:var(--gold);">£' + (p.amount || 0).toFixed(0) + '</td>' +
-      '<td><div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" data-id="' + p.id + '" onclick="openEditPurchase(this.dataset.id)">Edit</button>' +
-      '<button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button></div></td></tr>';
-  }).join('');
+      '<td><div style="display:flex;gap:6px;">' +
+        '<button class="btn btn-ghost btn-sm" data-id="' + p.id + '" onclick="openEditPurchase(this.dataset.id)">Edit</button>' +
+        '<button class="btn btn-red btn-sm" data-id="' + p.id + '" onclick="deletePurchase(this.dataset.id)">✕</button>' +
+      '</div></td></tr>';
+  }
+
+  var openEl = document.getElementById('openPurchasesTable');
+  openEl.innerHTML = !open.length
+    ? '<tr><td colspan="7"><div class="empty" style="padding:20px;"><div class="empty-body">No open purchases.</div></div></td></tr>'
+    : open.map(function(p){ return purchaseRow(p, true); }).join('');
+
+  var closedEl = document.getElementById('closedPurchasesTable');
+  closedEl.innerHTML = !closed.length
+    ? '<tr><td colspan="7"><div class="empty" style="padding:20px;"><div class="empty-body">No closed purchases yet.</div></div></td></tr>'
+    : closed.map(function(p){ return purchaseRow(p, false); }).join('');
 }
 
 function openAddPurchase() {
@@ -863,50 +938,66 @@ function deletePurchase(id) {
 }
 
 // ============ ATTENDANCE ============
+function getCurrentBlock() {
+  var todayIso = toISO();
+  var blocks = (S.courseBlocks || []).slice().sort(function(a,b){ return a.startDate.localeCompare(b.startDate); });
+  // Find block containing today, or the most recent past block
+  var current = null;
+  for (var i = 0; i < blocks.length; i++) {
+    var dates = getCourseBlockDates(blocks[i]);
+    var lastDate = dates[dates.length-1].iso;
+    if (blocks[i].startDate <= todayIso) current = blocks[i];
+    if (lastDate >= todayIso && blocks[i].startDate <= todayIso) return blocks[i];
+  }
+  return current;
+}
+
 function renderAttendance() {
   var container = document.getElementById('attendanceSections');
   if (!container) return;
-  var dates = getAllCourseDates();
-  if (!dates.length) {
-    container.innerHTML = '<div class="empty"><div class="empty-body">No course blocks set up yet. Add one in Settings to get started.</div></div>';
+
+  var currentBlock = getCurrentBlock();
+  if (!currentBlock) {
+    container.innerHTML = '<div class="empty"><div class="empty-body">No course blocks set up yet. Add one in Settings.</div></div>';
   } else {
-    var html = '';
+    var dates = getCourseBlockDates(currentBlock);
+    var blockLabel = formatDateLong(new Date(currentBlock.startDate+'T00:00:00')) + ' — ' + formatDateLong(new Date(dates[dates.length-1].iso+'T00:00:00'));
+    var html = '<p style="font-size:13px;font-weight:300;color:var(--text-faint);margin-bottom:20px;">Current block: <strong style="color:var(--brown);">' + blockLabel + '</strong>. Tick to mark attended.</p>';
+
     dates.forEach(function(d) {
+      var isPast = d.iso < toISO();
       html += '<div style="margin-bottom:28px;">';
-      html += '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;align-items:center;">' +
-        '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--gold);">' + d.label + '</span></div>';
+      html += '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;align-items:center;justify-content:space-between;">' +
+        '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--gold);">' + d.label + '</span>' +
+        (isPast ? '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Past</span>' : '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);opacity:0.6;">Upcoming</span>') +
+      '</div>';
       html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">';
       S.classes.forEach(function(cls) {
         var regs = S.registrations.filter(function(r) { return r.slot === cls.slot && r.date === d.iso; });
         var rows = !regs.length
-          ? '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;">No one registered.</div>'
+          ? '<div style="font-size:13px;color:var(--text-faint);padding:12px 0;font-style:italic;">No one registered for this class.</div>'
           : regs.map(function(reg) {
               var member = S.members.find(function(m) { return m.id === reg.memberId; });
               if (!member) return '';
               var att = attendanceForReg(reg.id);
               var status = att ? att.status : null;
               var type = getBookingType(reg);
-              var typeBadge = type === 'dropin'
-                ? '<span class="badge badge-dropin">Drop in</span>'
-                : '<span class="badge badge-block">Block</span>';
+              var typeBadge = type === 'dropin' ? '<span class="badge badge-dropin">Drop in</span>' : '<span class="badge badge-block">Block</span>';
               var checked = status === 'attended' ? 'checked' : '';
               return '<div class="att-row">' +
                 '<div style="display:flex;align-items:center;gap:10px;">' +
                   '<input type="checkbox" class="att-check" ' + checked +
                   ' data-regid="' + reg.id + '" onchange="toggleAttendance(this.dataset.regid,this.checked)">' +
-                  '<div>' +
-                    '<div style="font-weight:500;font-size:13px;color:var(--brown);">' + member.firstName + ' ' + (member.lastName||'') + '</div>' +
-                    typeBadge +
-                  '</div>' +
+                  '<div><div style="font-weight:500;font-size:13px;color:var(--brown);">' + member.firstName + ' ' + (member.lastName||'') + '</div>' + typeBadge + '</div>' +
                 '</div>' +
                 (status === 'attended' ? '<span class="badge badge-attended">✓ Attended</span>' :
                  status === 'noshow' ? '<span class="badge badge-noshow">No show</span>' :
-                 d.iso < toISO() ? '<span class="badge badge-pending">Not logged</span>' : '<span class="badge badge-pending">Upcoming</span>') +
+                 isPast ? '<span class="badge badge-pending">Not logged</span>' : '<span class="badge badge-pending">Upcoming</span>') +
               '</div>';
             }).join('');
         html += '<div class="card" style="margin-bottom:0;">' +
           '<div style="padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">' +
-            '<div style="font-size:16px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
+            '<div style="font-size:15px;font-weight:600;color:var(--brown);">' + cls.time + ' — ' + cls.name + '</div>' +
             '<span style="font-size:11px;color:var(--text-mid);">' + regs.length + ' registered</span>' +
           '</div>' + rows + '</div>';
       });
@@ -915,48 +1006,71 @@ function renderAttendance() {
     container.innerHTML = html;
   }
 
-  // History grouped by CLASS then date
+  // ── HISTORY — compact, by class then date, with clickable attendee count ──
   var histEl = document.getElementById('attendHistory');
-  var loggedRegIds = {};
-  S.attendance.forEach(function(a) { loggedRegIds[a.registrationId] = a; });
-  var hasHistory = Object.keys(loggedRegIds).length > 0;
-  if (!hasHistory) {
+
+  // Group all past dates (not in current block) by class then date
+  var currentBlockDateSet = {};
+  if (currentBlock) {
+    getCourseBlockDates(currentBlock).forEach(function(d){ currentBlockDateSet[d.iso] = true; });
+  }
+
+  // Build date → attendees/noshows map
+  var dateClassMap = {}; // key: slot+'|'+date
+  S.registrations.forEach(function(r) {
+    if (currentBlockDateSet[r.date]) return; // skip current block
+    var key = r.slot + '|' + r.date;
+    if (!dateClassMap[key]) dateClassMap[key] = {slot: r.slot, date: r.date, attended: [], noshow: [], pending: []};
+    var att = attendanceForReg(r.id);
+    var member = S.members.find(function(m){ return m.id === r.memberId; });
+    var name = member ? member.firstName + ' ' + (member.lastName||'') : 'Unknown';
+    if (att && att.status === 'attended') dateClassMap[key].attended.push(name);
+    else if (att && att.status === 'noshow') dateClassMap[key].noshow.push(name);
+    else dateClassMap[key].pending.push(name);
+  });
+
+  var entries = Object.values(dateClassMap).sort(function(a,b){ return b.date.localeCompare(a.date); });
+
+  if (!entries.length) {
     histEl.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No history yet</div></div>';
     return;
   }
-  var byClass = {};
-  S.attendance.forEach(function(a) {
-    var reg = S.registrations.find(function(r) { return r.id === a.registrationId; });
-    var slot = reg ? reg.slot : (a.slot || 'unknown');
-    if (!byClass[slot]) byClass[slot] = [];
-    byClass[slot].push({ a: a, reg: reg });
+
+  // Group by slot
+  var bySlot = {};
+  entries.forEach(function(e) {
+    if (!bySlot[e.slot]) bySlot[e.slot] = [];
+    bySlot[e.slot].push(e);
   });
-  histEl.innerHTML = Object.keys(byClass).map(function(slot) {
+
+  histEl.innerHTML = Object.keys(bySlot).map(function(slot) {
     var cls = clsObj(slot);
-    var entries = byClass[slot].slice().sort(function(x,y) {
-      var dx = x.reg ? x.reg.date : '';
-      var dy = y.reg ? y.reg.date : '';
-      return dy.localeCompare(dx);
-    });
-    var attendedCount = entries.filter(function(e){return e.a.status==='attended';}).length;
-    var noshowCount = entries.filter(function(e){return e.a.status==='noshow';}).length;
-    var rows = entries.map(function(e) {
-      var member = e.reg ? S.members.find(function(m){return m.id===e.reg.memberId;}) : null;
-      var name = member ? (member.firstName + ' ' + (member.lastName||'')) : 'Unknown (deleted)';
-      var dateStr = e.reg ? e.reg.date : '';
-      var dateLabel = dateStr ? formatDateLong(new Date(dateStr+'T00:00:00')) : 'Unknown date';
-      var statusBadge = e.a.status === 'attended' ? '<span class="badge badge-attended">Attended</span>' : '<span class="badge badge-noshow">No show</span>';
-      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid var(--border);font-size:13px;">' +
-        '<div><div style="font-weight:500;">' + name + '</div><div style="font-size:11px;color:var(--text-faint);">' + dateLabel + '</div></div>' +
-        '<div style="display:flex;align-items:center;gap:10px;">' + statusBadge +
-        '<button class="btn btn-ghost btn-sm" data-id="' + e.a.id + '" onclick="undoAttendance(this.dataset.id)" style="padding:4px 10px;font-size:10px;">Undo</button></div></div>';
+    var clsLabel = cls ? cls.day + ' ' + cls.time + ' — ' + cls.name : slot;
+    var rows = bySlot[slot].map(function(e) {
+      var dateLabel = formatDateLong(new Date(e.date+'T00:00:00'));
+      var attList = e.attended.join(', ') || 'None';
+      var nsCount = e.noshow.length;
+      var attCount = e.attended.length;
+      var attId = 'att-' + slot + '-' + e.date.replace(/-/g,'');
+      return '<tr>' +
+        '<td style="font-size:13px;font-weight:400;">' + dateLabel + '</td>' +
+        '<td style="text-align:center;">' +
+          '<button onclick="toggleAttendeeList(\'' + attId + '\')" style="background:var(--green-pale);color:var(--green);border:none;padding:4px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:\'DM Sans\',sans-serif;">' + attCount + '</button>' +
+        '</td>' +
+        '<td style="text-align:center;"><span style="color:var(--red);font-weight:600;">' + nsCount + '</span></td>' +
+        '<td colspan="1"><div id="' + attId + '" style="display:none;font-size:12px;color:var(--text-mid);padding:8px 0;line-height:1.7;">' + attList + '</div></td>' +
+      '</tr>';
     }).join('');
     return '<div class="card" style="padding:0;margin-bottom:14px;">' +
-      '<div class="card-hdr" style="margin:0;padding:16px 20px;">' +
-        '<div class="card-title">' + (cls ? cls.day + ' ' + cls.time + ' — ' + cls.name : slot) + '</div>' +
-        '<div style="font-size:12px;color:var(--text-mid);">' + attendedCount + ' attended · ' + noshowCount + ' no show</div>' +
-      '</div>' + rows + '</div>';
+      '<div class="card-hdr" style="margin:0;padding:14px 20px;"><div class="card-title">' + clsLabel + '</div></div>' +
+      '<table><thead><tr><th>Date</th><th style="text-align:center;">Attended</th><th style="text-align:center;">No Shows</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '</div>';
   }).join('');
+}
+
+function toggleAttendeeList(id) {
+  var el = document.getElementById(id);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
 function toggleAttendance(regId, checked) {
