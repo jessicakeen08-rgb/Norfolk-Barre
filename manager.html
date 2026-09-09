@@ -182,6 +182,11 @@ tr:hover td{background:var(--gold-pale);}
   <div class="ph">
     <div class="pt">Members</div>
     <div class="bgrp">
+      <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text-mid);">
+        <span><span class="cp cp-good" style="padding:2px 8px;font-size:11px;">●</span> Block credits</span>
+        <span><span class="cp cp-low" style="padding:2px 8px;font-size:11px;">●</span> Drop-in only</span>
+        <span><span class="cp cp-none" style="padding:2px 8px;font-size:11px;">●</span> No credits</span>
+      </div>
       <button class="btn btn-ghost btn-sm" onclick="copySelectedEmails()">📋 Copy Selected</button>
       <button class="btn btn-ghost btn-sm" onclick="copyAllEmails()">📋 Copy All</button>
       <button class="btn btn-ghost btn-sm" onclick="exportMembersCSV()">Export CSV</button>
@@ -525,11 +530,47 @@ function regStatus(reg) {
 // whether attended or not - it does not roll over.
 function activeCreditsForMember(mid) {
   var todayIso = toISO();
+  var seen = {};
   return S.registrations.filter(function(r) {
-    return r.memberId === mid && r.date >= todayIso;
+    if (r.memberId !== mid) return false;
+    if (r.date < todayIso) return false;
+    var purchase = S.purchases.find(function(p) { return p.id === r.purchaseId; });
+    if (!purchase || purchase.amount === 0) return false;
+    var key = r.date + '|' + r.slot;
+    if (seen[key]) return false;
+    seen[key] = true;
+    return true;
   }).length;
 }
-function cpClass(n) {
+
+function creditTypeForMember(mid) {
+  // Returns 'block', 'dropin', or 'none'
+  var todayIso = toISO();
+  var seen = {};
+  var hasBlock = false, hasDropin = false;
+  S.registrations.forEach(function(r) {
+    if (r.memberId !== mid || r.date < todayIso) return;
+    var purchase = S.purchases.find(function(p) { return p.id === r.purchaseId; });
+    if (!purchase || purchase.amount === 0) return;
+    var key = r.date + '|' + r.slot;
+    if (seen[key]) return;
+    seen[key] = true;
+    if (purchase.package === 'payg') hasDropin = true;
+    else hasBlock = true;
+  });
+  if (hasBlock) return 'block';
+  if (hasDropin) return 'dropin';
+  return 'none';
+}
+
+function cpClass(n, mid) {
+  // If mid provided, use credit type for colour; otherwise fall back to count
+  if (mid !== undefined) {
+    var type = creditTypeForMember(mid);
+    if (type === 'block') return 'cp-good';
+    if (type === 'dropin') return 'cp-low';
+    return 'cp-none';
+  }
   if (n <= 0) return 'cp-none';
   if (n === 1) return 'cp-low';
   return 'cp-good';
@@ -644,7 +685,7 @@ function renderDashboard() {
         return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">' +
           '<div><div style="font-weight:500;font-size:14px;color:var(--brown);">' + m.firstName + ' ' + (m.lastName || '') + '</div>' +
           '<div style="font-size:11px;color:var(--text-faint);">' + m.email + '</div></div>' +
-          '<span class="cp ' + cpClass(c) + '">' + c + '</span></div>';
+          '<span class="cp ' + cpClass(c, m.id) + '">' + c + '</span></div>';
       }).join('');
 
   // Top clients - all time attended count
@@ -684,7 +725,7 @@ function renderMembers() {
       '<td style="font-size:13px;">' + m.email + '</td>' +
       '<td style="font-size:13px;">' + (m.phone || '') + '</td>' +
       '<td>' + badge + '</td>' +
-      '<td style="text-align:center;"><span class="cp ' + cpClass(c) + '">' + c + '</span></td>' +
+      '<td style="text-align:center;"><span class="cp ' + cpClass(c, m.id) + '">' + c + '</span></td>' +
       '<td><div style="display:flex;gap:6px;">' +
         '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="openEditMember(this.dataset.id)">Edit</button>' +
         '<button class="btn btn-ghost btn-sm" data-id="' + m.id + '" onclick="openAddPurchaseFor(this.dataset.id)">+ Credits</button>' +
@@ -954,38 +995,71 @@ function deletePurchase(id) {
 }
 
 // ============ ATTENDANCE ============
-function getCurrentBlock() {
+function getCurrentAndFutureBlocks() {
   var todayIso = toISO();
   var blocks = (S.courseBlocks || []).slice().sort(function(a,b){ return a.startDate.localeCompare(b.startDate); });
-  // Find block containing today, or the most recent past block
-  var current = null;
-  for (var i = 0; i < blocks.length; i++) {
-    var dates = getCourseBlockDates(blocks[i]);
-    var lastDate = dates[dates.length-1].iso;
-    if (blocks[i].startDate <= todayIso) current = blocks[i];
-    if (lastDate >= todayIso && blocks[i].startDate <= todayIso) return blocks[i];
-  }
-  return current;
+  // Return blocks that have at least one date >= today, plus the most recent past block for context
+  var upcoming = blocks.filter(function(b) {
+    var dates = getCourseBlockDates(b);
+    return dates[dates.length-1].iso >= todayIso;
+  });
+  if (!upcoming.length && blocks.length) upcoming = [blocks[blocks.length-1]];
+  return upcoming;
 }
 
 function renderAttendance() {
   var container = document.getElementById('attendanceSections');
   if (!container) return;
 
-  var currentBlock = getCurrentBlock();
-  if (!currentBlock) {
-    container.innerHTML = '<div class="empty"><div class="empty-body">No course blocks set up yet. Add one in Settings.</div></div>';
-  } else {
-    var dates = getCourseBlockDates(currentBlock);
-    var blockLabel = formatDateLong(currentBlock.startDate) + ' — ' + formatDateLong(dates[dates.length-1].iso);
-    var html = '<p style="font-size:13px;font-weight:300;color:var(--text-faint);margin-bottom:20px;">Current block: <strong style="color:var(--brown);">' + blockLabel + '</strong>. Tick to mark attended.</p>';
+  var activeBlocks = getCurrentAndFutureBlocks();
+  // Also include any individual drop-in dates (payg) not in a block that are upcoming
+  var blockDateSet = {};
+  activeBlocks.forEach(function(b) {
+    getCourseBlockDates(b).forEach(function(d){ blockDateSet[d.iso] = true; });
+  });
 
-    dates.forEach(function(d) {
-      var isPast = d.iso < toISO();
+  // Find any drop-in registration dates that are upcoming but not in a block
+  var todayIso = toISO();
+  var extraDates = {};
+  S.registrations.forEach(function(r) {
+    if (r.date >= todayIso && !blockDateSet[r.date]) {
+      extraDates[r.date] = true;
+    }
+  });
+
+  // Build full list of dates to show — extra drop-in dates first, then block dates
+  var allDates = Object.keys(extraDates).sort().map(function(iso) {
+    return {iso: iso, label: formatDateLong(iso)};
+  });
+  activeBlocks.forEach(function(b) {
+    getCourseBlockDates(b).forEach(function(d){ allDates.push(d); });
+  });
+  // Dedupe and sort
+  var seen = {};
+  allDates = allDates.filter(function(d) {
+    if (seen[d.iso]) return false;
+    seen[d.iso] = true;
+    return true;
+  }).sort(function(a,b){ return a.iso.localeCompare(b.iso); });
+
+  if (!allDates.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-body">No upcoming classes found. Add a course block in Settings.</div></div>';
+  } else {
+    var blockNames = activeBlocks.map(function(b) {
+      var dates = getCourseBlockDates(b);
+      return formatDateLong(b.startDate) + ' — ' + formatDateLong(dates[dates.length-1].iso);
+    }).join(' &nbsp;|&nbsp; ');
+    var html = '<p style="font-size:13px;font-weight:300;color:var(--text-faint);margin-bottom:20px;">Showing: <strong style="color:var(--brown);">' + blockNames + '</strong>. Tick to mark attended.</p>';
+
+    allDates.forEach(function(d) {
+      var isPast = d.iso < todayIso;
+      var isToday = d.iso === todayIso;
       html += '<div style="margin-bottom:28px;">';
       html += '<div style="background:var(--brown);padding:14px 20px;margin-bottom:3px;display:flex;align-items:center;justify-content:space-between;">' +
         '<span style="font-size:16px;font-weight:600;letter-spacing:0.06em;color:var(--gold);">' + d.label + '</span>' +
-        (isPast ? '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Past</span>' : '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);opacity:0.6;">Upcoming</span>') +
+        (isToday ? '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#c49a2a;font-weight:700;">Today</span>' :
+         isPast ? '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.4);">Past</span>' :
+         '<span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,239,0.5);">Upcoming</span>') +
       '</div>';
       html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">';
       S.classes.forEach(function(cls) {
@@ -1388,3 +1462,4 @@ render();
 </script>
 </body>
 </html>
+
